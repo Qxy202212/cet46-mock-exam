@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2026年英语四级考试真题一</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            header: "#2B7DE9",
+            primary: "#3F80F4",
+            sheet: "#F54A45",
+            time: "#22A45A",
+            exit: "#E85D5D",
+            page: "#F2F2F2",
+          },
+          boxShadow: {
+            card: "0 1px 4px rgba(0,0,0,.08)",
+            win: "0 8px 24px rgba(0,0,0,.18)",
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    html, body { height: 100%; }
+    body { font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif; }
+    .opt-dot { box-shadow: inset 0 0 0 1px #C5C5C5; }
+    .opt-dot.is-on { box-shadow: inset 0 0 0 5px #3F80F4; }
+    textarea:focus, input:focus { border-color: #3F80F4; }
+    .q-card.is-hidden { display: none; }
+    .progress-track { height: 6px; background: #E6E6E6; }
+    .progress-fill { height: 6px; background: #3F80F4; }
+    .progress-thumb { width: 12px; height: 12px; background: #3F80F4; top: 50%; transform: translate(-50%, -50%); }
+    .blank-slot { min-width: 72px; border-bottom: 2px solid #3F80F4; color: #3F80F4; cursor: pointer; }
+    .blank-slot.is-active { background: #EBF3FF; border-radius: 2px; }
+    .blank-slot.is-filled { color: #222; font-weight: 600; }
+    .word-chip.is-used { opacity: .45; }
+    .para-btn.is-on { border-color: #3F80F4; background: #EBF3FF; color: #3F80F4; }
+    .mode-btn { transition: background-color .15s, color .15s; }
+    .passage-scroll::-webkit-scrollbar { width: 6px; }
+    .passage-scroll::-webkit-scrollbar-thumb { background: #D0D0D0; border-radius: 3px; }
+    .sub-q-pill.is-active { border-color: #3F80F4; background: #3F80F4; color: #fff; }
+    .sub-q-pill.is-done { border-color: #3F80F4; color: #3F80F4; background: #F5F9FF; }
+    .split-divider { position: relative; z-index: 10; height: 14px; flex-shrink: 0; cursor: ns-resize; user-select: none; touch-action: none; }
+    .split-divider::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: #E6E6E6; transform: translateY(-50%); }
+    .split-handle { position: absolute; left: 50%; top: 50%; z-index: 1; display: flex; width: 48px; height: 16px; flex-direction: column; align-items: center; justify-content: center; gap: 2px; border: 1px solid #E6E6E6; border-radius: 6px 6px 4px 4px; background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,.1); transform: translate(-50%, -50%); }
+    .split-handle i { display: block; width: 20px; height: 2px; border-radius: 1px; background: #D0D0D0; }
+    .split-divider:hover .split-handle, .split-divider.is-dragging .split-handle { border-color: #C5D9F7; box-shadow: 0 2px 8px rgba(63,128,244,.14); }
+    body.is-split-dragging { cursor: ns-resize !important; user-select: none !important; }
+    .cloze-blank { display: inline-block; min-width: 52px; margin: 0 2px; border-bottom: 1.5px solid #333; color: #3F80F4; font-weight: 600; text-align: center; cursor: pointer; line-height: 1.4; }
+    .cloze-blank.is-active { background: #EBF3FF; border-radius: 2px; }
+    .cloze-blank.is-filled { color: #222; }
+    .cloze-opt-letter { box-shadow: inset 0 0 0 1px #D0D0D0; background: #F3F3F3; color: #666; }
+    .cloze-opt-letter.is-on { box-shadow: none; background: #3F80F4; color: #fff; }
+    .match-letter-bar { background: transparent; }
+    .match-letter { background: #EDEDED; color: #666; }
+    .match-letter.is-on { background: #3F80F4; color: #fff; }
+    .sheet-sec-bar { background: #EEF3F9; }
+    .sheet-num { background: #F0F0F0; color: #666; }
+    .sheet-num.is-done { background: #3F80F4; color: #fff; }
+    .sheet-num.is-cur { outline: 2px solid #3F80F4; outline-offset: 1px; }
+  </style>
+</head>
+<body class="h-screen overflow-hidden bg-page text-[#333]">
+  <div class="flex h-full flex-col">
+    <header class="relative z-20 flex h-[56px] shrink-0 items-center bg-header px-3 text-white select-none">
+      <div class="flex min-w-0 items-center gap-2">
+        <svg class="h-8 w-8 shrink-0" viewBox="0 0 32 32" fill="none">
+          <path d="M4 7.2h7.1l4.9 17.6H9.2L4 7.2z" fill="#fff" opacity=".95"/>
+          <path d="M12.2 7.2h7.4L24.8 24.8h-7.1L12.2 7.2z" fill="#fff" opacity=".75"/>
+          <path d="M20.6 7.2H28L23.2 24.8h-7.2L20.6 7.2z" fill="#fff"/>
+        </svg>
+        <div class="leading-tight">
+          <div class="text-[15px] font-semibold tracking-wide">WPS 教学平台</div>
+          <div class="text-[11px] font-normal text-white/85">一站式数字化办公人才培养平台（模考试室）</div>
+        </div>
+        <div class="mx-3 h-8 w-px bg-white/40"></div>
+        <div class="truncate text-[16px] font-medium">2026年英语四级考试真题一</div>
+      </div>
+      <div class="ml-auto flex items-center gap-3">
+        <div class="flex items-center gap-1.5">
+          <div class="flex h-8 w-8 items-center justify-center rounded-full bg-[#D9A6E8] text-[11px] font-medium leading-none text-white">老师</div>
+          <span class="text-[13px]">邱老师</span>
+        </div>
+        <div class="flex h-[56px] w-[148px] flex-col items-center justify-center bg-white px-2">
+          <div class="text-[11px] leading-none text-time">考生剩余时间</div>
+          <div id="timer" class="mt-1 text-[16px] font-semibold leading-none text-time">477分36秒</div>
+        </div>
+        <div class="flex items-center gap-2 text-white">
+          <button type="button" class="grid h-6 w-6 place-items-center rounded hover:bg-white/15" title="收藏考场">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.9 6.8 19.6l1-5.8L3.6 9.7l5.8-.8L12 3.6z"/></svg>
+          </button>
+          <button type="button" class="grid h-6 w-6 place-items-center rounded hover:bg-white/15" title="最小化">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M5 12h14"/></svg>
+          </button>
+          <button type="button" class="grid h-6 w-6 place-items-center rounded hover:bg-white/15" title="最大化">
+            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14"/></svg>
+          </button>
+        </div>
+        <button id="exitBtn" type="button" class="ml-1 flex h-8 items-center gap-1 rounded-full bg-white px-3.5 text-[13px] text-exit hover:bg-red-50">
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M10 7V5a2 2 0 0 1 2-2h7v18h-7a2 2 0 0 1-2-2v-2"/><path d="M4 12h12M13 8l4 4-4 4"/></svg>
+          退出考场
+        </button>
+      </div>
+    </header>
+
+    <div class="flex min-h-0 flex-1 gap-3 p-3">
+      <section class="flex min-w-0 flex-1 flex-col rounded bg-white shadow-card">
+        <div class="flex items-center justify-between px-5 pt-4 select-none">
+          <div class="flex items-center gap-2">
+            <button id="miniWinBtn" type="button" class="h-8 rounded border border-[#9EC4F8] bg-white px-3.5 text-[13px] text-primary hover:bg-blue-50">展示题目小窗</button>
+            <div id="modeSwitch" class="ml-1 flex rounded border border-[#9EC4F8] bg-white p-0.5 text-[13px]">
+              <button id="modeSingle" type="button" class="mode-btn rounded px-3 py-1.5 bg-primary text-white">单题模式</button>
+              <button id="modeFull" type="button" class="mode-btn rounded px-3 py-1.5 text-primary hover:bg-blue-50">整卷模式</button>
+            </div>
+          </div>
+          <div class="flex items-center gap-5 text-[13px] text-primary">
+            <button id="markBtn" type="button" class="inline-flex items-center gap-1 hover:opacity-80">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M4 20l4.5-1.2L19 8.3a2 2 0 0 0 0-2.8L18.5 5a2 2 0 0 0-2.8 0L4.8 15.9 4 20z"/></svg>
+              标记
+            </button>
+            <button id="favBtn" type="button" class="inline-flex items-center gap-1 hover:opacity-80">
+              <svg id="favIcon" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.9 6.8 19.6l1-5.8L3.6 9.7l5.8-.8L12 3.6z"/></svg>
+              收藏
+            </button>
+          </div>
+        </div>
+        <div id="answerArea" class="flex min-h-0 flex-1 flex-col">
+          <!-- 母题区：单题模式下篇章/听力材料（沿用原白卡片样式） -->
+          <div id="parentPanel" class="hidden flex min-h-0 shrink-0 flex-col overflow-hidden bg-white">
+            <div id="parentPanelInner" class="mx-5 mt-2 flex min-h-0 flex-1 flex-col overflow-hidden bg-white"></div>
+          </div>
+          <div id="splitDivider" class="split-divider hidden" title="拖动调整篇章与题目区域高度">
+            <div class="split-handle" aria-hidden="true"><i></i><i></i><i></i></div>
+          </div>
+          <div id="questionScroll" class="min-h-0 flex-1 overflow-auto pb-2">
+            <div id="questionList"></div>
+          </div>
+        </div>
+        <div id="navBar" class="flex items-center justify-between px-5 py-3 select-none">
+          <div class="flex items-center gap-2">
+            <button id="prevBtn" type="button" class="h-8 rounded bg-[#B7D8F8] px-4 text-[13px] text-white hover:bg-[#A6CEF4]">&lt; 上一题</button>
+            <button id="nextBtn" type="button" class="h-8 rounded bg-[#8EC4F5] px-4 text-[13px] text-white hover:bg-[#7BB8F0]">下一题 &gt;</button>
+          </div>
+          <div class="hidden text-[12px] text-[#B0B0B0]">注：AI实训题的评分明细请在提交考卷后查看</div>
+        </div>
+      </section>
+
+      <aside class="flex w-[280px] shrink-0 flex-col rounded bg-white shadow-card select-none">
+        <div class="flex items-center justify-between px-4 pt-4">
+          <div class="flex items-baseline gap-2">
+            <span class="text-[17px] font-bold text-[#333]">答题卡</span>
+            <span id="sheetProgress" class="text-[13px] text-[#999]">0/0</span>
+          </div>
+          <div class="flex items-center gap-3 text-[12px] text-[#666]">
+            <span class="inline-flex items-center gap-1"><i class="inline-block h-2.5 w-2.5 rounded-full bg-primary"></i>已答</span>
+            <span class="inline-flex items-center gap-1"><i class="inline-block h-2.5 w-2.5 rounded-full bg-[#E8E8E8]"></i>未答</span>
+          </div>
+        </div>
+        <div id="sheetGroups" class="mt-3 min-h-0 flex-1 overflow-auto"></div>
+        <div class="mt-auto px-6 pb-5 pt-4">
+          <button id="submitBtn" type="button" class="h-10 w-full rounded-full bg-sheet text-[15px] font-medium text-white hover:bg-[#E0433F]">提交考卷</button>
+        </div>
+      </aside>
+    </div>
+
+    <div class="relative h-6 shrink-0 bg-[#EFEFEF]">
+      <a href="cet-index.html" class="absolute bottom-1 left-4 text-[12px] text-[#9A9A9A] hover:text-[#666]">原型入口</a>
+      <button id="tipBtn" type="button" class="absolute bottom-1 right-4 text-[12px] text-[#9A9A9A] hover:text-[#666]">作答提示</button>
+    </div>
+  </div>
+
+  <div id="miniWin" class="fixed bottom-10 right-[300px] z-30 hidden w-[320px] overflow-hidden rounded shadow-win">
+    <div class="flex h-8 items-center bg-header px-3 text-[12px] text-white">
+      <span id="miniWinTitle" class="truncate">1. 【听力题·5分】</span>
+      <button id="closeMiniWin" type="button" class="ml-auto grid h-5 w-5 place-items-center rounded hover:bg-white/15">×</button>
+    </div>
+    <div id="miniWinBody" class="max-h-40 overflow-auto bg-white p-3 text-[12px] leading-relaxed text-[#333]"></div>
+  </div>
+
+  <div id="mask" class="fixed inset-0 z-40 hidden items-center justify-center bg-black/35">
+    <div class="w-[360px] rounded bg-white p-6 shadow-win">
+      <div id="dialogTitle" class="text-[16px] font-medium text-[#333]">提示</div>
+      <div id="dialogText" class="mt-3 text-[14px] leading-relaxed text-[#666]"></div>
+      <div class="mt-6 flex justify-end gap-2">
+        <button id="dialogCancel" type="button" class="h-8 rounded border border-[#D9D9D9] px-4 text-[13px] text-[#666] hover:bg-gray-50">取消</button>
+        <button id="dialogOk" type="button" class="h-8 rounded bg-primary px-4 text-[13px] text-white hover:bg-[#3374e8]">确定</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="pointer-events-none fixed left-1/2 top-20 z-50 hidden -translate-x-1/2 rounded bg-black/70 px-4 py-2 text-[13px] text-white"></div>
+
+  <script>
+    (function () {
+      var QUESTIONS = [
+        {
+          id: 1, section: "听力", kind: "listening", label: "听力题", score: 5,
+          listenGroup: "ln-1", listenRange: [1, 2],
+          audio: "https://mock.audio/cet4/listening/conversation-one.mp3", duration: 48,
+          directions: "Section A. Directions: In this section, you will hear two long conversations. At the end of each conversation, you will hear four questions. Both the conversation and the questions will be spoken only once.",
+          material: "Conversation One",
+          stem: "Question 1. What does the woman mean?",
+          options: [
+            { key: "A", text: "She will finish the report after class." },
+            { key: "B", text: "She has already submitted the assignment." },
+            { key: "C", text: "She needs more time to collect the data." },
+            { key: "D", text: "She is not going to attend the meeting." }
+          ]
+        },
+        {
+          id: 2, section: "听力", kind: "listening", label: "听力题", score: 5,
+          listenGroup: "ln-1", listenRange: [1, 2],
+          audio: "https://mock.audio/cet4/listening/conversation-one.mp3", duration: 48,
+          directions: "Section A. Directions: In this section, you will hear two long conversations. At the end of each conversation, you will hear four questions. Both the conversation and the questions will be spoken only once.",
+          material: "Conversation One",
+          stem: "Question 2. What will the man probably do next?",
+          options: [
+            { key: "A", text: "Call the professor immediately." },
+            { key: "B", text: "Share his notes with the woman." },
+            { key: "C", text: "Cancel the group discussion." },
+            { key: "D", text: "Wait for the library to open." }
+          ]
+        },
+        {
+          id: 3, section: "阅读", kind: "banked_cloze", label: "选词填空", score: 1,
+          clozeGroup: "bc-1", blankNo: 26,
+          directions: "Section A. Directions: In this section, there is a passage with ten blanks. You are required to select one word for each blank from a list of choices. You may not use any of the words in the bank more than once.",
+          wordBank: [
+            { key: "A", word: "analyze" }, { key: "B", word: "weekly" }, { key: "C", word: "inventory" },
+            { key: "D", word: "patterns" }, { key: "E", word: "support" }, { key: "F", word: "accurate" },
+            { key: "G", word: "meeting" }, { key: "H", word: "assistant" }, { key: "I", word: "sales" }, { key: "J", word: "reports" }
+          ],
+          segments: [
+            { type: "text", text: "Every Monday, the shop " },
+            { type: "blank", no: 26 },
+            { type: "text", text: " prepares a " },
+            { type: "blank", no: 27 },
+            { type: "text", text: " operation report. The " },
+            { type: "blank", no: 28 },
+            { type: "text", text: " manager uses WPS AI to " },
+            { type: "blank", no: 29 },
+            { type: "text", text: " last week's " },
+            { type: "blank", no: 30 },
+            { type: "text", text: " data and find buying " },
+            { type: "blank", no: 31 },
+            { type: "text", text: ". The report provides " },
+            { type: "blank", no: 32 },
+            { type: "text", text: " for the morning " },
+            { type: "blank", no: 33 },
+            { type: "text", text: " and helps adjust " },
+            { type: "blank", no: 34 },
+            { type: "text", text: " before the next busy week." }
+          ],
+          stem: "26. Choose the best word for blank 26.",
+          options: [
+            { key: "A", text: "analyze" }, { key: "B", text: "weekly" }, { key: "C", text: "inventory" },
+            { key: "D", text: "patterns" }, { key: "E", text: "support" }, { key: "F", text: "accurate" },
+            { key: "G", text: "meeting" }, { key: "H", text: "assistant" }, { key: "I", text: "sales" }, { key: "J", text: "reports" }
+          ]
+        },
+        {
+          id: 4, section: "阅读", kind: "banked_cloze", label: "选词填空", score: 1,
+          clozeGroup: "bc-1", blankNo: 27,
+          directions: "Section A. Directions: In this section, there is a passage with ten blanks. You are required to select one word for each blank from a list of choices. You may not use any of the words in the bank more than once.",
+          wordBank: [
+            { key: "A", word: "analyze" }, { key: "B", word: "weekly" }, { key: "C", word: "inventory" },
+            { key: "D", word: "patterns" }, { key: "E", word: "support" }, { key: "F", word: "accurate" },
+            { key: "G", word: "meeting" }, { key: "H", word: "assistant" }, { key: "I", word: "sales" }, { key: "J", word: "reports" }
+          ],
+          segments: [
+            { type: "text", text: "Every Monday, the shop " },
+            { type: "blank", no: 26 },
+            { type: "text", text: " prepares a " },
+            { type: "blank", no: 27 },
+            { type: "text", text: " operation report. The " },
+            { type: "blank", no: 28 },
+            { type: "text", text: " manager uses WPS AI to " },
+            { type: "blank", no: 29 },
+            { type: "text", text: " last week's " },
+            { type: "blank", no: 30 },
+            { type: "text", text: " data and find buying " },
+            { type: "blank", no: 31 },
+            { type: "text", text: ". The report provides " },
+            { type: "blank", no: 32 },
+            { type: "text", text: " for the morning " },
+            { type: "blank", no: 33 },
+            { type: "text", text: " and helps adjust " },
+            { type: "blank", no: 34 },
+            { type: "text", text: " before the next busy week." }
+          ],
+          stem: "27. Choose the best word for blank 27.",
+          options: [
+            { key: "A", text: "analyze" }, { key: "B", text: "weekly" }, { key: "C", text: "inventory" },
+            { key: "D", text: "patterns" }, { key: "E", text: "support" }, { key: "F", text: "accurate" },
+            { key: "G", text: "meeting" }, { key: "H", text: "assistant" }, { key: "I", text: "sales" }, { key: "J", text: "reports" }
+          ]
+        },
+        {
+          id: 5, section: "阅读", kind: "banked_cloze", label: "选词填空", score: 1,
+          clozeGroup: "bc-1", blankNo: 28,
+          directions: "Section A. Directions: In this section, there is a passage with ten blanks. You are required to select one word for each blank from a list of choices. You may not use any of the words in the bank more than once.",
+          wordBank: [
+            { key: "A", word: "analyze" }, { key: "B", word: "weekly" }, { key: "C", word: "inventory" },
+            { key: "D", word: "patterns" }, { key: "E", word: "support" }, { key: "F", word: "accurate" },
+            { key: "G", word: "meeting" }, { key: "H", word: "assistant" }, { key: "I", word: "sales" }, { key: "J", word: "reports" }
+          ],
+          segments: [
+            { type: "text", text: "Every Monday, the shop " },
+            { type: "blank", no: 26 },
+            { type: "text", text: " prepares a " },
+            { type: "blank", no: 27 },
+            { type: "text", text: " operation report. The " },
+            { type: "blank", no: 28 },
+            { type: "text", text: " manager uses WPS AI to " },
+            { type: "blank", no: 29 },
+            { type: "text", text: " last week's " },
+            { type: "blank", no: 30 },
+            { type: "text", text: " data and find buying " },
+            { type: "blank", no: 31 },
+            { type: "text", text: ". The report provides " },
+            { type: "blank", no: 32 },
+            { type: "text", text: " for the morning " },
+            { type: "blank", no: 33 },
+            { type: "text", text: " and helps adjust " },
+            { type: "blank", no: 34 },
+            { type: "text", text: " before the next busy week." }
+          ],
+          stem: "28. Choose the best word for blank 28.",
+          options: [
+            { key: "A", text: "analyze" }, { key: "B", text: "weekly" }, { key: "C", text: "inventory" },
+            { key: "D", text: "patterns" }, { key: "E", text: "support" }, { key: "F", text: "accurate" },
+            { key: "G", text: "meeting" }, { key: "H", text: "assistant" }, { key: "I", text: "sales" }, { key: "J", text: "reports" }
+          ]
+        },
+        {
+          id: 6, section: "阅读", kind: "banked_cloze", label: "选词填空", score: 1,
+          clozeGroup: "bc-1", blankNo: 29,
+          directions: "Section A. Directions: In this section, there is a passage with ten blanks. You are required to select one word for each blank from a list of choices. You may not use any of the words in the bank more than once.",
+          wordBank: [
+            { key: "A", word: "analyze" }, { key: "B", word: "weekly" }, { key: "C", word: "inventory" },
+            { key: "D", word: "patterns" }, { key: "E", word: "support" }, { key: "F", word: "accurate" },
+            { key: "G", word: "meeting" }, { key: "H", word: "assistant" }, { key: "I", word: "sales" }, { key: "J", word: "reports" }
+          ],
+          segments: [
+            { type: "text", text: "Every Monday, the shop " },
+            { type: "blank", no: 26 },
+            { type: "text", text: " prepares a " },
+            { type: "blank", no: 27 },
+            { type: "text", text: " operation report. The " },
+            { type: "blank", no: 28 },
+            { type: "text", text: " manager uses WPS AI to " },
+            { type: "blank", no: 29 },
+            { type: "text", text: " last week's " },
+            { type: "blank", no: 30 },
+            { type: "text", text: " data and find buying " },
+            { type: "blank", no: 31 },
+            { type: "text", text: ". The report provides " },
+            { type: "blank", no: 32 },
+            { type: "text", text: " for the morning " },
+            { type: "blank", no: 33 },
+            { type: "text", text: " and helps adjust " },
+            { type: "blank", no: 34 },
+            { type: "text", text: " before the next busy week." }
+          ],
+          stem: "29. Choose the best word for blank 29.",
+          options: [
+            { key: "A", text: "analyze" }, { key: "B", text: "weekly" }, { key: "C", text: "inventory" },
+            { key: "D", text: "patterns" }, { key: "E", text: "support" }, { key: "F", text: "accurate" },
+            { key: "G", text: "meeting" }, { key: "H", text: "assistant" }, { key: "I", text: "sales" }, { key: "J", text: "reports" }
+          ]
+        },
+        {
+          id: 7, section: "阅读", kind: "banked_cloze", label: "选词填空", score: 1,
+          clozeGroup: "bc-1", blankNo: 30,
+          directions: "Section A. Directions: In this section, there is a passage with ten blanks. You are required to select one word for each blank from a list of choices. You may not use any of the words in the bank more than once.",
+          wordBank: [
+            { key: "A", word: "analyze" }, { key: "B", word: "weekly" }, { key: "C", word: "inventory" },
+            { key: "D", word: "patterns" }, { key: "E", word: "support" }, { key: "F", word: "accurate" },
+            { key: "G", word: "meeting" }, { key: "H", word: "assistant" }, { key: "I", word: "sales" }, { key: "J", word: "reports" }
+          ],
+          segments: [
+            { type: "text", text: "Every Monday, the shop " },
+            { type: "blank", no: 26 },
+            { type: "text", text: " prepares a " },
+            { type: "blank", no: 27 },
+            { type: "text", text: " operation report. The " },
+            { type: "blank", no: 28 },
+            { type: "text", text: " manager uses WPS AI to " },
+            { type: "blank", no: 29 },
+            { type: "text", text: " last week's " },
+            { type: "blank", no: 30 },
+            { type: "text", text: " data and find buying " },
+            { type: "blank", no: 31 },
+            { type: "text", text: ". The report provides " },
+            { type: "blank", no: 32 },
+            { type: "text", text: " for the morning " },
+            { type: "blank", no: 33 },
+            { type: "text", text: " and helps adjust " },
+            { type: "blank", no: 34 },
+            { type: "text", text: " before the next busy week." }
+          ],
+          stem: "30. Choose the best word for blank 30.",
+          options: [
+            { key: "A", text: "analyze" }, { key: "B", text: "weekly" }, { key: "C", text: "inventory" },
+            { key: "D", text: "patterns" }, { key: "E", text: "support" }, { key: "F", text: "accurate" },
+            { key: "G", text: "meeting" }, { key: "H", text: "assistant" }, { key: "I", text: "sales" }, { key: "J", text: "reports" }
+          ]
+        },
+        {
+          id: 8, section: "阅读", kind: "banked_cloze", label: "选词填空", score: 1,
+          clozeGroup: "bc-1", blankNo: 31,
+          directions: "Section A. Directions: In this section, there is a passage with ten blanks. You are required to select one word for each blank from a list of choices. You may not use any of the words in the bank more than once.",
+          wordBank: [
+            { key: "A", word: "analyze" }, { key: "B", word: "weekly" }, { key: "C", word: "inventory" },
+            { key: "D", word: "patterns" }, { key: "E", word: "support" }, { key: "F", word: "accurate" },
+            { key: "G", word: "meeting" }, { key: "H", word: "assistant" }, { key: "I", word: "sales" }, { key: "J", word: "reports" }
+          ],
+          segments: [
+            { type: "text", text: "Every Monday, the shop " },
+            { type: "blank", no: 26 },
+            { type: "text", text: " prepares a " },
+            { type: "blank", no: 27 },
+            { type: "text", text: " operation report. The " },
+            { type: "blank", no: 28 },
+            { type: "text", text: " manager uses WPS AI to " },
+            { type: "blank", no: 29 },
+            { type: "text", text: " last week's " },
+            { type: "blank", no: 30 },
+            { type: "text", text: " data and find buying " },
+            { type: "blank", no: 31 },
+            { type: "text", text: ". The report provides " },
+            { type: "blank", no: 32 },
+            { type: "text", text: " for the morning " },
+            { type: "blank", no: 33 },
+            { type: "text", text: " and helps adjust " },
+            { type: "blank", no: 34 },
+            { type: "text", text: " before the next busy week." }
+          ],
+          stem: "31. Choose the best word for blank 31.",
+          options: [
+            { key: "A", text: "analyze" }, { key: "B", text: "weekly" }, { key: "C", text: "inventory" },
+            { key: "D", text: "patterns" }, { key: "E", text: "support" }, { key: "F", text: "accurate" },
+            { key: "G", text: "meeting" }, { key: "H", text: "assistant" }, { key: "I", text: "sales" }, { key: "J", text: "reports" }
+          ]
+        },
+        {
+          id: 9, section: "阅读", kind: "banked_cloze", label: "选词填空", score: 1,
+          clozeGroup: "bc-1", blankNo: 32,
+          directions: "Section A. Directions: In this section, there is a passage with ten blanks. You are required to select one word for each blank from a list of choices. You may not use any of the words in the bank more than once.",
+          wordBank: [
+            { key: "A", word: "analyze" }, { key: "B", word: "weekly" }, { key: "C", word: "inventory" },
+            { key: "D", word: "patterns" }, { key: "E", word: "support" }, { key: "F", word: "accurate" },
+            { key: "G", word: "meeting" }, { key: "H", word: "assistant" }, { key: "I", word: "sales" }, { key: "J", word: "reports" }
+          ],
+          segments: [
+            { type: "text", text: "Every Monday, the shop " },
+            { type: "blank", no: 26 },
+            { type: "text", text: " prepares a " },
+            { type: "blank", no: 27 },
+            { type: "text", text: " operation report. The " },
+            { type: "blank", no: 28 },
+            { type: "text", text: " manager uses WPS AI to " },
+            { type: "blank", no: 29 },
+            { type: "text", text: " last week's " },
+            { type: "blank", no: 30 },
+            { type: "text", text: " data and find buying " },
+            { type: "blank", no: 31 },
+            { type: "text", text: ". The report provides " },
+            { type: "blank", no: 32 },
+            { type: "text", text: " for the morning " },
+            { type: "blank", no: 33 },
+            { type: "text", text: " and helps adjust " },
+            { type: "blank", no: 34 },
+            { type: "text", text: " before the next busy week." }
+          ],
+          stem: "32. Choose the best word for blank 32.",
+          options: [
+            { key: "A", text: "analyze" }, { key: "B", text: "weekly" }, { key: "C", text: "inventory" },
+            { key: "D", text: "patterns" }, { key: "E", text: "support" }, { key: "F", text: "accurate" },
+            { key: "G", text: "meeting" }, { key: "H", text: "assistant" }, { key: "I", text: "sales" }, { key: "J", text: "reports" }
+          ]
+        },
+        {
+          id: 10, section: "阅读", kind: "banked_cloze", label: "选词填空", score: 1,
+          clozeGroup: "bc-1", blankNo: 33,
+          directions: "Section A. Directions: In this section, there is a passage with ten blanks. You are required to select one word for each blank from a list of choices. You may not use any of the words in the bank more than once.",
+          wordBank: [
+            { key: "A", word: "analyze" }, { key: "B", word: "weekly" }, { key: "C", word: "inventory" },
+            { key: "D", word: "patterns" }, { key: "E", word: "support" }, { key: "F", word: "accurate" },
+            { key: "G", word: "meeting" }, { key: "H", word: "assistant" }, { key: "I", word: "sales" }, { key: "J", word: "reports" }
+          ],
+          segments: [
+            { type: "text", text: "Every Monday, the shop " },
+            { type: "blank", no: 26 },
+            { type: "text", text: " prepares a " },
+            { type: "blank", no: 27 },
+            { type: "text", text: " operation report. The " },
+            { type: "blank", no: 28 },
+            { type: "text", text: " manager uses WPS AI to " },
+            { type: "blank", no: 29 },
+            { type: "text", text: " last week's " },
+            { type: "blank", no: 30 },
+            { type: "text", text: " data and find buying " },
+            { type: "blank", no: 31 },
+            { type: "text", text: ". The report provides " },
+            { type: "blank", no: 32 },
+            { type: "text", text: " for the morning " },
+            { type: "blank", no: 33 },
+            { type: "text", text: " and helps adjust " },
+            { type: "blank", no: 34 },
+            { type: "text", text: " before the next busy week." }
+          ],
+          stem: "33. Choose the best word for blank 33.",
+          options: [
+            { key: "A", text: "analyze" }, { key: "B", text: "weekly" }, { key: "C", text: "inventory" },
+            { key: "D", text: "patterns" }, { key: "E", text: "support" }, { key: "F", text: "accurate" },
+            { key: "G", text: "meeting" }, { key: "H", text: "assistant" }, { key: "I", text: "sales" }, { key: "J", text: "reports" }
+          ]
+        },
+        {
+          id: 11, section: "阅读", kind: "banked_cloze", label: "选词填空", score: 1,
+          clozeGroup: "bc-1", blankNo: 34,
+          directions: "Section A. Directions: In this section, there is a passage with ten blanks. You are required to select one word for each blank from a list of choices. You may not use any of the words in the bank more than once.",
+          wordBank: [
+            { key: "A", word: "analyze" }, { key: "B", word: "weekly" }, { key: "C", word: "inventory" },
+            { key: "D", word: "patterns" }, { key: "E", word: "support" }, { key: "F", word: "accurate" },
+            { key: "G", word: "meeting" }, { key: "H", word: "assistant" }, { key: "I", word: "sales" }, { key: "J", word: "reports" }
+          ],
+          segments: [
+            { type: "text", text: "Every Monday, the shop " },
+            { type: "blank", no: 26 },
+            { type: "text", text: " prepares a " },
+            { type: "blank", no: 27 },
+            { type: "text", text: " operation report. The " },
+            { type: "blank", no: 28 },
+            { type: "text", text: " manager uses WPS AI to " },
+            { type: "blank", no: 29 },
+            { type: "text", text: " last week's " },
+            { type: "blank", no: 30 },
+            { type: "text", text: " data and find buying " },
+            { type: "blank", no: 31 },
+            { type: "text", text: ". The report provides " },
+            { type: "blank", no: 32 },
+            { type: "text", text: " for the morning " },
+            { type: "blank", no: 33 },
+            { type: "text", text: " and helps adjust " },
+            { type: "blank", no: 34 },
+            { type: "text", text: " before the next busy week." }
+          ],
+          stem: "34. Choose the best word for blank 34.",
+          options: [
+            { key: "A", text: "analyze" }, { key: "B", text: "weekly" }, { key: "C", text: "inventory" },
+            { key: "D", text: "patterns" }, { key: "E", text: "support" }, { key: "F", text: "accurate" },
+            { key: "G", text: "meeting" }, { key: "H", text: "assistant" }, { key: "I", text: "sales" }, { key: "J", text: "reports" }
+          ]
+        },
+        {
+          id: 12, section: "阅读", kind: "matching", label: "信息匹配", score: 5,
+          matchGroup: "mt-1", matchNo: 36,
+          directions: "Section B. Directions: In this section, you are going to read a passage with ten statements attached to it. Each statement contains information given in one of the paragraphs. Identify the paragraph from which the information is derived. You may choose a paragraph more than once. Each paragraph is marked with a letter.",
+          paragraphs: [
+            { key: "A", text: "Many employers still prefer candidates with recent workplace experience. They worry that long gaps on a résumé signal outdated skills, especially when technology changes rapidly across industries." },
+            { key: "B", text: "Career counselors often advise older job seekers to rewrite their CVs around achievements rather than years of service. Clear results help hiring teams see value beyond age." },
+            { key: "C", text: "Some companies have introduced reverse mentoring, pairing senior staff with younger employees who teach digital tools while learning leadership lessons in return." },
+            { key: "D", text: "Government programs in several countries now subsidize mid-career training. The goal is to keep experienced workers productive instead of pushing them into early retirement." },
+            { key: "E", text: "Recruiters admit that automated screening systems sometimes reject résumés with graduation years that look \"too old,\" even when the applicant is highly qualified." },
+            { key: "F", text: "Flexible work arrangements can help people over 45 re-enter the labor market. Part-time roles and project-based contracts lower the risk for both sides." },
+            { key: "G", text: "After a layoff, finding a similar job can take months. Changing fields entirely is harder still, because employers may question whether the applicant can adapt quickly enough." },
+            { key: "H", text: "Professional networks matter more with age. Referrals from former colleagues often open doors that online applications alone cannot." },
+            { key: "I", text: "Hiring managers say that when they look at applicants who have been out of work for a while, especially those over 45, they often assume those candidates need more training than younger applicants. They also tend to believe older unemployed workers are less adaptable. Some managers argue that government subsidies for retraining would help, while others prefer industry-backed certificates that prove real workplace skills." },
+            { key: "J", text: "Learning new skills after 45 is possible, but not everyone joins training programs. Studies show that people from lower-income communities are less likely to enroll, even when courses are free. Those who feel least confident about returning to study are often the ones who need support the most." },
+            { key: "K", text: "A recent survey found that many employers value work experience more than a \"perfect\" degree. Candidates who can demonstrate practical problem-solving often beat applicants with stronger academic records but little real-world practice." },
+            { key: "L", text: "Ageism remains a barrier. At the same time, inexpensive or free training is widely available on platforms such as Udemy, Lynda.com and YouTube, making it easier for motivated learners to update skills without large tuition fees." },
+            { key: "M", text: "Switching careers after 45 is difficult, and getting reemployed after a layoff can be even tougher. Still, continuous learning helps people stay employable, and society benefits when experienced workers remain in the labor force." }
+          ],
+          stem: "Hiring managers believe unemployed workers over 45 lack good skills and are less adaptable."
+        },
+        {
+          id: 13, section: "阅读", kind: "matching", label: "信息匹配", score: 5,
+          matchGroup: "mt-1", matchNo: 37,
+          directions: "Section B. Directions: In this section, you are going to read a passage with ten statements attached to it. Each statement contains information given in one of the paragraphs. Identify the paragraph from which the information is derived. You may choose a paragraph more than once. Each paragraph is marked with a letter.",
+          paragraphs: [
+            { key: "A", text: "Many employers still prefer candidates with recent workplace experience. They worry that long gaps on a résumé signal outdated skills, especially when technology changes rapidly across industries." },
+            { key: "B", text: "Career counselors often advise older job seekers to rewrite their CVs around achievements rather than years of service. Clear results help hiring teams see value beyond age." },
+            { key: "C", text: "Some companies have introduced reverse mentoring, pairing senior staff with younger employees who teach digital tools while learning leadership lessons in return." },
+            { key: "D", text: "Government programs in several countries now subsidize mid-career training. The goal is to keep experienced workers productive instead of pushing them into early retirement." },
+            { key: "E", text: "Recruiters admit that automated screening systems sometimes reject résumés with graduation years that look \"too old,\" even when the applicant is highly qualified." },
+            { key: "F", text: "Flexible work arrangements can help people over 45 re-enter the labor market. Part-time roles and project-based contracts lower the risk for both sides." },
+            { key: "G", text: "After a layoff, finding a similar job can take months. Changing fields entirely is harder still, because employers may question whether the applicant can adapt quickly enough." },
+            { key: "H", text: "Professional networks matter more with age. Referrals from former colleagues often open doors that online applications alone cannot." },
+            { key: "I", text: "Hiring managers say that when they look at applicants who have been out of work for a while, especially those over 45, they often assume those candidates need more training than younger applicants. They also tend to believe older unemployed workers are less adaptable. Some managers argue that government subsidies for retraining would help, while others prefer industry-backed certificates that prove real workplace skills." },
+            { key: "J", text: "Learning new skills after 45 is possible, but not everyone joins training programs. Studies show that people from lower-income communities are less likely to enroll, even when courses are free. Those who feel least confident about returning to study are often the ones who need support the most." },
+            { key: "K", text: "A recent survey found that many employers value work experience more than a \"perfect\" degree. Candidates who can demonstrate practical problem-solving often beat applicants with stronger academic records but little real-world practice." },
+            { key: "L", text: "Ageism remains a barrier. At the same time, inexpensive or free training is widely available on platforms such as Udemy, Lynda.com and YouTube, making it easier for motivated learners to update skills without large tuition fees." },
+            { key: "M", text: "Switching careers after 45 is difficult, and getting reemployed after a layoff can be even tougher. Still, continuous learning helps people stay employable, and society benefits when experienced workers remain in the labor force." }
+          ],
+          stem: "Switching to a new career is difficult and getting reemployed after a layoff is even tougher."
+        },
+        {
+          id: 14, section: "阅读", kind: "careful_reading", label: "仔细阅读", score: 10,
+          passageGroup: "cr-1", passageTitle: "Passage One", readingNo: 46, readingRange: [46, 50],
+          directions: "Directions: There are 2 passages in this section. Each passage is followed by some questions or unfinished statements. For each of them there are four choices marked A), B), C) and D). You should decide on the best choice and mark the corresponding letter on Answer Sheet 2 with a single line through the centre.",
+          passage: "New York's Eleven Madison Park is becoming a vegan (素食主义的) restaurant. The decision surprised many diners who knew the place for its rich meat and fish dishes. The chef said the change was about creativity and the future of fine dining, not a temporary experiment. Plant-based cooking, he argued, can still deliver the same sense of luxury that high-end guests expect.\n\nThe restaurant plans to rebuild its menu around vegetables, grains and creative culinary (烹饪的) techniques. Some long-time customers worry they will miss classic flavors, while others welcome the shift as a sign that top kitchens are taking sustainability more seriously. Industry watchers note that if a famous steakhouse-style destination can go fully plant-based, more restaurants may follow.",
+          stem: "What do we learn about New York's Eleven Madison Park?",
+          options: [
+            { key: "A", text: "It has been forced to close for renovation." },
+            { key: "B", text: "It is turning into a vegan fine-dining restaurant." },
+            { key: "C", text: "It will stop serving lunch to cut costs." },
+            { key: "D", text: "It plans to open more branches overseas." }
+          ]
+        },
+        {
+          id: 15, section: "阅读", kind: "careful_reading", label: "仔细阅读", score: 10,
+          passageGroup: "cr-1", passageTitle: "Passage One", readingNo: 47, readingRange: [46, 50],
+          directions: "Directions: There are 2 passages in this section. Each passage is followed by some questions or unfinished statements. For each of them there are four choices marked A), B), C) and D). You should decide on the best choice and mark the corresponding letter on Answer Sheet 2 with a single line through the centre.",
+          passage: "New York's Eleven Madison Park is becoming a vegan (素食主义的) restaurant. The decision surprised many diners who knew the place for its rich meat and fish dishes. The chef said the change was about creativity and the future of fine dining, not a temporary experiment. Plant-based cooking, he argued, can still deliver the same sense of luxury that high-end guests expect.\n\nThe restaurant plans to rebuild its menu around vegetables, grains and creative culinary (烹饪的) techniques. Some long-time customers worry they will miss classic flavors, while others welcome the shift as a sign that top kitchens are taking sustainability more seriously. Industry watchers note that if a famous steakhouse-style destination can go fully plant-based, more restaurants may follow.",
+          stem: "What is the chef's attitude toward plant-based fine dining?",
+          options: [
+            { key: "A", text: "It is only suitable for casual restaurants." },
+            { key: "B", text: "It cannot replace traditional luxury dining." },
+            { key: "C", text: "It can still offer creativity and a luxury experience." },
+            { key: "D", text: "It should focus mainly on price competition." }
+          ]
+        },
+        {
+          id: 16, section: "翻译", kind: "translation", label: "翻译题", score: 15,
+          stem: "请将下面的中文原文译成英语。",
+          source: "云顶咖啡是校内一家小型连锁门店。每周一，店长都会根据上一周的销售流水，整理一份运营分析周报，为上午的例会提供数据支持。请用准确、通顺的英语表达上述内容。"
+        },
+        {
+          id: 17, section: "写作", kind: "writing", label: "写作题", score: 15,
+          stem: "Directions: For this part, you are allowed 30 minutes to write an essay. You should write at least 120 words but no more than 180 words.",
+          material: "写作要求：请以 “The Value of a Weekly Operation Report” 为题，结合校园咖啡店运营场景，说明周报如何帮助团队发现问题、调整库存并服务例会决策。要求观点明确、结构完整、语言规范。"
+        }
+      ];
+
+      var CLOZE_OPTIONS = [
+        { key: "A", text: "analyze" }, { key: "B", text: "weekly" }, { key: "C", text: "inventory" },
+        { key: "D", text: "patterns" }, { key: "E", text: "support" }, { key: "F", text: "accurate" },
+        { key: "G", text: "meeting" }, { key: "H", text: "assistant" }, { key: "I", text: "sales" },
+        { key: "J", text: "reports" }, { key: "K", text: "concerns" }, { key: "L", text: "expansion" },
+        { key: "M", text: "inspired" }, { key: "N", text: "potential" }, { key: "O", text: "together" }
+      ];
+      QUESTIONS.forEach(function (q) {
+        if (q.clozeGroup === "bc-1") {
+          q.options = CLOZE_OPTIONS.slice();
+          q.wordBank = CLOZE_OPTIONS.map(function (o) { return { key: o.key, word: o.text }; });
+        }
+      });
+
+      var remain = 477 * 60 + 36;
+      var timerEl = document.getElementById("timer");
+      setInterval(function () {
+        if (remain > 0) remain -= 1;
+        var m = Math.floor(remain / 60);
+        var s = remain % 60;
+        timerEl.textContent = m + "分" + s + "秒";
+      }, 1000);
+
+      var current = 0;
+      var viewMode = "single";
+      var answers = {};
+      var marked = {};
+      var faved = {};
+      var activeBlank = {};
+      var mask = document.getElementById("mask");
+      var dialogText = document.getElementById("dialogText");
+      var dialogTitle = document.getElementById("dialogTitle");
+      var pending = null;
+      var toastEl = document.getElementById("toast");
+      var toastTimer = null;
+
+      function toast(msg) {
+        toastEl.textContent = msg;
+        toastEl.classList.remove("hidden");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () { toastEl.classList.add("hidden"); }, 1600);
+      }
+
+      function openDialog(title, text, onOk) {
+        dialogTitle.textContent = title;
+        dialogText.textContent = text;
+        pending = onOk;
+        mask.classList.remove("hidden");
+        mask.classList.add("flex");
+      }
+
+      function closeDialog() {
+        mask.classList.add("hidden");
+        mask.classList.remove("flex");
+        pending = null;
+      }
+
+      document.getElementById("dialogCancel").onclick = closeDialog;
+      document.getElementById("dialogOk").onclick = function () {
+        if (pending) pending();
+        closeDialog();
+      };
+      mask.addEventListener("click", function (e) {
+        if (e.target === mask) closeDialog();
+      });
+
+      function qTitle(q) {
+        if (q.kind === "banked_cloze" && q.blankNo) {
+          return q.blankNo + ". 【" + q.label + "·" + q.score + "分】";
+        }
+        if (q.kind === "matching" && q.matchNo) {
+          return q.matchNo + ". 【" + q.label + "·" + q.score + "分】";
+        }
+        if (q.kind === "careful_reading" && q.readingNo) {
+          return q.readingNo + ". 【" + q.label + "·" + q.score + "分】";
+        }
+        return q.id + ". 【" + q.label + "·" + q.score + "分】";
+      }
+
+      function getClozeAnswerMap(q) {
+        var map = {};
+        groupQuestions(q).forEach(function (sq) {
+          if (answers[sq.id]) map[sq.blankNo] = answers[sq.id];
+        });
+        return map;
+      }
+
+      function findClozeByBlank(groupQ, blankNo) {
+        var list = groupQuestions(groupQ);
+        for (var i = 0; i < list.length; i++) {
+          if (list[i].blankNo === blankNo) return list[i];
+        }
+        return null;
+      }
+
+      function isDone(q) {
+        var v = answers[q.id];
+        return !!(v && String(v).trim());
+      }
+
+      function doneCount() {
+        return QUESTIONS.filter(isDone).length;
+      }
+
+      function markCount() {
+        return Object.keys(marked).filter(function (k) { return marked[k]; }).length;
+      }
+
+      function indexByQid(qid) {
+        for (var i = 0; i < QUESTIONS.length; i++) {
+          if (QUESTIONS[i].id === qid) return i;
+        }
+        return -1;
+      }
+
+      function qPreview(q) {
+        if (q.stem) return q.stem;
+        if (q.kind === "banked_cloze") return "选词填空：为当前空格选择最佳选项";
+        return q.label;
+      }
+
+      function isParentChild(q) {
+        return !!(q.passageGroup || q.listenGroup || q.clozeGroup || q.matchGroup);
+      }
+
+      function qParentPreview(q) {
+        if (q.kind === "listening") {
+          var range = q.listenRange || [q.id, q.id];
+          return [q.directions, q.material,
+            "Questions " + range[0] + " to " + range[1] + " are based on the conversation you have just heard."
+          ].filter(Boolean).join("\n\n");
+        }
+        if (q.kind === "banked_cloze") {
+          var passage = (q.segments || []).map(function (seg) {
+            if (seg.type === "text") return seg.text;
+            return "____" + seg.no + "____";
+          }).join("");
+          return [q.directions, passage].filter(Boolean).join("\n\n");
+        }
+        if (q.kind === "matching") {
+          var paras = (q.paragraphs || []).map(function (p) {
+            return p.key + ". " + p.text;
+          }).join("\n\n");
+          return [q.directions, paras].filter(Boolean).join("\n\n");
+        }
+        if (q.kind === "careful_reading") {
+          return [q.directions, q.passageTitle || "Passage One", q.passage].filter(Boolean).join("\n\n");
+        }
+        return qPreview(q);
+      }
+
+      var audioState = {};
+      QUESTIONS.forEach(function (q) {
+        if (q.kind === "listening") {
+          audioState[q.id] = { playing: false, t: 0, duration: q.duration || 45 };
+        }
+      });
+
+      function headingBars() {
+        return '<div class="absolute -left-7 top-1 flex flex-col gap-[3px]"><span class="block h-[3px] w-6 rounded-sm bg-primary"></span><span class="block h-[3px] w-[18px] rounded-sm bg-primary"></span><span class="block h-[3px] w-3 rounded-sm bg-primary"></span></div>';
+      }
+
+      function fmtTime(sec) {
+        sec = Math.max(0, Math.floor(sec));
+        var m = Math.floor(sec / 60);
+        var s = sec % 60;
+        return (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+      }
+
+      function playerHtml(q) {
+        var st = audioState[q.id];
+        var pct = st.duration ? (st.t / st.duration) * 100 : 0;
+        return '<div class="mb-5 flex items-center gap-3 rounded border border-[#E6E6E6] bg-[#F7F9FC] px-4 py-3" data-player="' + q.id + '">' +
+          '<audio class="hidden" preload="none" src="' + q.audio + '"></audio>' +
+          '<button type="button" class="play-btn grid h-9 w-9 shrink-0 place-items-center rounded-full bg-primary text-white hover:bg-[#3374e8]" data-play="' + q.id + '">' +
+          '<svg class="icon-play h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>' +
+          '<svg class="icon-pause hidden h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>' +
+          "</button>" +
+          '<span class="cur-time w-10 shrink-0 text-[12px] text-[#888]">' + fmtTime(st.t) + "</span>" +
+          '<div class="progress-hit relative h-4 flex-1 cursor-pointer" data-seek="' + q.id + '">' +
+          '<div class="progress-track absolute left-0 right-0 top-1/2 -translate-y-1/2 overflow-hidden rounded-full">' +
+          '<div class="progress-fill" style="width:' + pct + '%"></div></div>' +
+          '<div class="progress-thumb absolute rounded-full" style="left:' + pct + '%"></div></div>' +
+          '<span class="dur-time w-10 shrink-0 text-right text-[12px] text-[#888]">' + fmtTime(st.duration) + "</span></div>";
+      }
+
+      function playerHtmlReadonly(q) {
+        var st = audioState[q.id];
+        var pct = st.duration ? (st.t / st.duration) * 100 : 0;
+        return '<div class="flex items-center gap-3 rounded border border-[#E6E6E6] bg-[#F7F9FC] px-4 py-3" data-player="' + q.id + '">' +
+          '<button type="button" class="play-btn grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary text-white hover:bg-[#3374e8]" data-play="' + q.id + '">' +
+          '<svg class="icon-play h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>' +
+          '<svg class="icon-pause hidden h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>' +
+          "</button>" +
+          '<span class="cur-time w-10 shrink-0 text-[12px] text-[#888]">' + fmtTime(st.t) + "</span>" +
+          '<div class="relative h-4 flex-1 select-none pointer-events-none">' +
+          '<div class="progress-track absolute left-0 right-0 top-1/2 -translate-y-1/2 overflow-hidden rounded-full">' +
+          '<div class="progress-fill" style="width:' + pct + '%"></div></div></div>' +
+          '<span class="dur-time w-10 shrink-0 text-right text-[12px] text-[#888]">' + fmtTime(st.duration) + "</span></div>";
+      }
+
+      function groupQuestions(q) {
+        if (q.passageGroup) {
+          return QUESTIONS.filter(function (x) { return x.passageGroup === q.passageGroup; });
+        }
+        if (q.listenGroup) {
+          return QUESTIONS.filter(function (x) { return x.listenGroup === q.listenGroup; });
+        }
+        if (q.clozeGroup) {
+          return QUESTIONS.filter(function (x) { return x.clozeGroup === q.clozeGroup; });
+        }
+        if (q.matchGroup) {
+          return QUESTIONS.filter(function (x) { return x.matchGroup === q.matchGroup; });
+        }
+        return [q];
+      }
+
+      function useSplitLayout(q) {
+        if (viewMode !== "single") return false;
+        return !!(q.passageGroup || q.listenGroup || q.clozeGroup || q.matchGroup);
+      }
+
+      var lastParentKey = "";
+      var splitRatio = 0.46;
+      var splitMinPx = 140;
+      var splitDragging = false;
+
+      function applySplitLayout() {
+        var area = document.getElementById("answerArea");
+        var panel = document.getElementById("parentPanel");
+        var divider = document.getElementById("splitDivider");
+        var q = QUESTIONS[current];
+        if (!useSplitLayout(q)) {
+          panel.classList.add("hidden");
+          divider.classList.add("hidden");
+          panel.style.height = "";
+          return;
+        }
+        panel.classList.remove("hidden");
+        divider.classList.remove("hidden");
+        var dividerH = divider.offsetHeight || 14;
+        var total = area.clientHeight - dividerH;
+        if (total <= splitMinPx * 2) return;
+        var parentH = Math.round(total * splitRatio);
+        parentH = Math.max(splitMinPx, Math.min(parentH, total - splitMinPx));
+        splitRatio = parentH / total;
+        panel.style.height = parentH + "px";
+      }
+
+      function initSplitDrag() {
+        var divider = document.getElementById("splitDivider");
+        function onMove(clientY) {
+          var area = document.getElementById("answerArea");
+          var panel = document.getElementById("parentPanel");
+          var rect = area.getBoundingClientRect();
+          var dividerH = divider.offsetHeight || 14;
+          var total = area.clientHeight - dividerH;
+          var y = clientY - rect.top;
+          var parentH = Math.max(splitMinPx, Math.min(y, total - splitMinPx));
+          splitRatio = parentH / total;
+          panel.style.height = parentH + "px";
+        }
+        divider.addEventListener("mousedown", function (e) {
+          if (divider.classList.contains("hidden")) return;
+          splitDragging = true;
+          divider.classList.add("is-dragging");
+          document.body.classList.add("is-split-dragging");
+          e.preventDefault();
+        });
+        document.addEventListener("mousemove", function (e) {
+          if (!splitDragging) return;
+          onMove(e.clientY);
+        });
+        document.addEventListener("mouseup", function () {
+          if (!splitDragging) return;
+          splitDragging = false;
+          divider.classList.remove("is-dragging");
+          document.body.classList.remove("is-split-dragging");
+        });
+        divider.addEventListener("touchstart", function (e) {
+          if (divider.classList.contains("hidden")) return;
+          splitDragging = true;
+          divider.classList.add("is-dragging");
+          document.body.classList.add("is-split-dragging");
+          e.preventDefault();
+        }, { passive: false });
+        document.addEventListener("touchmove", function (e) {
+          if (!splitDragging || !e.touches[0]) return;
+          onMove(e.touches[0].clientY);
+        }, { passive: false });
+        document.addEventListener("touchend", function () {
+          if (!splitDragging) return;
+          splitDragging = false;
+          divider.classList.remove("is-dragging");
+          document.body.classList.remove("is-split-dragging");
+        });
+        window.addEventListener("resize", function () {
+          if (useSplitLayout(QUESTIONS[current])) applySplitLayout();
+        });
+      }
+
+      function buildSubPills(subs) {
+        return subs.map(function (sq) {
+          var done = isDone(sq);
+          var active = QUESTIONS[current].id === sq.id;
+          var cls = "sub-q-pill grid h-8 min-w-[36px] place-items-center rounded border px-2 text-[13px] hover:bg-gray-50 ";
+          if (active) cls += "is-active";
+          else if (done) cls += "is-done";
+          else cls += "border-[#D9D9D9] text-[#333]";
+          var label = sq.blankNo || sq.id;
+          return '<button type="button" class="' + cls + '" data-sub-jump="' + sq.id + '">' + label + "</button>";
+        }).join("");
+      }
+
+      function bindSubPills(root) {
+        root.querySelectorAll("[data-sub-jump]").forEach(function (btn) {
+          btn.onclick = function () {
+            goTo(indexByQid(Number(btn.getAttribute("data-sub-jump"))));
+          };
+        });
+      }
+
+      function updateSubPillsOnly(q) {
+        var subs = groupQuestions(q);
+        var bar = document.getElementById("parentSubPills");
+        if (!bar || subs.length <= 1) return;
+        bar.innerHTML = buildSubPills(subs);
+        bindSubPills(bar);
+      }
+
+      function carefulReadingParentHtml(q) {
+        var range = q.readingRange || [q.readingNo || q.id, q.readingNo || q.id];
+        var paras = String(q.passage).split(/\n\n+/).map(function (p) {
+          return '<p class="mb-4 text-[15px] leading-[2] text-[#222]">' + p + "</p>";
+        }).join("");
+        return '<div class="relative flex min-h-0 flex-1 flex-col overflow-hidden px-8 py-4 md:px-10">' +
+          '<p class="shrink-0 text-[13px] italic leading-[1.85] text-[#666]">' + q.directions + "</p>" +
+          '<h2 class="mt-4 shrink-0 text-[18px] font-bold text-black">' + (q.passageTitle || "Passage One") + "</h2>" +
+          '<p class="mt-2 shrink-0 text-[13px] italic leading-[1.85] text-[#666]">Questions ' + range[0] +
+          " to " + range[1] + " are based on the following passage.</p>" +
+          '<div class="passage-scroll mt-4 min-h-0 flex-1 overflow-y-auto pr-1">' + paras + "</div></div>";
+      }
+
+      function readingOptionList(q) {
+        var html = '<div class="mt-4 space-y-3">';
+        q.options.forEach(function (opt) {
+          var on = answers[q.id] === opt.key;
+          html += '<label class="flex cursor-pointer items-center gap-3 text-[14px] text-[#333] hover:opacity-80" data-qid="' + q.id + '" data-key="' + opt.key + '">';
+          html += '<span class="cloze-opt-letter grid h-7 w-7 shrink-0 place-items-center rounded-full text-[13px] font-medium' + (on ? " is-on" : "") + '">' + opt.key + "</span>";
+          html += "<span>" + opt.text + "</span></label>";
+        });
+        return html + "</div>";
+      }
+
+      function carefulReadingChildBlock(q) {
+        var no = q.readingNo || q.id;
+        return '<div class="relative px-5 py-4 md:px-6 md:py-5">' +
+          '<div class="flex items-start justify-between gap-3">' +
+          '<p class="min-w-0 flex-1 text-[15px] font-semibold leading-[1.85] text-[#222]">' + no + ". " +
+          q.stem.replace(/^Question\s+\d+\.\s*/i, "").replace(/^\d+\.\s*/, "") + "</p></div>" +
+          readingOptionList(q) +
+          '<div class="mt-4 hidden justify-end gap-3 text-primary">' +
+          '<button type="button" class="grid h-8 w-8 place-items-center rounded hover:bg-white/70" title="标记" id="inlineMarkBtn">' +
+          '<svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M6 4h9a1 1 0 0 1 1 1v15l-5.5-3L5 20V5a1 1 0 0 1 1-1z"/></svg></button>' +
+          '<button type="button" class="grid h-8 w-8 place-items-center rounded hover:bg-white/70" title="收藏" id="inlineFavBtn">' +
+          '<svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.9 6.8 19.6l1-5.8L3.6 9.7l5.8-.8L12 3.6z"/></svg></button></div></div>';
+      }
+
+      function carefulReadingBlock(q) {
+        var isFirst = groupQuestions(q)[0].id === q.id;
+        var html = "";
+        if (isFirst || !q.passageGroup) {
+          html += carefulReadingParentHtml(q).replace('class="relative flex min-h-0 flex-1 flex-col overflow-hidden px-8 py-4 md:px-10"', 'class="relative px-0 py-0"')
+            .replace('passage-scroll mt-4 min-h-0 flex-1 overflow-y-auto pr-1', 'mt-4');
+        }
+        html += '<div class="mt-6">' + carefulReadingChildBlock(q) + "</div>";
+        return html;
+      }
+
+      function listeningParentHtml(q) {
+        var range = q.listenRange || [q.id, q.id];
+        var leader = groupQuestions(q)[0];
+        return '<div class="relative px-10 py-5">' +
+          playerHtmlReadonly(leader) +
+          '<div class="relative mt-5">' + headingBars() +
+          '<h1 class="text-[22px] font-bold leading-snug text-black">听力理解</h1></div>' +
+          '<p class="mt-3 text-[14px] leading-[1.9] text-[#555]">' + q.directions + "</p>" +
+          '<h2 class="mt-6 text-[18px] font-bold text-black">' + q.material + "</h2>" +
+          '<p class="mt-3 text-[14px] leading-[1.85] text-[#666]">Questions ' + range[0] + " to " + range[1] +
+          " are based on the conversation you have just heard.</p>" +
+          "</div>";
+      }
+
+      function listeningChildBlock(q) {
+        return '<p class="text-[15px] leading-[1.9] text-[#222]">' + q.stem + "</p>" +
+          optionList(q);
+      }
+
+      function clozePassageHtml(q) {
+        var map = getClozeAnswerMap(q);
+        var curBlank = q.blankNo;
+        return q.segments.map(function (seg) {
+          if (seg.type === "text") return seg.text;
+          var val = map[seg.no];
+          var cls = "cloze-blank";
+          if (curBlank === seg.no) cls += " is-active";
+          if (val) cls += " is-filled";
+          var wordItem = null;
+          if (val) {
+            for (var wi = 0; wi < q.wordBank.length; wi++) {
+              if (q.wordBank[wi].key === val) { wordItem = q.wordBank[wi]; break; }
+            }
+          }
+          var show = wordItem ? wordItem.word : String(seg.no);
+          return '<span class="' + cls + '" data-blank-jump="' + seg.no + '" title="空格 ' + seg.no + '">' + show + "</span>";
+        }).join("");
+      }
+
+      function bankedClozeParentHtml(q) {
+        return '<div class="relative flex min-h-0 flex-1 flex-col overflow-hidden px-8 py-4 md:px-10">' +
+          '<p class="shrink-0 text-[14px] leading-[1.85] text-[#555]"><span class="font-semibold text-[#333]">Directions: </span>' +
+          q.directions.replace(/^Section A\.\s*Directions:\s*/i, "") + "</p>" +
+          '<div class="passage-scroll mt-4 min-h-0 flex-1 overflow-y-auto pr-1">' +
+          '<p class="text-[15px] leading-[2.15] text-[#222]">' + clozePassageHtml(q) + "</p></div>" +
+          "</div>";
+      }
+
+      function clozeOptionGrid(q) {
+        var usedElsewhere = {};
+        groupQuestions(q).forEach(function (sq) {
+          if (sq.id !== q.id && answers[sq.id]) usedElsewhere[answers[sq.id]] = true;
+        });
+        var html = '<div class="grid grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">';
+        q.options.forEach(function (opt) {
+          var on = answers[q.id] === opt.key;
+          var used = usedElsewhere[opt.key];
+          var labCls = "inline-flex cursor-pointer items-center gap-2 text-[14px] text-[#333] hover:opacity-80";
+          if (used) labCls += " opacity-35";
+          html += '<label class="' + labCls + '" data-qid="' + q.id + '" data-key="' + opt.key + '">';
+          html += '<span class="cloze-opt-letter grid h-7 w-7 place-items-center rounded-full text-[13px] font-medium' + (on ? " is-on" : "") + '">' + opt.key + "</span>";
+          html += "<span>" + opt.text + "</span></label>";
+        });
+        return html + "</div>";
+      }
+
+      function bankedClozeChildBlock(q) {
+        return '<div class="px-5 py-4 md:px-6 md:py-5">' +
+          '<div class="mb-4">' +
+          '<span class="text-[16px] font-semibold text-[#333]">' + q.blankNo + ".</span></div>" +
+          clozeOptionGrid(q) +
+          "</div>";
+      }
+
+      function renderParentPanel() {
+        var panel = document.getElementById("parentPanel");
+        var inner = document.getElementById("parentPanelInner");
+        var q = QUESTIONS[current];
+        if (!useSplitLayout(q)) {
+          panel.classList.add("hidden");
+          document.getElementById("splitDivider").classList.add("hidden");
+          panel.style.height = "";
+          lastParentKey = "";
+          return;
+        }
+        panel.classList.remove("hidden");
+        document.getElementById("splitDivider").classList.remove("hidden");
+        var key = (q.passageGroup || q.listenGroup || q.clozeGroup || q.matchGroup || "") + ":" + q.kind;
+        var scrollEl = inner.querySelector(".passage-scroll");
+        var savedScroll = scrollEl ? scrollEl.scrollTop : 0;
+        if (q.kind === "careful_reading") {
+          if (key !== lastParentKey) {
+            inner.innerHTML = carefulReadingParentHtml(q);
+          } else {
+            lastParentKey = key;
+            applySplitLayout();
+            return;
+          }
+        } else if (q.kind === "listening") {
+          if (key !== lastParentKey) {
+            inner.innerHTML = listeningParentHtml(q);
+          } else {
+            updateSubPillsOnly(q);
+            syncPlayer(groupQuestions(q)[0].id);
+            lastParentKey = key;
+            applySplitLayout();
+            return;
+          }
+          syncPlayer(groupQuestions(q)[0].id);
+        } else if (q.kind === "banked_cloze") {
+          inner.innerHTML = bankedClozeParentHtml(q);
+        } else if (q.kind === "matching") {
+          if (key !== lastParentKey) {
+            inner.innerHTML = matchingParentHtml(q);
+          } else {
+            lastParentKey = key;
+            applySplitLayout();
+            return;
+          }
+        }
+        lastParentKey = key;
+        bindSubPills(inner);
+        scrollEl = inner.querySelector(".passage-scroll");
+        if (scrollEl) scrollEl.scrollTop = savedScroll;
+        applySplitLayout();
+      }
+
+      function optionList(q) {
+        var usedElsewhere = {};
+        if (q.clozeGroup) {
+          groupQuestions(q).forEach(function (sq) {
+            if (sq.id !== q.id && answers[sq.id]) usedElsewhere[answers[sq.id]] = true;
+          });
+        }
+        var html = '<div class="mt-5 space-y-1">';
+        q.options.forEach(function (opt) {
+          var on = answers[q.id] === opt.key ? " is-on" : "";
+          var used = usedElsewhere[opt.key];
+          var labCls = "flex cursor-pointer items-start gap-3 rounded px-2 py-2 hover:bg-[#F5F9FF]";
+          if (used) labCls += " opacity-40";
+          html += '<label class="' + labCls + '" data-qid="' + q.id + '" data-key="' + opt.key + '">';
+          html += '<span class="opt-dot mt-1 inline-block h-4 w-4 shrink-0 rounded-full bg-white' + on + '"></span>';
+          html += '<span class="text-[15px] leading-[1.9] text-[#222]">' + opt.key + ". " + opt.text + "</span>";
+          html += "</label>";
+        });
+        return html + "</div>";
+      }
+
+      function listeningBlock(q) {
+        return playerHtml(q) +
+          '<div class="relative">' + headingBars() + '<h1 class="text-[22px] font-bold leading-snug text-black">听力理解</h1></div>' +
+          '<p class="mt-3 text-[14px] leading-[1.9] text-[#555]">' + q.directions + "</p>" +
+          '<h2 class="mt-6 text-[18px] font-bold text-black">' + q.material + "</h2>" +
+          '<p class="mt-3 text-[15px] leading-[1.9] text-[#222]">' + q.stem + "</p>" +
+          optionList(q);
+      }
+
+      function matchingParentHtml(q) {
+        var paras = q.paragraphs.map(function (p) {
+          return '<div class="mb-4 text-[15px] leading-[1.95] text-[#222]"><span class="mr-1 font-bold text-[#222]">' +
+            p.key + ".</span><span>" + p.text + "</span></div>";
+        }).join("");
+        return '<div class="relative flex min-h-0 flex-1 flex-col overflow-hidden px-8 py-4 md:px-10">' +
+          '<p class="shrink-0 text-[14px] leading-[1.85] text-[#555]"><span class="font-semibold text-[#333]">Directions: </span>' +
+          q.directions.replace(/^Section B\.\s*Directions:\s*/i, "") + "</p>" +
+          '<div class="passage-scroll mt-4 min-h-0 flex-1 overflow-y-auto pr-1">' + paras + "</div></div>";
+      }
+
+      function matchingLetterBar(q) {
+        var picked = answers[q.id] || "";
+        var letters = q.paragraphs.map(function (p) {
+          var on = picked === p.key ? " is-on" : "";
+          return '<button type="button" class="match-letter grid h-8 w-8 place-items-center rounded-full text-[13px] font-medium hover:opacity-90' +
+            on + '" data-match-qid="' + q.id + '" data-match-key="' + p.key + '">' + p.key + "</button>";
+        }).join("");
+        return '<div class="match-letter-bar mt-3 flex flex-wrap items-center gap-2 rounded-lg px-0 py-2">' +
+          '<div class="flex min-w-0 flex-1 flex-wrap gap-2">' + letters + "</div></div>";
+      }
+
+      function matchingChildBlock(q) {
+        var no = q.matchNo || q.id;
+        return '<div class="px-1">' +
+          '<p class="text-[15px] font-semibold leading-[1.85] text-[#222]"><span class="mr-1">' + no + ".</span>" +
+          q.stem.replace(/^\d+\.\s*/, "") + "</p>" +
+          matchingLetterBar(q) +
+          "</div>";
+      }
+
+      function matchingBlock(q) {
+        var isFirst = groupQuestions(q)[0].id === q.id;
+        var html = "";
+        if (isFirst || !q.matchGroup) {
+          var paras = q.paragraphs.map(function (p) {
+            return '<div class="mb-3 text-[15px] leading-[1.9] text-[#222]"><span class="mr-1 font-bold">' + p.key + ".</span>" + p.text + "</div>";
+          }).join("");
+          html += '<div class="relative">' + headingBars() + '<h1 class="text-[22px] font-bold leading-snug text-black">信息匹配</h1></div>' +
+            '<p class="mt-3 text-[14px] leading-[1.9] text-[#555]">' + q.directions + "</p>" +
+            '<h2 class="mt-6 text-[18px] font-bold text-black">阅读原文</h2>' +
+            '<div class="mt-3">' + paras + "</div>";
+        }
+        html += '<div class="mt-6">' + matchingChildBlock(q) + "</div>";
+        return html;
+      }
+
+      function bankedClozeBlock(q) {
+        var map = getClozeAnswerMap(q);
+        var article = q.segments.map(function (seg) {
+          if (seg.type === "text") return seg.text;
+          var val = map[seg.no];
+          var cls = "blank-slot inline-block px-1 text-center align-baseline";
+          if (q.blankNo === seg.no) cls += " is-active";
+          if (val) cls += " is-filled";
+          var wordItem = null;
+          if (val) {
+            for (var wi = 0; wi < q.wordBank.length; wi++) {
+              if (q.wordBank[wi].key === val) { wordItem = q.wordBank[wi]; break; }
+            }
+          }
+          var show = wordItem ? val + " " + wordItem.word : seg.no;
+          return '<span class="' + cls + '">' + show + "</span>";
+        }).join("");
+        var isFirst = groupQuestions(q)[0].id === q.id;
+        var html = "";
+        if (isFirst) {
+          html += '<div class="relative">' + headingBars() + '<h1 class="text-[22px] font-bold leading-snug text-black">选词填空</h1></div>' +
+            '<p class="mt-3 text-[14px] leading-[1.9] text-[#555]">' + q.directions + "</p>" +
+            '<h2 class="mt-6 text-[18px] font-bold text-black">文章</h2>' +
+            '<p class="mt-3 text-[15px] leading-[2.1] text-[#222]">' + article + "</p>";
+        }
+        html += '<h2 class="mt-7 text-[18px] font-bold text-black">题目</h2>' +
+          '<p class="mt-3 text-[15px] leading-[1.9] text-[#222]">' + q.stem + "</p>" +
+          optionList(q);
+        return html;
+      }
+
+      function translationBlock(q) {
+        var val = answers[q.id] || "";
+        return '<div class="relative">' + headingBars() + '<h1 class="text-[22px] font-bold leading-snug text-black">翻译</h1></div>' +
+          '<p class="mt-3 text-[15px] leading-[1.9] text-[#222]">' + q.stem + "</p>" +
+          '<p class="mt-4 text-[15px] leading-[1.9] text-[#222]">' + q.source + "</p>" +
+          '<textarea data-qid="' + q.id + '" class="mt-5 min-h-[140px] w-full resize-y rounded border border-[#E6E6E6] px-3 py-2 text-[15px] leading-[1.9] text-[#222] outline-none" placeholder="请在此输入英文译文">' + val + "</textarea>";
+      }
+
+      function writingBlock(q) {
+        var val = answers[q.id] || "";
+        return '<div class="relative">' + headingBars() + '<h1 class="text-[22px] font-bold leading-snug text-black">写作</h1></div>' +
+          '<p class="mt-3 text-[15px] leading-[1.9] text-[#222]">' + q.stem + "</p>" +
+          '<p class="mt-4 text-[15px] leading-[1.9] text-[#222]">' + q.material + "</p>" +
+          '<textarea data-qid="' + q.id + '" class="mt-5 min-h-[220px] w-full resize-y rounded border border-[#E6E6E6] px-3 py-2 text-[15px] leading-[1.9] text-[#222] outline-none" placeholder="请在此输入作文">' + val + "</textarea>";
+      }
+
+      function innerBlock(q) {
+        if (useSplitLayout(q)) {
+          if (q.kind === "careful_reading") return carefulReadingChildBlock(q);
+          if (q.kind === "listening") return listeningChildBlock(q);
+          if (q.kind === "banked_cloze") return bankedClozeChildBlock(q);
+          if (q.kind === "matching") return matchingChildBlock(q);
+        }
+        if (q.kind === "listening") return listeningBlock(q);
+        if (q.kind === "careful_reading") return carefulReadingBlock(q);
+        if (q.kind === "matching") return matchingBlock(q);
+        if (q.kind === "banked_cloze") return bankedClozeBlock(q);
+        if (q.kind === "translation") return translationBlock(q);
+        return writingBlock(q);
+      }
+
+      function syncDomToAnswers() {
+        var list = document.querySelectorAll("#questionList textarea[data-qid]");
+        for (var i = 0; i < list.length; i++) {
+          var ta = list[i];
+          answers[Number(ta.getAttribute("data-qid"))] = ta.value;
+        }
+      }
+
+      function syncAllPlayers() {
+        QUESTIONS.forEach(function (q) {
+          if (q.kind === "listening") syncPlayer(q.id);
+        });
+      }
+
+      function updateModeButtons() {
+        var singleBtn = document.getElementById("modeSingle");
+        var fullBtn = document.getElementById("modeFull");
+        if (viewMode === "single") {
+          singleBtn.className = "mode-btn rounded px-3 py-1.5 bg-primary text-white";
+          fullBtn.className = "mode-btn rounded px-3 py-1.5 text-primary hover:bg-blue-50";
+        } else {
+          fullBtn.className = "mode-btn rounded px-3 py-1.5 bg-primary text-white";
+          singleBtn.className = "mode-btn rounded px-3 py-1.5 text-primary hover:bg-blue-50";
+        }
+      }
+
+      function scrollToQuestion(qid) {
+        var el = document.getElementById("qcard-" + qid);
+        var scroller = document.getElementById("questionScroll");
+        if (!el || !scroller) return;
+        scroller.scrollTo({ top: el.offsetTop - 8, behavior: "smooth" });
+      }
+
+      function renderQuestions() {
+        var box = document.getElementById("questionList");
+        box.innerHTML = QUESTIONS.map(function (q, i) {
+          var hidden = viewMode === "single" && i !== current ? " is-hidden" : "";
+          var split = useSplitLayout(q);
+          if (split) {
+            if (q.kind === "banked_cloze") {
+              return '<article id="qcard-' + q.id + '" class="q-card' + hidden + '">' +
+                '<div class="q-card-body px-5 pb-4 pt-1 md:px-8">' + innerBlock(q) + "</div>" +
+                "</article>";
+            }
+            if (q.kind === "matching") {
+              return '<article id="qcard-' + q.id + '" class="q-card' + hidden + '">' +
+                '<div class="q-card-body px-5 pb-5 pt-2 md:px-8">' + innerBlock(q) + "</div>" +
+                "</article>";
+            }
+            if (q.kind === "careful_reading") {
+              return '<article id="qcard-' + q.id + '" class="q-card' + hidden + '">' +
+                '<div class="q-card-body px-5 pb-5 pt-2 md:px-8">' + innerBlock(q) + "</div>" +
+                "</article>";
+            }
+            return '<article id="qcard-' + q.id + '" class="q-card' + hidden + '">' +
+              '<div class="px-10 pt-1 text-[13px] text-[#999]">' + qTitle(q) + "</div>" +
+              '<div class="q-card-body px-10 pb-5 pt-3">' + innerBlock(q) + "</div>" +
+              "</article>";
+          }
+          return '<article id="qcard-' + q.id + '" class="q-card pb-4' + hidden + '">' +
+            '<div class="px-5 pt-3 text-[14px] text-[#333]">' + qTitle(q) + "</div>" +
+            '<div class="mx-5 mt-2 rounded border border-[#E6E6E6] bg-white px-10 py-8">' + innerBlock(q) + "</div>" +
+            "</article>";
+        }).join("");
+        syncAllPlayers();
+        renderParentPanel();
+      }
+
+      function applyViewMode() {
+        var navBar = document.getElementById("navBar");
+        if (viewMode === "full") {
+          document.getElementById("parentPanel").classList.add("hidden");
+          document.getElementById("splitDivider").classList.add("hidden");
+          lastParentKey = "";
+          QUESTIONS.forEach(function (q) {
+            var el = document.getElementById("qcard-" + q.id);
+            if (el) el.classList.remove("is-hidden");
+          });
+          navBar.classList.add("hidden");
+        } else {
+          QUESTIONS.forEach(function (q, i) {
+            var el = document.getElementById("qcard-" + q.id);
+            if (!el) return;
+            if (i === current) el.classList.remove("is-hidden");
+            else el.classList.add("is-hidden");
+          });
+          navBar.classList.remove("hidden");
+          document.getElementById("prevBtn").style.opacity = current === 0 ? "0.55" : "1";
+          document.getElementById("nextBtn").style.opacity = current === QUESTIONS.length - 1 ? "0.55" : "1";
+        }
+        updateModeButtons();
+        renderSheet();
+        if (viewMode === "single") renderParentPanel();
+      }
+
+      function setViewMode(mode) {
+        if (viewMode === mode) return;
+        syncDomToAnswers();
+        pauseAllAudio();
+        viewMode = mode;
+        lastParentKey = "";
+        renderQuestions();
+        applyViewMode();
+        syncMini();
+        if (viewMode === "single") {
+          document.getElementById("questionScroll").scrollTop = 0;
+        } else {
+          scrollToQuestion(QUESTIONS[current].id);
+        }
+      }
+
+      function pauseAllAudio() {
+        QUESTIONS.forEach(function (q) {
+          if (audioState[q.id]) audioState[q.id].playing = false;
+        });
+      }
+
+      function syncPlayer(qid) {
+        var st = audioState[qid];
+        if (!st) return;
+        var root = document.querySelector('[data-player="' + qid + '"]');
+        if (!root) return;
+        var pct = st.duration ? Math.min(100, (st.t / st.duration) * 100) : 0;
+        root.querySelector(".cur-time").textContent = fmtTime(st.t);
+        root.querySelector(".dur-time").textContent = fmtTime(st.duration);
+        root.querySelector(".progress-fill").style.width = pct + "%";
+        var thumb = root.querySelector(".progress-thumb");
+        if (thumb) thumb.style.left = pct + "%";
+        root.querySelector(".icon-play").classList.toggle("hidden", st.playing);
+        root.querySelector(".icon-pause").classList.toggle("hidden", !st.playing);
+      }
+
+      function showOnlyCurrent() {
+        if (viewMode === "full") return;
+        QUESTIONS.forEach(function (q, i) {
+          var el = document.getElementById("qcard-" + q.id);
+          if (!el) return;
+          if (i === current) el.classList.remove("is-hidden");
+          else el.classList.add("is-hidden");
+        });
+        document.getElementById("prevBtn").style.opacity = current === 0 ? "0.55" : "1";
+        document.getElementById("nextBtn").style.opacity = current === QUESTIONS.length - 1 ? "0.55" : "1";
+        renderParentPanel();
+      }
+
+      function sheetSectionName(q) {
+        if (q.kind === "listening") return "听力";
+        if (q.kind === "banked_cloze") return "Section A 选词填空";
+        if (q.kind === "matching") return "Section B 信息匹配";
+        if (q.kind === "careful_reading") return "Section C 篇章阅读";
+        if (q.kind === "translation") return "翻译";
+        if (q.kind === "writing") return "写作";
+        return q.section || q.label;
+      }
+
+      function renderSheet() {
+        var groupMap = {};
+        var groupOrder = [];
+        QUESTIONS.forEach(function (q) {
+          var name = sheetSectionName(q);
+          if (!groupMap[name]) {
+            groupMap[name] = { name: name, items: [] };
+            groupOrder.push(name);
+          }
+          groupMap[name].items.push(q);
+        });
+        var preferred = ["写作", "听力", "Section A 选词填空", "Section B 信息匹配", "Section C 篇章阅读", "翻译"];
+        var groups = [];
+        preferred.forEach(function (name) {
+          if (groupMap[name]) groups.push(groupMap[name]);
+        });
+        groupOrder.forEach(function (name) {
+          if (preferred.indexOf(name) < 0 && groupMap[name]) groups.push(groupMap[name]);
+        });
+        document.getElementById("sheetGroups").innerHTML = groups.map(function (g) {
+          var btns = g.items.map(function (q) {
+            var done = isDone(q);
+            var cur = QUESTIONS[current].id === q.id;
+            var cls = "sheet-num relative grid h-8 w-8 place-items-center rounded-full text-[13px] hover:opacity-90 ";
+            if (done) cls += "is-done";
+            if (cur) cls += " is-cur";
+            var dot = marked[q.id] ? '<span class="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-[#E85D5D]"></span>' : "";
+            return '<button type="button" data-jump="' + q.id + '" class="' + cls + '">' + (q.blankNo || q.matchNo || q.readingNo || q.id) + dot + "</button>";
+          }).join("");
+          return '<div class="mb-1">' +
+            '<div class="sheet-sec-bar flex items-center gap-2 px-4 py-2 text-[13px] font-semibold text-[#333]">' +
+            g.name + ' <span class="font-normal text-[#999]">共' + g.items.length + "题</span></div>" +
+            '<div class="grid grid-cols-5 gap-2 px-4 py-3">' + btns + "</div></div>";
+        }).join("");
+        document.getElementById("sheetProgress").textContent = doneCount() + "/" + QUESTIONS.length;
+      }
+
+      function syncMini() {
+        var q = QUESTIONS[current];
+        document.getElementById("miniWinTitle").textContent = qTitle(q);
+        document.getElementById("miniWinBody").textContent = isParentChild(q) ? qParentPreview(q) : qPreview(q);
+        var icon = document.getElementById("favIcon");
+        icon.setAttribute("fill", faved[q.id] ? "currentColor" : "none");
+      }
+
+      function refreshQuestionCard(qid) {
+        var q = null;
+        for (var qi = 0; qi < QUESTIONS.length; qi++) {
+          if (QUESTIONS[qi].id === qid) { q = QUESTIONS[qi]; break; }
+        }
+        if (!q) return;
+        var card = document.getElementById("qcard-" + qid);
+        if (!card) return;
+        var body = card.querySelector(".q-card-body");
+        if (body) body.innerHTML = innerBlock(q);
+        else card.querySelector(".mx-5.mt-2").innerHTML = innerBlock(q);
+        if (q.kind === "listening") syncPlayer(q.id);
+        if (useSplitLayout(q)) {
+          renderParentPanel();
+          updateSubPillsOnly(q);
+        }
+      }
+
+      function goTo(index, focusAnswer) {
+        if (index < 0 || index >= QUESTIONS.length) return;
+        syncDomToAnswers();
+        if (viewMode === "full") {
+          current = index;
+          scrollToQuestion(QUESTIONS[current].id);
+          renderSheet();
+          syncMini();
+          return;
+        }
+        pauseAllAudio();
+        var prev = QUESTIONS[current];
+        if (prev && prev.kind === "listening") syncPlayer(prev.id);
+        current = index;
+        showOnlyCurrent();
+        renderSheet();
+        syncMini();
+        renderParentPanel();
+        document.getElementById("questionScroll").scrollTop = 0;
+        if (focusAnswer) {
+          var card = document.getElementById("qcard-" + QUESTIONS[current].id);
+          var field = card.querySelector("textarea") || card.querySelector("label") || card.querySelector(".blank-slot");
+          if (field) field.focus();
+        }
+      }
+
+      renderQuestions();
+      applyViewMode();
+      syncMini();
+      initSplitDrag();
+
+      setInterval(function () {
+        QUESTIONS.forEach(function (q) {
+          if (q.kind !== "listening") return;
+          var st = audioState[q.id];
+          if (!st || !st.playing) return;
+          st.t = Math.min(st.t + 0.2, st.duration);
+          if (st.t >= st.duration) st.playing = false;
+          syncPlayer(q.id);
+        });
+      }, 200);
+
+      document.getElementById("modeSingle").onclick = function () { setViewMode("single"); };
+      document.getElementById("modeFull").onclick = function () { setViewMode("full"); };
+
+      document.getElementById("questionList").addEventListener("click", function (e) {
+        handleQuestionAreaClick(e);
+      });
+      document.getElementById("parentPanel").addEventListener("click", function (e) {
+        handleQuestionAreaClick(e);
+      });
+
+      function handleQuestionAreaClick(e) {
+        var playBtn = e.target.closest("[data-play]");
+        if (playBtn) {
+          var pid = Number(playBtn.getAttribute("data-play"));
+          var st = audioState[pid];
+          if (!st.playing) {
+            QUESTIONS.forEach(function (q) {
+              if (q.kind === "listening" && q.id !== pid && audioState[q.id]) {
+                audioState[q.id].playing = false;
+                syncPlayer(q.id);
+              }
+            });
+          }
+          st.playing = !st.playing;
+          if (st.t >= st.duration) st.t = 0;
+          syncPlayer(pid);
+          return;
+        }
+        var seek = e.target.closest("[data-seek]");
+        if (seek) {
+          var sid = Number(seek.getAttribute("data-seek"));
+          var st2 = audioState[sid];
+          var rect = seek.getBoundingClientRect();
+          var ratio = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
+          st2.t = ratio * st2.duration;
+          syncPlayer(sid);
+          return;
+        }
+        var inlineMark = e.target.closest("#inlineMarkBtn");
+        if (inlineMark) {
+          var mid = QUESTIONS[current].id;
+          marked[mid] = !marked[mid];
+          renderSheet();
+          toast(marked[mid] ? "已标记本题" : "已取消标记");
+          return;
+        }
+        var inlineFav = e.target.closest("#inlineFavBtn");
+        if (inlineFav) {
+          var fid = QUESTIONS[current].id;
+          faved[fid] = !faved[fid];
+          syncMini();
+          toast(faved[fid] ? "已收藏本题" : "已取消收藏");
+          return;
+        }
+        var blankJump = e.target.closest("[data-blank-jump]");
+        if (blankJump) {
+          var jumpNo = Number(blankJump.getAttribute("data-blank-jump"));
+          var curQ = QUESTIONS[current];
+          var target = findClozeByBlank(curQ, jumpNo);
+          if (target) goTo(indexByQid(target.id));
+          return;
+        }
+        var matchBtn = e.target.closest("[data-match-key]");
+        if (matchBtn) {
+          var mqid = Number(matchBtn.getAttribute("data-match-qid"));
+          var mkey = matchBtn.getAttribute("data-match-key");
+          answers[mqid] = mkey;
+          refreshQuestionCard(mqid);
+          renderSheet();
+          syncMini();
+          return;
+        }
+        var lab = e.target.closest("label[data-qid]");
+        if (!lab) return;
+        var qid = Number(lab.getAttribute("data-qid"));
+        var picked = lab.getAttribute("data-key");
+        var ansQ = null;
+        for (var qi = 0; qi < QUESTIONS.length; qi++) {
+          if (QUESTIONS[qi].id === qid) { ansQ = QUESTIONS[qi]; break; }
+        }
+        if (ansQ && ansQ.clozeGroup) {
+          groupQuestions(ansQ).forEach(function (sq) {
+            if (sq.id !== qid && answers[sq.id] === picked) delete answers[sq.id];
+          });
+        }
+        answers[qid] = picked;
+        var card = document.getElementById("qcard-" + qid);
+        if (card) {
+          card.querySelectorAll(".opt-dot").forEach(function (dot) { dot.classList.remove("is-on"); });
+          card.querySelectorAll(".cloze-opt-letter").forEach(function (dot) { dot.classList.remove("is-on"); });
+          var optDot = lab.querySelector(".opt-dot");
+          var clozeDot = lab.querySelector(".cloze-opt-letter");
+          if (optDot) optDot.classList.add("is-on");
+          if (clozeDot) clozeDot.classList.add("is-on");
+        }
+        if (ansQ && ansQ.clozeGroup) {
+          groupQuestions(ansQ).forEach(function (sq) {
+            if (sq.id !== qid) refreshQuestionCard(sq.id);
+          });
+          lastParentKey = "";
+          renderParentPanel();
+          refreshQuestionCard(qid);
+        }
+        renderSheet();
+        syncMini();
+        if (useSplitLayout(QUESTIONS[current])) updateSubPillsOnly(QUESTIONS[current]);
+      }
+
+      document.getElementById("questionList").addEventListener("input", function (e) {
+        if (e.target.tagName !== "TEXTAREA") return;
+        var qid = Number(e.target.getAttribute("data-qid"));
+        answers[qid] = e.target.value;
+        renderSheet();
+        syncMini();
+      });
+
+      document.getElementById("sheetGroups").addEventListener("click", function (e) {
+        var btn = e.target.closest("button[data-jump]");
+        if (!btn) return;
+        var qid = Number(btn.getAttribute("data-jump"));
+        goTo(indexByQid(qid));
+      });
+
+      document.getElementById("prevBtn").onclick = function () {
+        if (viewMode !== "single") return;
+        if (current <= 0) { toast("已经是第一题"); return; }
+        goTo(current - 1);
+      };
+      document.getElementById("nextBtn").onclick = function () {
+        if (viewMode !== "single") return;
+        if (current >= QUESTIONS.length - 1) { toast("已经是最后一题"); return; }
+        goTo(current + 1);
+      };
+
+      document.getElementById("miniWinBtn").onclick = function () {
+        document.getElementById("miniWin").classList.toggle("hidden");
+      };
+      document.getElementById("closeMiniWin").onclick = function () {
+        document.getElementById("miniWin").classList.add("hidden");
+      };
+
+      document.getElementById("markBtn").onclick = function () {
+        var id = QUESTIONS[current].id;
+        marked[id] = !marked[id];
+        renderSheet();
+        toast(marked[id] ? "已标记本题" : "已取消标记");
+      };
+
+      document.getElementById("favBtn").onclick = function () {
+        var id = QUESTIONS[current].id;
+        faved[id] = !faved[id];
+        syncMini();
+        toast(faved[id] ? "已收藏本题" : "已取消收藏");
+      };
+
+      document.getElementById("submitBtn").onclick = function () {
+        openDialog("提交考卷", "确认提交考卷？提交后将无法继续作答。", function () {
+          window.location.href = "cet-score-detail.html";
+        });
+      };
+
+      document.getElementById("exitBtn").onclick = function () {
+        openDialog("退出考场", "确认退出考场？未提交的作答可能不会保存。", function () {
+          toast("已退出考场（演示）");
+        });
+      };
+
+      document.getElementById("tipBtn").onclick = function () {
+        toast("方案二：选词填空上半篇章、下半选项；听力/仔细阅读同为子母题分屏");
+      };
+    })();
+  </script>
+</body>
+</html>

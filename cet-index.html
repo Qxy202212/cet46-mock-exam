@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>四六级模考原型入口</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            header: "#2B7DE9",
+            primary: "#3F80F4",
+            page: "#F2F3F5",
+            ink: "#333333",
+          },
+          boxShadow: { card: "0 1px 4px rgba(0,0,0,.06)" },
+        },
+      },
+    };
+  </script>
+  <style>
+    html, body { height: 100%; }
+    body { font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif; }
+    .entry-card { transition: border-color .15s, box-shadow .15s, transform .15s; }
+    .entry-card:hover { border-color: #9EC4F8; box-shadow: 0 8px 24px rgba(63,128,244,.08); transform: translateY(-1px); }
+  </style>
+</head>
+<body class="flex min-h-screen flex-col bg-page text-ink">
+  <header class="flex h-14 shrink-0 items-center bg-header px-5 text-white">
+    <svg class="h-8 w-8 shrink-0" viewBox="0 0 32 32" fill="none">
+      <path d="M4 7.2h7.1l4.9 17.6H9.2L4 7.2z" fill="#fff" opacity=".95"/>
+      <path d="M12.2 7.2h7.4L24.8 24.8h-7.1L12.2 7.2z" fill="#fff" opacity=".75"/>
+      <path d="M20.6 7.2H28L23.2 24.8h-7.2L20.6 7.2z" fill="#fff"/>
+    </svg>
+    <div class="ml-2 leading-tight">
+      <div class="text-[15px] font-semibold">WPS 教学平台</div>
+      <div class="text-[11px] text-white/85">四六级模考原型入口</div>
+    </div>
+  </header>
+
+  <main class="mx-auto flex w-full max-w-[1080px] flex-1 flex-col px-6 py-10">
+    <div>
+      <h1 class="text-[22px] font-bold">2026年英语四级考试真题一</h1>
+      <p class="mt-2 text-[13px] text-[#888]">17 题 · 满分 79 · 及格 48 · 写作 / 听力 / 阅读 / 翻译</p>
+    </div>
+
+    <div class="mt-4 flex items-center gap-2 text-[13px] text-[#999]">
+      <span>推荐路径</span>
+      <span class="text-[#D0D0D0]">·</span>
+      <span>试卷详情</span>
+      <span class="text-[#D0D0D0]">→</span>
+      <span>考场作答</span>
+      <span class="text-[#D0D0D0]">→</span>
+      <span>成绩详情</span>
+    </div>
+
+    <section class="mt-8 grid gap-4 md:grid-cols-3">
+      <a href="cet-paper-preview.html" class="entry-card flex flex-col rounded-lg border border-transparent bg-white p-6 shadow-card">
+        <div class="flex h-9 w-9 items-center justify-center rounded-md bg-[#EBF3FF] text-[13px] font-semibold text-primary">01</div>
+        <h2 class="mt-5 text-[17px] font-medium">试卷详情</h2>
+        <p class="mt-2 flex-1 text-[13px] leading-6 text-[#888]">只读整卷预览。按写作 → 听力 → 阅读 → 翻译展开，右侧试卷结构可跳转题号。</p>
+        <span class="mt-6 inline-flex items-center text-[13px] text-primary">打开页面
+          <svg class="ml-1 h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+
+      <a href="wps-exam-ai-weekly-v2.html" class="entry-card flex flex-col rounded-lg border border-transparent bg-white p-6 shadow-card">
+        <div class="flex h-9 w-9 items-center justify-center rounded-md bg-[#EBF3FF] text-[13px] font-semibold text-primary">02</div>
+        <h2 class="mt-5 text-[17px] font-medium">考场作答</h2>
+        <p class="mt-2 flex-1 text-[13px] leading-6 text-[#888]">模考试室。支持单题分屏与整卷模式，含听力、选词填空、信息匹配、仔细阅读、翻译、写作。</p>
+        <span class="mt-6 inline-flex items-center text-[13px] text-primary">进入考场
+          <svg class="ml-1 h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+
+      <a href="cet-score-detail.html" class="entry-card flex flex-col rounded-lg border border-transparent bg-white p-6 shadow-card">
+        <div class="flex h-9 w-9 items-center justify-center rounded-md bg-[#EBF3FF] text-[13px] font-semibold text-primary">03</div>
+        <h2 class="mt-5 text-[17px] font-medium">成绩详情</h2>
+        <p class="mt-2 flex-1 text-[13px] leading-6 text-[#888]">交卷后的得分总览。圆环总分、四项分卡、逐题得分表，点击题目查看解析抽屉。</p>
+        <span class="mt-6 inline-flex items-center text-[13px] text-primary">查看成绩
+          <svg class="ml-1 h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+    </section>
+  </main>
+</body>
+</html>

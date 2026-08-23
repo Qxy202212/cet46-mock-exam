@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>试卷详情 · 2026年英语四级考试真题一</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#3F80F4",
+            page: "#F2F3F5",
+            ink: "#333333",
+          },
+          boxShadow: { card: "0 1px 4px rgba(0,0,0,.06)" },
+        },
+      },
+    };
+  </script>
+  <style>
+    html, body { height: 100%; }
+    body { font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif; }
+    .paper-scroll::-webkit-scrollbar { width: 8px; }
+    .paper-scroll::-webkit-scrollbar-thumb { background: #D8D8D8; border-radius: 4px; }
+    .nav-num {
+      display: grid; place-items: center; width: 36px; height: 36px;
+      border: 1px solid #E6E6E6; border-radius: 4px; background: #fff;
+      font-size: 13px; color: #333; cursor: pointer;
+    }
+    .nav-num:hover { border-color: #3F80F4; color: #3F80F4; }
+    .nav-num.is-on { border-color: #3F80F4; background: #F5F9FF; color: #3F80F4; }
+    .q-block.is-flash { background: #F5F9FF; }
+    .blank-no {
+      display: inline-block; min-width: 42px; margin: 0 2px; padding: 0 2px;
+      border-bottom: 1.5px solid #333; text-align: center; font-weight: 600; color: #666;
+    }
+    .blank-no.is-on { background: #EBF3FF; color: #3F80F4; border-color: #3F80F4; }
+    .opt-dot { box-shadow: inset 0 0 0 1px #C5C5C5; }
+  </style>
+</head>
+<body class="flex h-screen flex-col overflow-hidden bg-page text-ink">
+  <header class="flex h-12 shrink-0 items-center justify-between bg-white px-5 shadow-[0_1px_0_#EEE]">
+    <div class="flex items-center gap-3">
+      <a href="cet-index.html" class="text-[13px] text-[#888] hover:text-primary">原型入口</a>
+      <h1 class="text-[16px] font-medium">试卷详情</h1>
+    </div>
+    <a href="cet-index.html" class="grid h-8 w-8 place-items-center rounded text-[#999] hover:bg-gray-50 hover:text-[#666]" title="关闭">
+      <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </a>
+  </header>
+
+  <main class="flex min-h-0 flex-1 gap-4 p-4">
+    <section id="paperScroll" class="paper-scroll min-w-0 flex-1 overflow-auto rounded-lg bg-white px-14 py-12 shadow-card">
+      <h2 class="text-center text-[22px] font-bold leading-snug">2026年英语四级考试真题一</h2>
+      <p class="mt-3 text-center text-[13px] text-[#999]">
+        总分: 79&nbsp;&nbsp;&nbsp;题数: 17&nbsp;&nbsp;&nbsp;及格分: 48
+      </p>
+
+      <div id="paperBody" class="mt-12"></div>
+    </section>
+
+    <aside class="flex w-[300px] shrink-0 flex-col overflow-auto rounded-lg bg-white px-5 py-5 shadow-card">
+      <div class="mb-4 flex items-center gap-1.5">
+        <span class="text-[15px] font-medium">试卷结构</span>
+        <span class="grid h-4 w-4 place-items-center rounded-full border border-[#D0D0D0] text-[10px] text-[#999]" title="点击题号可跳转到对应题目">?</span>
+      </div>
+      <div id="structNav"></div>
+    </aside>
+  </main>
+
+  <script>
+    (function () {
+      var CLOZE_BANK = [
+        { key: "A", word: "analyze" }, { key: "B", word: "weekly" }, { key: "C", word: "inventory" },
+        { key: "D", word: "patterns" }, { key: "E", word: "support" }, { key: "F", word: "accurate" },
+        { key: "G", word: "meeting" }, { key: "H", word: "assistant" }, { key: "I", word: "sales" },
+        { key: "J", word: "reports" }, { key: "K", word: "concerns" }, { key: "L", word: "expansion" },
+        { key: "M", word: "inspired" }, { key: "N", word: "potential" }, { key: "O", word: "together" }
+      ];
+      var CLOZE_SEGS = [
+        { type: "text", text: "Every Monday, the shop " }, { type: "blank", no: 26 },
+        { type: "text", text: " prepares a " }, { type: "blank", no: 27 },
+        { type: "text", text: " operation report. The " }, { type: "blank", no: 28 },
+        { type: "text", text: " manager uses WPS AI to " }, { type: "blank", no: 29 },
+        { type: "text", text: " last week's " }, { type: "blank", no: 30 },
+        { type: "text", text: " data and find buying " }, { type: "blank", no: 31 },
+        { type: "text", text: ". The report provides " }, { type: "blank", no: 32 },
+        { type: "text", text: " for the morning " }, { type: "blank", no: 33 },
+        { type: "text", text: " and helps adjust " }, { type: "blank", no: 34 },
+        { type: "text", text: " before the next busy week." }
+      ];
+      var MATCH_PARAS = [
+        { key: "A", text: "Many employers still prefer candidates with recent workplace experience. They worry that long gaps on a résumé signal outdated skills, especially when technology changes rapidly across industries." },
+        { key: "B", text: "Career counselors often advise older job seekers to rewrite their CVs around achievements rather than years of service. Clear results help hiring teams see value beyond age." },
+        { key: "C", text: "Some companies have introduced reverse mentoring, pairing senior staff with younger employees who teach digital tools while learning leadership lessons in return." },
+        { key: "D", text: "Government programs in several countries now subsidize mid-career training. The goal is to keep experienced workers productive instead of pushing them into early retirement." },
+        { key: "E", text: "Recruiters admit that automated screening systems sometimes reject résumés with graduation years that look \"too old,\" even when the applicant is highly qualified." },
+        { key: "F", text: "Flexible work arrangements can help people over 45 re-enter the labor market. Part-time roles and project-based contracts lower the risk for both sides." },
+        { key: "G", text: "After a layoff, finding a similar job can take months. Changing fields entirely is harder still, because employers may question whether the applicant can adapt quickly enough." },
+        { key: "H", text: "Professional networks matter more with age. Referrals from former colleagues often open doors that online applications alone cannot." },
+        { key: "I", text: "Hiring managers say that when they look at applicants who have been out of work for a while, especially those over 45, they often assume those candidates need more training than younger applicants. They also tend to believe older unemployed workers are less adaptable. Some managers argue that government subsidies for retraining would help, while others prefer industry-backed certificates that prove real workplace skills." },
+        { key: "J", text: "Learning new skills after 45 is possible, but not everyone joins training programs. Studies show that people from lower-income communities are less likely to enroll, even when courses are free. Those who feel least confident about returning to study are often the ones who need support the most." },
+        { key: "K", text: "A recent survey found that many employers value work experience more than a \"perfect\" degree. Candidates who can demonstrate practical problem-solving often beat applicants with stronger academic records but little real-world practice." },
+        { key: "L", text: "Ageism remains a barrier. At the same time, inexpensive or free training is widely available on platforms such as Udemy, Lynda.com and YouTube, making it easier for motivated learners to update skills without large tuition fees." },
+        { key: "M", text: "Switching careers after 45 is difficult, and getting reemployed after a layoff can be even tougher. Still, continuous learning helps people stay employable, and society benefits when experienced workers remain in the labor force." }
+      ];
+      var CAREFUL_PASSAGE = "New York's Eleven Madison Park is becoming a vegan (素食主义的) restaurant. The decision surprised many diners who knew the place for its rich meat and fish dishes. The chef said the change was about creativity and the future of fine dining, not a temporary experiment. Plant-based cooking, he argued, can still deliver the same sense of luxury that high-end guests expect.\n\nThe restaurant plans to rebuild its menu around vegetables, grains and creative culinary (烹饪的) techniques. Some long-time customers worry they will miss classic flavors, while others welcome the shift as a sign that top kitchens are taking sustainability more seriously. Industry watchers note that if a famous steakhouse-style destination can go fully plant-based, more restaurants may follow.";
+
+      var ITEMS = [
+        { no: 1, group: "writing", kind: "writing", score: 15, label: "写作题",
+          stem: "Directions: For this part, you are allowed 30 minutes to write an essay. You should write at least 120 words but no more than 180 words.",
+          material: "写作要求：请以 “The Value of a Weekly Operation Report” 为题，结合校园咖啡店运营场景，说明周报如何帮助团队发现问题、调整库存并服务例会决策。要求观点明确、结构完整、语言规范。" },
+        { no: 2, group: "listening", kind: "listening", score: 5, label: "听力题", cetNo: 1,
+          stem: "Question 1. What does the woman mean?",
+          options: [
+            { key: "A", text: "She will finish the report after class." },
+            { key: "B", text: "She has already submitted the assignment." },
+            { key: "C", text: "She needs more time to collect the data." },
+            { key: "D", text: "She is not going to attend the meeting." }
+          ] },
+        { no: 3, group: "listening", kind: "listening", score: 5, label: "听力题", cetNo: 2,
+          stem: "Question 2. What will the man probably do next?",
+          options: [
+            { key: "A", text: "Call the professor immediately." },
+            { key: "B", text: "Share his notes with the woman." },
+            { key: "C", text: "Cancel the group discussion." },
+            { key: "D", text: "Wait for the library to open." }
+          ] },
+        { no: 4, group: "cloze", kind: "cloze", score: 1, label: "选词填空", blankNo: 26 },
+        { no: 5, group: "cloze", kind: "cloze", score: 1, label: "选词填空", blankNo: 27 },
+        { no: 6, group: "cloze", kind: "cloze", score: 1, label: "选词填空", blankNo: 28 },
+        { no: 7, group: "cloze", kind: "cloze", score: 1, label: "选词填空", blankNo: 29 },
+        { no: 8, group: "cloze", kind: "cloze", score: 1, label: "选词填空", blankNo: 30 },
+        { no: 9, group: "cloze", kind: "cloze", score: 1, label: "选词填空", blankNo: 31 },
+        { no: 10, group: "cloze", kind: "cloze", score: 1, label: "选词填空", blankNo: 32 },
+        { no: 11, group: "cloze", kind: "cloze", score: 1, label: "选词填空", blankNo: 33 },
+        { no: 12, group: "cloze", kind: "cloze", score: 1, label: "选词填空", blankNo: 34 },
+        { no: 13, group: "matching", kind: "matching", score: 5, label: "信息匹配", cetNo: 36,
+          stem: "Hiring managers believe unemployed workers over 45 lack good skills and are less adaptable." },
+        { no: 14, group: "matching", kind: "matching", score: 5, label: "信息匹配", cetNo: 37,
+          stem: "Switching to a new career is difficult and getting reemployed after a layoff is even tougher." },
+        { no: 15, group: "careful", kind: "careful", score: 10, label: "仔细阅读", cetNo: 46,
+          stem: "What do we learn about New York's Eleven Madison Park?",
+          options: [
+            { key: "A", text: "It has been forced to close for renovation." },
+            { key: "B", text: "It is turning into a vegan fine-dining restaurant." },
+            { key: "C", text: "It will stop serving lunch to cut costs." },
+            { key: "D", text: "It plans to open more branches overseas." }
+          ] },
+        { no: 16, group: "careful", kind: "careful", score: 10, label: "仔细阅读", cetNo: 47,
+          stem: "What is the chef's attitude toward plant-based fine dining?",
+          options: [
+            { key: "A", text: "It is only suitable for casual restaurants." },
+            { key: "B", text: "It cannot replace traditional luxury dining." },
+            { key: "C", text: "It can still offer creativity and a luxury experience." },
+            { key: "D", text: "It should focus mainly on price competition." }
+          ] },
+        { no: 17, group: "translation", kind: "translation", score: 15, label: "翻译题",
+          stem: "请将下面的中文原文译成英语。",
+          source: "云顶咖啡是校内一家小型连锁门店。每周一，店长都会根据上一周的销售流水，整理一份运营分析周报，为上午的例会提供数据支持。请用准确、通顺的英语表达上述内容。" }
+      ];
+
+      var GROUPS = [
+        { key: "writing", title: "写作", heading: "一、写作", extra: "" },
+        { key: "listening", title: "听力", heading: "二、听力理解", extra: "" },
+        { key: "cloze", title: "选词填空", heading: "三、阅读理解", extra: "Section A 选词填空" },
+        { key: "matching", title: "信息匹配", heading: "", extra: "Section B 信息匹配" },
+        { key: "careful", title: "仔细阅读", heading: "", extra: "Section C 仔细阅读" },
+        { key: "translation", title: "翻译", heading: "四、翻译", extra: "" }
+      ];
+
+      function esc(s) {
+        return String(s == null ? "" : s)
+          .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      }
+
+      function itemsOf(key) {
+        return ITEMS.filter(function (it) { return it.group === key; });
+      }
+
+      function groupMeta(key) {
+        var list = itemsOf(key);
+        var score = 0;
+        list.forEach(function (it) { score += it.score; });
+        return { count: list.length, score: score };
+      }
+
+      function optionBlock(options) {
+        if (!options) return "";
+        return '<div class="mt-3 space-y-2 pl-5">' + options.map(function (o) {
+          return '<div class="flex items-start gap-3 text-[14px] leading-[1.85] text-[#333]">' +
+            '<span class="opt-dot mt-1.5 inline-block h-3.5 w-3.5 shrink-0 rounded-full bg-white"></span>' +
+            "<span>" + esc(o.key) + ". " + esc(o.text) + "</span></div>";
+        }).join("") + "</div>";
+      }
+
+      function qHead(it) {
+        return '<div class="text-[15px] leading-[1.9] text-[#222]"><span class="mr-1 font-medium">' + it.no + ".</span>";
+      }
+
+      function playerBar() {
+        return '<div class="mb-5 flex items-center gap-3 rounded border border-[#E6E6E6] bg-[#F7F9FC] px-4 py-3">' +
+          '<div class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary text-white">' +
+          '<svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>' +
+          '<span class="w-10 shrink-0 text-[12px] text-[#888]">00:00</span>' +
+          '<div class="relative h-1.5 flex-1 overflow-hidden rounded-full bg-[#E6E6E6]"><div class="h-full w-0 rounded-full bg-primary"></div></div>' +
+          '<span class="w-10 shrink-0 text-right text-[12px] text-[#888]">00:48</span></div>';
+      }
+
+      function clozePassage() {
+        return CLOZE_SEGS.map(function (seg) {
+          if (seg.type !== "blank") return esc(seg.text);
+          return '<span class="blank-no" data-blank="' + seg.no + '">' + seg.no + "</span>";
+        }).join("");
+      }
+
+      function wordBank() {
+        return '<div class="mt-5 grid grid-cols-3 gap-x-6 gap-y-2 text-[14px] leading-[1.8] text-[#333] sm:grid-cols-5">' +
+          CLOZE_BANK.map(function (w) {
+            return "<div>" + esc(w.key) + ") " + esc(w.word) + "</div>";
+          }).join("") + "</div>";
+      }
+
+      function renderPaper() {
+        var html = "";
+        GROUPS.forEach(function (g) {
+          var list = itemsOf(g.key);
+          if (g.heading) {
+            html += '<h3 class="mb-5 mt-12 text-[16px] font-bold first:mt-0">' + esc(g.heading) + "</h3>";
+          }
+          if (g.extra) {
+            html += '<h4 class="mb-3 mt-10 text-[15px] font-bold text-[#222]">' + esc(g.extra) + "</h4>";
+          }
+
+          if (g.key === "writing") {
+            var w = list[0];
+            html += '<article id="q-' + w.no + '" class="q-block rounded-md px-1 py-2 transition-colors">' +
+              qHead(w) + esc(w.stem) + "</div>" +
+              '<p class="mt-3 text-[15px] leading-[1.9] text-[#222]">' + esc(w.material) + "</p></article>";
+          }
+
+          if (g.key === "listening") {
+            html += '<p class="mb-4 text-[14px] leading-[1.9] text-[#555]"><span class="font-semibold text-[#333]">Directions: </span>' +
+              "In this section, you will hear two long conversations. At the end of each conversation, you will hear four questions. Both the conversation and the questions will be spoken only once.</p>";
+            html += playerBar();
+            html += '<h4 class="mb-2 text-[16px] font-bold">Conversation One</h4>';
+            html += '<p class="mb-6 text-[14px] leading-[1.85] text-[#666]">Questions 1 to 2 are based on the conversation you have just heard.</p>';
+            list.forEach(function (it) {
+              html += '<article id="q-' + it.no + '" class="q-block mb-8 rounded-md px-1 py-2 transition-colors">' +
+                qHead(it) + esc(it.stem) + "</div>" + optionBlock(it.options) + "</article>";
+            });
+          }
+
+          if (g.key === "cloze") {
+            html += '<p class="mb-4 text-[14px] leading-[1.9] text-[#555]"><span class="font-semibold text-[#333]">Directions: </span>' +
+              "In this section, there is a passage with ten blanks. You are required to select one word for each blank from a list of choices. You may not use any of the words in the bank more than once.</p>";
+            html += '<p class="text-[15px] leading-[2.15] text-[#222]">' + clozePassage() + "</p>";
+            html += wordBank();
+            list.forEach(function (it) {
+              html += '<article id="q-' + it.no + '" class="q-block mt-6 rounded-md px-1 py-2 transition-colors">' +
+                qHead(it) + it.blankNo + ". Choose the best word for blank " + it.blankNo + ".</div></article>";
+            });
+          }
+
+          if (g.key === "matching") {
+            html += '<p class="mb-4 text-[14px] leading-[1.9] text-[#555]"><span class="font-semibold text-[#333]">Directions: </span>' +
+              "You are going to read a passage with ten statements attached to it. Each statement contains information given in one of the paragraphs. Identify the paragraph from which the information is derived. You may choose a paragraph more than once.</p>";
+            MATCH_PARAS.forEach(function (p) {
+              html += '<p class="mb-3 text-[15px] leading-[1.95] text-[#222]"><span class="mr-1 font-bold">' + esc(p.key) + ".</span>" + esc(p.text) + "</p>";
+            });
+            list.forEach(function (it) {
+              html += '<article id="q-' + it.no + '" class="q-block mt-6 rounded-md px-1 py-2 transition-colors">' +
+                qHead(it) + it.cetNo + ". " + esc(it.stem) + "</div>" +
+                '<p class="mt-2 pl-5 text-[13px] text-[#999]">请选出信息来源段落（A–M）</p></article>';
+            });
+          }
+
+          if (g.key === "careful") {
+            html += '<p class="mb-3 text-[13px] italic leading-[1.85] text-[#666]">Directions: There are 2 passages in this section. Each passage is followed by some questions or unfinished statements. For each of them there are four choices marked A), B), C) and D).</p>';
+            html += '<h4 class="mb-2 text-[16px] font-bold">Passage One</h4>';
+            html += '<p class="mb-4 text-[13px] italic leading-[1.85] text-[#666]">Questions 46 to 47 are based on the following passage.</p>';
+            CAREFUL_PASSAGE.split(/\n\n+/).forEach(function (para) {
+              html += '<p class="mb-4 text-[15px] leading-[2] text-[#222]">' + esc(para) + "</p>";
+            });
+            list.forEach(function (it) {
+              html += '<article id="q-' + it.no + '" class="q-block mt-6 rounded-md px-1 py-2 transition-colors">' +
+                qHead(it) + it.cetNo + ". " + esc(it.stem) + "</div>" + optionBlock(it.options) + "</article>";
+            });
+          }
+
+          if (g.key === "translation") {
+            var t = list[0];
+            html += '<article id="q-' + t.no + '" class="q-block rounded-md px-1 py-2 transition-colors">' +
+              qHead(t) + esc(t.stem) + "</div>" +
+              '<p class="mt-4 pl-5 text-[15px] leading-[1.9] text-[#222]">' + esc(t.source) + "</p></article>";
+          }
+        });
+        document.getElementById("paperBody").innerHTML = html;
+      }
+
+      function renderNav() {
+        var html = GROUPS.map(function (g) {
+          var m = groupMeta(g.key);
+          var list = itemsOf(g.key);
+          return '<div class="mb-6">' +
+            '<div class="mb-3 text-[13px] text-[#666]">' + esc(g.title) +
+            " (共" + m.count + "题；共" + m.score + "分)</div>" +
+            '<div class="flex flex-wrap gap-2">' + list.map(function (it) {
+              return '<button type="button" class="nav-num" data-jump="' + it.no + '">' + it.no + "</button>";
+            }).join("") + "</div></div>";
+        }).join("");
+        document.getElementById("structNav").innerHTML = html;
+      }
+
+      var activeNo = 1;
+      var flashTimer = null;
+
+      function setActive(no) {
+        activeNo = no;
+        document.querySelectorAll(".nav-num").forEach(function (btn) {
+          btn.classList.toggle("is-on", Number(btn.getAttribute("data-jump")) === no);
+        });
+        document.querySelectorAll(".blank-no").forEach(function (el) {
+          var it = ITEMS.filter(function (x) { return x.no === no; })[0];
+          el.classList.toggle("is-on", !!(it && it.blankNo && Number(el.getAttribute("data-blank")) === it.blankNo));
+        });
+      }
+
+      function jumpTo(no) {
+        var el = document.getElementById("q-" + no);
+        var scroller = document.getElementById("paperScroll");
+        if (!el || !scroller) return;
+        setActive(no);
+        var top = el.offsetTop - 24;
+        scroller.scrollTo({ top: top, behavior: "smooth" });
+        el.classList.add("is-flash");
+        clearTimeout(flashTimer);
+        flashTimer = setTimeout(function () { el.classList.remove("is-flash"); }, 900);
+      }
+
+      function syncActiveByScroll() {
+        var scroller = document.getElementById("paperScroll");
+        var y = scroller.scrollTop + 80;
+        var current = ITEMS[0].no;
+        ITEMS.forEach(function (it) {
+          var el = document.getElementById("q-" + it.no);
+          if (el && el.offsetTop <= y) current = it.no;
+        });
+        if (current !== activeNo) setActive(current);
+      }
+
+      renderPaper();
+      renderNav();
+      setActive(1);
+
+      document.getElementById("structNav").addEventListener("click", function (e) {
+        var btn = e.target.closest("[data-jump]");
+        if (!btn) return;
+        jumpTo(Number(btn.getAttribute("data-jump")));
+      });
+      document.getElementById("paperScroll").addEventListener("scroll", syncActiveByScroll);
+    })();
+  </script>
+</body>
+</html>
