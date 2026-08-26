@@ -50,7 +50,7 @@
 ### 任务链 #4 从入口进入
 
 ```text
-[使用者] 要 [在三页间切换演示] → 需要 [试卷元信息 + 三张入口卡] → 原型入口（b_dashboard）
+[使用者] 要 [在三页间切换演示] → 需要 [试卷元信息 + 三张入口卡 + 独立星火整卷页] → 原型入口（b_dashboard）
 ```
 
 ## 4. 页面映射
@@ -66,6 +66,7 @@
 | exam-careful | 考场·仔细阅读 | 任务链 #2 | b_detail_page | b_end | P0 |
 | exam-translation | 考场·翻译 | 任务链 #2 | b_detail_page | b_end | P0 |
 | score-detail | 成绩详情 | 任务链 #3 | b_detail_page | b_end | P0 |
+| exam-sparke | 星火整卷做题（独立页） | 任务链 #2 对照还原 | b_detail_page | b_end | P1 |
 
 ## 5. Scope Out（明确不做）
 

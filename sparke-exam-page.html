@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>星火英语</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { height: 100%; scroll-padding-top: 130px; overflow-y: auto; }
+    body {
+      min-height: 100%;
+      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+      background: #f4f4fb;
+      color: #343a43;
+    }
+    a { text-decoration: none; color: inherit; }
+    button { font-family: inherit; }
+
+    .exam_top {
+      position: fixed; top: 0; left: 0; z-index: 100;
+      display: flex; align-items: center;
+      width: 100%; height: 60px; background: #fff;
+    }
+    .exam_warming {
+      position: absolute; left: 0;
+      display: flex; align-items: center;
+      color: #343a43; font-size: 16px; line-height: 24px; cursor: pointer;
+    }
+    .exam_warming i {
+      display: inline-block; width: 24px; height: 24px;
+      margin: 0 8px 0 32px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' stroke='%23343a43' stroke-width='1.7'%3E%3Cpath d='M10 7V5a2 2 0 0 1 2-2h7v18h-7a2 2 0 0 1-2-2v-2'/%3E%3Cpath d='M4 12h12M13 8l4 4-4 4'/%3E%3C/svg%3E") center / 22px no-repeat;
+    }
+    .exam_title {
+      position: absolute; left: 180px;
+      color: #343a43; font-size: 18px; font-weight: 700; padding-left: 20px;
+    }
+    .exam_time {
+      position: absolute; right: 180px;
+      display: flex; align-items: center; justify-content: center;
+      color: #343a43; font-size: 18px; font-weight: 700;
+    }
+    .exam_time i {
+      display: inline-block; width: 16px; height: 16px; margin-right: 10px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%234c84ff' stroke-width='1.6'%3E%3Ccircle cx='8' cy='8' r='6.2'/%3E%3Cpath d='M8 4.5V8l2.4 1.6'/%3E%3C/svg%3E") 50% / 16px no-repeat;
+    }
+
+    .wrap {
+      width: 1240px; margin: 0 auto; min-height: 100vh;
+    }
+    .nd-tabs {
+      position: fixed; top: 60px; z-index: 500;
+      left: max(0px, calc((100vw - 1240px) / 2));
+      display: flex; width: 910px; padding-top: 20px; background: #f8f8f9;
+    }
+    .nd-tabs .tab {
+      height: 50px; line-height: 50px; text-align: center; cursor: pointer;
+      background: #f9fafe; color: #818a92; font-size: 14px;
+    }
+    .nd-tabs .tab:hover { color: #4c84ff; }
+    .nd-tabs .tab.is-on {
+      background: #fff; color: #4c84ff; font-weight: 700; position: relative;
+    }
+
+    .nd-exam { display: flex; width: 100%; margin-top: 130px; padding-bottom: 80px; }
+    .nd-detail { display: flex; flex-direction: column; width: 910px; margin-right: 20px; }
+    .nd-networkContent { background: #fff; min-height: calc(100vh - 170px); }
+
+    .section { display: block; scroll-margin-top: 130px; }
+
+    .nd-title {
+      position: relative; display: flex; align-items: center;
+      background: #ecf2ff; color: #343a43; font-size: 18px; font-weight: 700;
+      line-height: 36px; padding-left: 30px;
+    }
+    .nd-title:before {
+      content: ""; position: absolute; left: 0; top: 0; width: 6px; height: 36px; background: #4c84ff;
+    }
+    .nd-title .part-time {
+      flex: 1; text-align: right; margin-right: 30px;
+      color: #343a43; font-size: 16px; font-weight: 400;
+    }
+    .q-score { color: #818a92; font-size: 14px; font-weight: 400; margin-left: 8px; }
+
+    .sec-body { padding: 20px 30px 50px; }
+    .thr-content { color: #343a43; font-size: 16px; line-height: 28px; }
+    .thr-content p + p { margin-top: 12px; }
+    .prompt-block { margin-top: 16px; color: #343a43; font-size: 16px; line-height: 28px; }
+
+    .way-row { display: flex; align-items: center; margin-top: 20px; font-size: 14px; color: #343a43; }
+    .way-row .lab { width: 80px; color: #818a92; }
+    .way-row label { display: inline-flex; align-items: center; margin-right: 30px; cursor: pointer; }
+    .way-row input { margin-right: 8px; accent-color: #4c84ff; }
+    .hint-gray { margin-top: 10px; color: #818a92; font-size: 13px; }
+
+    .answer-box {
+      margin-top: 16px; width: 100%; min-height: 220px; padding: 12px 14px;
+      border: 1px solid #dcdee2; border-radius: 4px; resize: vertical;
+      font-size: 14px; line-height: 24px; color: #343a43; outline: none;
+    }
+    .answer-box:focus { border-color: #4c84ff; }
+    .pic-panel { display: none; margin-top: 16px; }
+    .pic-panel.is-on { display: block; }
+    .upload-pic {
+      display: flex; align-items: center; height: 90px; padding-left: 20px; background: #f9fafe;
+    }
+    .upload-d {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      width: 56px; height: 70px; background: #fff; cursor: pointer; color: #4c84ff; font-size: 12px;
+    }
+    .upload-d span { font-size: 22px; line-height: 22px; }
+    .pic-warming { color: #818a92; font-size: 14px; margin: 10px 0 0 20px; }
+
+    .audio-player {
+      display: flex; align-items: center; gap: 12px; padding: 8px 0 18px;
+    }
+    .audio-icon {
+      width: 30px; height: 20px; cursor: pointer; flex-shrink: 0; border: 0; background: transparent;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='20' viewBox='0 0 30 20'%3E%3Cpath d='M4 5v10l9-5-9-5z' fill='%234c84ff'/%3E%3Cpath d='M16 6c1.6 1.1 2.6 2.9 2.6 4s-1 2.9-2.6 4M20 4c2.4 1.7 3.8 4.3 3.8 6s-1.4 4.3-3.8 6' fill='none' stroke='%234c84ff' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-position: 50%; background-repeat: no-repeat;
+    }
+    .audio-icon.is-pause {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='20' viewBox='0 0 30 20'%3E%3Crect x='8' y='4' width='3.5' height='12' rx='.5' fill='%234c84ff'/%3E%3Crect x='16.5' y='4' width='3.5' height='12' rx='.5' fill='%234c84ff'/%3E%3C/svg%3E");
+    }
+    .audio-track { flex: 1; height: 4px; background: #edeff0; border-radius: 2px; cursor: pointer; position: relative; }
+    .audio-fill { height: 100%; width: 0; background: #4c84ff; border-radius: 2px; }
+    .audio-time { color: #818a92; font-size: 12px; width: 86px; text-align: right; }
+
+    .group-h {
+      margin: 8px 0 16px; color: #343a43; font-size: 16px; font-weight: 700; line-height: 22px;
+    }
+    .q-block { margin-bottom: 8px; scroll-margin-top: 140px; }
+    .q-head { display: flex; align-items: flex-start; margin-bottom: 8px; }
+    .q-head .audio-icon { margin-top: 2px; margin-right: 8px; }
+    .sub-num { width: 36px; flex-shrink: 0; color: #343a43; font-size: 16px; font-weight: 700; line-height: 24px; }
+    .sub-num-content { flex: 1; font-size: 16px; line-height: 24px; color: #343a43; }
+
+    .options-sub { display: flex; background: #f9fafe; padding: 16px 10px 8px; margin-bottom: 20px; }
+    .options-d { display: flex; flex-direction: column; flex: 1; }
+    .option-d { display: flex; align-items: flex-start; cursor: pointer; margin: 0 0 12px 11px; }
+    .option-pre {
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      width: 24px; height: 24px; border-radius: 12px; background: #edeff0; color: #818a92; font-size: 12px;
+    }
+    .option-pre.is-on { background: #4c84ff; color: #fff; font-weight: 700; }
+    .option-answer { margin-left: 10px; color: #343a43; font-size: 14px; line-height: 22px; }
+
+    .passage { font-size: 16px; line-height: 30px; color: #343a43; }
+    .cloze-blank {
+      display: inline-block; min-width: 52px; margin: 0 3px; padding: 0 4px;
+      border-bottom: 1.5px solid #343a43; color: #4c84ff; font-weight: 700;
+      text-align: center; cursor: pointer; line-height: 1.3;
+    }
+    .cloze-blank.is-on { background: #ecf2ff; }
+    .word-bank { display: flex; flex-wrap: wrap; margin-top: 20px; padding: 16px 8px; background: #f9fafe; }
+    .word-chip {
+      display: flex; align-items: center; width: 33.33%; margin-bottom: 12px; padding-left: 11px; cursor: pointer;
+    }
+    .word-chip.is-used { opacity: .45; pointer-events: none; }
+    .para { margin-bottom: 14px; font-size: 15px; line-height: 28px; color: #343a43; }
+    .para b { margin-right: 6px; }
+    .letter-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 20px 36px; }
+    .letter-btn {
+      width: 28px; height: 28px; border: 0; border-radius: 14px; cursor: pointer;
+      background: #edeff0; color: #818a92; font-size: 12px;
+    }
+    .letter-btn.is-on { background: #4c84ff; color: #fff; font-weight: 700; }
+
+    .nd-answer-card { width: 310px; }
+    .answer-card {
+      position: fixed; top: 80px; bottom: 0; width: 310px;
+      display: flex; flex-direction: column; background: #f9fafe;
+      right: max(0px, calc((100vw - 1240px) / 2));
+    }
+    .card-top {
+      display: flex; align-items: center; height: 70px; background: #fff; flex-shrink: 0;
+    }
+    .card-top-left {
+      position: relative; display: flex; align-items: center; flex: 1; padding-left: 20px;
+    }
+    .card-top-left:before {
+      content: ""; position: absolute; left: 0; width: 6px; height: 16px; background: #4c84ff;
+    }
+    .card-title { color: #343a43; font-size: 16px; font-weight: 700; }
+    .card-num { color: #818a92; font-size: 12px; margin-left: 14px; }
+    .card-top-r1, .card-top-r2 {
+      display: flex; align-items: center; color: #818a92; font-size: 12px;
+    }
+    .card-top-r1 { margin-right: 16px; }
+    .card-top-r2 { margin-right: 20px; }
+    .card-top-r1 > i, .card-top-r2 > i {
+      display: block; width: 8px; height: 8px; border-radius: 4px; margin-right: 6px;
+    }
+    .card-top-r1 > i { background: #4c84ff; }
+    .card-top-r2 > i { background: #edeff0; }
+    .card-content { flex: 1; overflow-y: auto; margin-bottom: 76px; }
+    .card-sub-title {
+      display: flex; align-items: center; height: 34px; padding-left: 20px;
+    }
+    .card-sec-title { color: #343a43; font-size: 14px; font-weight: 700; }
+    .card-sec-num { color: #818a92; font-size: 10px; margin-left: 14px; }
+    .card-answers {
+      display: flex; flex-wrap: wrap; background: #fff; padding: 6px 0 6px 20px;
+    }
+    .sub-answer {
+      display: flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; margin: 8px 24px 8px 0; border-radius: 14px;
+      background: #f8f8f9; color: #818a92; font-size: 14px; cursor: pointer;
+    }
+    .sub-answer.is-on { background: #4c84ff; color: #fff; font-weight: 700; }
+    .card-bottom {
+      position: absolute; bottom: 0; width: 100%;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 10px 0 20px; background: #fff;
+      box-shadow: 0 -2px 8px 0 rgba(76,132,255,.102); cursor: pointer;
+    }
+    .card_com {
+      display: flex; align-items: center; justify-content: center;
+      width: 270px; height: 40px; background: #4c84ff; color: #fff; font-weight: 700;
+    }
+    .card_com_b { width: 250px; height: 6px; background: #c9daff; }
+
+    .mask {
+      display: none; position: fixed; inset: 0; z-index: 1000;
+      align-items: center; justify-content: center; background: rgba(0,0,0,.45);
+    }
+    .mask.is-on { display: flex; }
+    .exam-modal-content {
+      width: 430px; background: #fff; display: flex; flex-direction: column; align-items: center; color: #343a43;
+    }
+    .exam-modal-content .title { font-size: 20px; font-weight: 700; line-height: 20px; margin-top: 40px; }
+    .exam-modal-content .remark { font-size: 14px; line-height: 22px; margin: 24px 40px 8px; text-align: center; }
+    .exam-modal-content .remark-unfinished { margin-top: 8px; }
+    .exam-modal-content .remark-unfinished span { color: #4c84ff; font-weight: 700; }
+    .exam-modal-content .note { color: #818a92; font-size: 13px; line-height: 20px; margin: 12px 40px 0; }
+    .button-group { display: flex; margin: 32px 0 36px; }
+    .button { cursor: pointer; font-size: 14px; font-weight: 700; height: 40px; line-height: 40px; margin: 0 15px; width: 140px; text-align: center; border: 0; }
+    .button-dark { background: #4c84ff; color: #fff; }
+    .button-light { background: #ecf2ff; color: #4c84ff; }
+
+    @media (max-width: 1280px) {
+      .wrap, .nd-tabs { width: 100%; }
+      .nd-detail { width: calc(100% - 330px); }
+      .answer-card, .nd-tabs { left: 0; right: auto; }
+      .answer-card { right: 0; left: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="exam_top">
+    <span class="exam_warming" id="exitBtn"><i></i>退出考试</span>
+    <span class="exam_title">2025年12月四级真题（卷3）</span>
+    <span class="exam_time"><i></i><span id="timer">00:00:00</span></span>
+  </div>
+
+  <div class="wrap">
+    <div class="nd-tabs" id="tabs"></div>
+    <div class="nd-exam">
+      <div class="nd-detail">
+        <div class="nd-networkContent">
+          <div id="sections"></div>
+        </div>
+      </div>
+      <div class="nd-answer-card">
+        <div class="answer-card">
+          <div class="card-top">
+            <div class="card-top-left">
+              <div class="card-title">答题卡</div>
+              <div class="card-num" id="sheetProgress">0/57</div>
+            </div>
+            <div class="card-top-r1"><i></i>已答</div>
+            <div class="card-top-r2"><i></i>未答</div>
+          </div>
+          <div class="card-content" id="sheetBody"></div>
+          <div class="card-bottom" id="submitBtn">
+            <div class="card_com">交卷</div>
+            <div class="card_com_b"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mask" id="exitMask">
+    <div class="exam-modal-content">
+      <div class="title">退出考试</div>
+      <div class="remark">答题用时 <span id="exitUsed">00:00:00</span></div>
+      <div class="remark remark-unfinished">已作答 <span id="exitDone">0</span> 题，还有 <span id="exitLeft">57</span> 题未作答</div>
+      <div class="note">主观题暂不支持保存。退出后可从试卷入口继续作答。</div>
+      <div class="button-group">
+        <button class="button button-dark" type="button" id="keepBtn">继续作答</button>
+        <button class="button button-light" type="button" id="saveExitBtn">保存并退出</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mask" id="submitMask">
+    <div class="exam-modal-content">
+      <div class="title">立即交卷</div>
+      <div class="remark">答题用时 <span id="subUsed">00:00:00</span></div>
+      <div class="remark remark-unfinished">已作答 <span id="subDone">0</span> 题，还有 <span id="subLeft">57</span> 题未作答</div>
+      <div class="note">本套试卷含写作、翻译等主观题，交卷后需要您手动判卷才能得分。</div>
+      <div class="button-group">
+        <button class="button button-dark" type="button" id="keepBtn2">继续作答</button>
+        <button class="button button-light" type="button" id="doSubmitBtn">立即交卷</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mask" id="doneMask">
+    <div class="exam-modal-content">
+      <div class="title">交卷成功</div>
+      <div class="remark">考试未结束也可查看作答记录。本页为静态还原，不连接星火服务器。</div>
+      <div class="button-group">
+        <button class="button button-dark" type="button" id="doneOk">知道了</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var TABS = [
+        { id: "writing", name: "写作", w: 108 },
+        { id: "listening", name: "听力", w: 108 },
+        { id: "cloze", name: "Section A 选词填空", w: 194 },
+        { id: "matching", name: "Section B 信息匹配", w: 194 },
+        { id: "careful", name: "Section C 仔细阅读", w: 194 },
+        { id: "translation", name: "翻译", w: 0 }
+      ];
+
+      var BANK = [
+        { key: "A", word: "analyze" }, { key: "B", word: "weekly" }, { key: "C", word: "inventory" },
+        { key: "D", word: "patterns" }, { key: "E", word: "support" }, { key: "F", word: "accurate" },
+        { key: "G", word: "meeting" }, { key: "H", word: "assistant" }, { key: "I", word: "sales" },
+        { key: "J", word: "reports" }, { key: "K", word: "concerns" }, { key: "L", word: "expansion" },
+        { key: "M", word: "inspired" }, { key: "N", word: "potential" }, { key: "O", word: "together" }
+      ];
+
+      var CLOZE_SEGS = [
+        { t: "Every Monday, the shop " }, { b: 26 },
+        { t: " prepares a " }, { b: 27 },
+        { t: " operation report. The " }, { b: 28 },
+        { t: " manager uses the weekly data to " }, { b: 29 },
+        { t: " last week's " }, { b: 30 },
+        { t: " data and find buying " }, { b: 31 },
+        { t: ". The report provides " }, { b: 32 },
+        { t: " for the morning " }, { b: 33 },
+        { t: " and helps adjust " }, { b: 34 },
+        { t: " before sharing highlights " }, { b: 35 },
+        { t: " with the whole team." }
+      ];
+
+      var PARAS = [
+        ["A", "Many employers still prefer candidates with recent workplace experience. They worry that long gaps on a résumé signal outdated skills."],
+        ["B", "Career counselors often advise older job seekers to rewrite their CVs around achievements rather than years of service."],
+        ["C", "Some companies have introduced reverse mentoring, pairing senior staff with younger employees who teach digital tools."],
+        ["D", "Government programs in several countries now subsidize mid-career training to keep experienced workers productive."],
+        ["E", "Recruiters admit that automated screening systems sometimes reject résumés with graduation years that look “too old.”"],
+        ["F", "Flexible work arrangements can help people over 45 re-enter the labor market."],
+        ["G", "After a layoff, finding a similar job can take months. Changing fields entirely is harder still."],
+        ["H", "Professional networks matter more with age. Referrals from former colleagues often open doors."],
+        ["I", "Hiring managers often assume unemployed workers over 45 need more training and are less adaptable."],
+        ["J", "Learning new skills after 45 is possible, but people from lower-income communities are less likely to enroll."],
+        ["K", "A recent survey found that many employers value work experience more than a “perfect” degree."],
+        ["L", "Ageism remains a barrier, while inexpensive training is widely available on online platforms."],
+        ["M", "Switching careers after 45 is difficult, and getting reemployed after a layoff can be even tougher."]
+      ];
+
+      var MATCH_Q = {
+        36: "Hiring managers believe unemployed workers over 45 lack good skills and are less adaptable.",
+        37: "Switching to a new career is difficult and getting reemployed after a layoff is even tougher.",
+        38: "Some firms pair older staff with younger colleagues so both sides can learn.",
+        39: "Automated systems may filter out résumés that look too old.",
+        40: "Government subsidies aim to keep experienced people in work.",
+        41: "Rewriting a CV around results can help older applicants.",
+        42: "Part-time and project contracts can lower risk for both sides.",
+        43: "People with fewer resources join fewer training programs.",
+        44: "Practical problem-solving can beat a stronger academic record.",
+        45: "Networks and referrals open doors that online forms cannot."
+      };
+
+      var CAREFUL = [
+        {
+          title: "Passage One",
+          text: "New York's Eleven Madison Park is becoming a vegan restaurant. The decision surprised many diners who knew the place for its rich meat and fish dishes. The chef said the change was about creativity and the future of fine dining, not a temporary experiment. Plant-based cooking, he argued, can still deliver the same sense of luxury that high-end guests expect.\n\nThe restaurant plans to rebuild its menu around vegetables, grains and creative culinary techniques. Some long-time customers worry they will miss classic flavors, while others welcome the shift as a sign that top kitchens are taking sustainability more seriously.",
+          qs: [
+            { n: 46, stem: "What do we learn about New York's Eleven Madison Park?", opts: ["It has been forced to close for renovation.", "It is turning into a vegan fine-dining restaurant.", "It will stop serving lunch to cut costs.", "It plans to open more branches overseas."] },
+            { n: 47, stem: "What is the chef's attitude toward plant-based fine dining?", opts: ["It is only suitable for casual restaurants.", "It cannot replace traditional luxury dining.", "It can still offer creativity and a luxury experience.", "It should focus mainly on price competition."] },
+            { n: 48, stem: "What worries some long-time customers?", opts: ["Higher prices after the change.", "Losing classic flavors they used to enjoy.", "A shortage of vegetarian chefs.", "The restaurant moving out of New York."] },
+            { n: 49, stem: "What may follow if a famous destination goes plant-based?", opts: ["More restaurants may follow the shift.", "Meat dishes will disappear worldwide.", "Fine dining will become less popular.", "The chef will open a steakhouse instead."] },
+            { n: 50, stem: "What is the passage mainly about?", opts: ["A cooking school in New York.", "A famous restaurant going vegan.", "How to cook vegetables at home.", "The history of fine dining."] }
+          ]
+        },
+        {
+          title: "Passage Two",
+          text: "With those born with natural talents, it feels as if they excel without really trying. But what about those of us who don't have a natural talent? Duckworth's Grit argues that talent may be overrated, and if you want real success, what you need is grit — passion plus persistence.\n\nGrit lifts unreasonable expectations off our shoulders. It tells us that perfection isn't the goal. Effort means more than natural ability. If at first you fail, try again with grit.",
+          qs: [
+            { n: 51, stem: "What does Duckworth's Grit mainly argue?", opts: ["Talent guarantees success.", "Luck matters more than effort.", "Passion and persistence matter more than talent.", "Natural ability cannot be improved."] },
+            { n: 52, stem: "What does grit consist of?", opts: ["Money and connections.", "Passion plus persistence.", "Talent and appearance.", "Speed and accuracy."] },
+            { n: 53, stem: "What can grit do for people?", opts: ["Remove the need to work.", "Lift unreasonable expectations.", "Replace all training.", "Guarantee first-time success."] },
+            { n: 54, stem: "According to the passage, what means more than natural ability?", opts: ["Effort.", "Family background.", "School ranking.", "Physical strength."] },
+            { n: 55, stem: "What should you do if you fail at first?", opts: ["Give up immediately.", "Blame your talent.", "Try again with grit.", "Wait for better luck."] }
+          ]
+        }
+      ];
+
+      function opt4(prefix, n) {
+        return ["A", "B", "C", "D"].map(function (k, i) {
+          return { key: k, text: prefix + " option " + k + " for question " + n + "." };
+        });
+      }
+
+      var LISTEN_GROUPS = [
+        { title: "News Report One", range: [1, 2] },
+        { title: "News Report Two", range: [3, 4] },
+        { title: "News Report Three", range: [5, 7] },
+        { title: "Conversation One", range: [8, 11] },
+        { title: "Conversation Two", range: [12, 15] },
+        { title: "Passage One", range: [16, 18] },
+        { title: "Passage Two", range: [19, 21] },
+        { title: "Passage Three", range: [22, 25] }
+      ];
+
+      var LISTEN_RICH = {
+        8: { stem: "Question 8. What does the woman mean?", opts: ["She will finish the report after class.", "She has already submitted the assignment.", "She needs more time to collect the data.", "She is not going to attend the meeting."] },
+        9: { stem: "Question 9. What will the man probably do next?", opts: ["Call the professor immediately.", "Share his notes with the woman.", "Cancel the group discussion.", "Wait for the library to open."] }
+      };
+
+      var SHEET = [
+        { id: "writing", title: "写作", items: [{ id: "w1", label: "1" }] },
+        { id: "listening", title: "听力", items: rangeItems(1, 25, "l") },
+        { id: "cloze", title: "选词填空", items: rangeItems(26, 35, "c") },
+        { id: "matching", title: "信息匹配", items: rangeItems(36, 45, "m") },
+        { id: "careful", title: "仔细阅读", items: rangeItems(46, 55, "r") },
+        { id: "translation", title: "翻译", items: [{ id: "t1", label: "1" }] }
+      ];
+
+      function rangeItems(a, b, prefix) {
+        var arr = [];
+        for (var i = a; i <= b; i++) arr.push({ id: prefix + i, label: String(i) });
+        return arr;
+      }
+
+      var ALL_IDS = [];
+      SHEET.forEach(function (g) { g.items.forEach(function (it) { ALL_IDS.push(it.id); }); });
+
+      var answers = {};
+      var currentTab = "writing";
+      var elapsed = 0;
+      var audioOn = {};
+      var audioPos = {};
+      var audioDur = 48;
+      var clozeActive = 26;
+
+      function pad(n) { return n < 10 ? "0" + n : "" + n; }
+      function fmt(sec) {
+        var h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60;
+        return pad(h) + ":" + pad(m) + ":" + pad(s);
+      }
+      function doneCount() {
+        var n = 0;
+        ALL_IDS.forEach(function (id) { if (answers[id]) n++; });
+        return n;
+      }
+      function setAns(id, val) {
+        if (val === "" || val == null) delete answers[id];
+        else answers[id] = val;
+        renderSheet();
+      }
+
+      function renderTabs() {
+        var html = "";
+        TABS.forEach(function (t) {
+          var style = t.w ? "width:" + t.w + "px;" : "flex:1;";
+          html += '<div class="tab' + (t.id === currentTab ? " is-on" : "") + '" data-tab="' + t.id + '" style="' + style + '">' + t.name + "</div>";
+        });
+        document.getElementById("tabs").innerHTML = html;
+      }
+
+      function listenQs(a, b) {
+        var html = "";
+        for (var n = a; n <= b; n++) {
+          var rich = LISTEN_RICH[n];
+          var stem = rich ? rich.stem : ("Question " + n + ".");
+          var opts = rich ? rich.opts : ["Option A.", "Option B.", "Option C.", "Option D."];
+          var id = "l" + n;
+          html += '<div class="q-block" id="q-' + id + '">';
+          html += '<div class="q-head"><div class="sub-num">' + n + '.</div><div class="sub-num-content">' + stem + '<span class="q-score">（1分）</span></div></div>';
+          html += '<div class="options-sub"><div class="options-d">';
+          ["A", "B", "C", "D"].forEach(function (k, i) {
+            html += '<div class="option-d" data-set="' + id + '" data-val="' + k + '"><span class="option-pre' + (answers[id] === k ? " is-on" : "") + '">' + k + '</span><span class="option-answer">' + k + ") " + opts[i] + "</span></div>";
+          });
+          html += "</div></div></div>";
+        }
+        return html;
+      }
+
+      function playerHtml(key) {
+        var p = audioPos[key] || 0;
+        var pct = Math.min(100, (p / audioDur) * 100);
+        return '<div class="audio-player" data-player="' + key + '">' +
+          '<button type="button" class="audio-icon' + (audioOn[key] ? " is-pause" : "") + '" data-audio="' + key + '"></button>' +
+          '<div class="audio-track" data-seek="' + key + '"><div class="audio-fill" style="width:' + pct + '%"></div></div>' +
+          '<div class="audio-time">' + fmt(Math.floor(p)) + " / " + fmt(audioDur) + "</div></div>";
+      }
+
+      function renderWriting() {
+        return '<div class="section" id="sec-writing">' +
+          '<div class="nd-title">PART Ⅰ　WRITING</div>' +
+          '<div class="sec-body" id="q-w1">' +
+          '<div class="thr-content"><p>Directions: For this part, you are allowed 30 minutes to write a news report to your campus newspaper. You should write at least 120 words but no more than 180 words.</p></div>' +
+          '<div class="prompt-block">Suppose your university has just opened a new learning-support center that offers writing help, digital-skill workshops and peer tutoring. Write a report to introduce the center and encourage students to use it.</div>' +
+          '<textarea class="answer-box" id="writeBox" placeholder="在此处作答">' + (answers.w1 || "") + "</textarea>" +
+          "</div></div>";
+      }
+
+      function renderListening() {
+        var html = '<div class="section" id="sec-listening">';
+        html += '<div class="nd-title">PART Ⅱ　LISTENING COMPREHENSION</div>';
+        html += '<div class="sec-body">';
+        html += '<div class="thr-content"><p>Section A. Directions: In this section, you will hear three news reports. At the end of each news report, you will hear two or three questions. Both the news report and the questions will be spoken only once.</p></div>';
+        LISTEN_GROUPS.forEach(function (g, i) {
+          html += '<div class="group-h">' + g.title + "</div>";
+          html += playerHtml("listen-" + (i + 1));
+          html += listenQs(g.range[0], g.range[1]);
+        });
+        html += "</div></div>";
+        return html;
+      }
+
+      function renderCloze() {
+        var html = '<div class="section" id="sec-cloze">';
+        html += '<div class="nd-title">PART Ⅲ　READING COMPREHENSION</div>';
+        html += '<div class="sec-body">';
+        html += '<div class="thr-content"><p>Section A. Directions: In this section, there is a passage with ten blanks. You are required to select one word for each blank from a list of choices given in a word bank following the passage. You may not use any of the words in the bank more than once.</p></div>';
+        html += '<div class="passage" style="margin-top:16px;">';
+        CLOZE_SEGS.forEach(function (s) {
+          if (s.t) html += s.t;
+          else {
+            var id = "c" + s.b;
+            var filled = answers[id] || "";
+            var word = "";
+            BANK.forEach(function (w) { if (w.key === filled) word = w.word; });
+            html += '<span class="cloze-blank' + (clozeActive === s.b ? " is-on" : "") + '" data-blank="' + s.b + '">' + s.b + (word ? " " + word : "") + '</span><span class="q-score">（1分）</span>';
+          }
+        });
+        html += '</div><div class="word-bank">';
+        BANK.forEach(function (w) {
+          var used = false;
+          for (var i = 26; i <= 35; i++) if (answers["c" + i] === w.key) used = true;
+          html += '<div class="word-chip' + (used ? " is-used" : "") + '" data-word="' + w.key + '"><span class="option-pre' + (answers["c" + clozeActive] === w.key ? " is-on" : "") + '">' + w.key + '</span><span class="option-answer">' + w.word + "</span></div>";
+        });
+        html += "</div></div></div>";
+        return html;
+      }
+
+      function renderMatching() {
+        var html = '<div class="section" id="sec-matching">';
+        html += '<div class="nd-title">PART Ⅲ　READING COMPREHENSION</div>';
+        html += '<div class="sec-body">';
+        html += '<div class="thr-content"><p>Section B. Directions: In this section, you are going to read a passage with ten statements attached to it. Each statement contains information given in one of the paragraphs. Identify the paragraph from which the information is derived. You may choose a paragraph more than once.</p></div>';
+        PARAS.forEach(function (p) {
+          html += '<div class="para"><b>' + p[0] + '.</b>' + p[1] + "</div>";
+        });
+        for (var n = 36; n <= 45; n++) {
+          var id = "m" + n;
+          html += '<div class="q-block" id="q-' + id + '"><div class="q-head"><div class="sub-num">' + n + '.</div><div class="sub-num-content">' + MATCH_Q[n] + '<span class="q-score">（1分）</span></div></div>';
+          html += '<div class="letter-row">';
+          PARAS.forEach(function (p) {
+            html += '<button type="button" class="letter-btn' + (answers[id] === p[0] ? " is-on" : "") + '" data-set="' + id + '" data-val="' + p[0] + '">' + p[0] + "</button>";
+          });
+          html += "</div></div>";
+        }
+        html += "</div></div>";
+        return html;
+      }
+
+      function renderCareful() {
+        var html = '<div class="section" id="sec-careful">';
+        html += '<div class="nd-title">PART Ⅲ　READING COMPREHENSION</div>';
+        html += '<div class="sec-body">';
+        html += '<div class="thr-content"><p>Section C. Directions: There are 2 passages in this section. Each passage is followed by some questions or unfinished statements. For each of them there are four choices marked A), B), C) and D).</p></div>';
+        CAREFUL.forEach(function (p) {
+          html += '<div class="group-h">' + p.title + "</div>";
+          html += '<div class="passage" style="white-space:pre-wrap;margin-bottom:18px;">' + p.text + "</div>";
+          p.qs.forEach(function (q) {
+            var id = "r" + q.n;
+            html += '<div class="q-block" id="q-' + id + '"><div class="q-head"><div class="sub-num">' + q.n + '.</div><div class="sub-num-content">' + q.stem + '<span class="q-score">（2分）</span></div></div>';
+            html += '<div class="options-sub"><div class="options-d">';
+            ["A", "B", "C", "D"].forEach(function (k, i) {
+              html += '<div class="option-d" data-set="' + id + '" data-val="' + k + '"><span class="option-pre' + (answers[id] === k ? " is-on" : "") + '">' + k + '</span><span class="option-answer">' + k + ") " + q.opts[i] + "</span></div>";
+            });
+            html += "</div></div></div>";
+          });
+        });
+        html += "</div></div>";
+        return html;
+      }
+
+      function renderTrans() {
+        return '<div class="section" id="sec-translation">' +
+          '<div class="nd-title">PART Ⅳ　TRANSLATION</div>' +
+          '<div class="sec-body" id="q-t1">' +
+          '<div class="thr-content"><p>Directions: For this part, you are allowed 30 minutes to translate a passage from Chinese into English.</p></div>' +
+          '<div class="prompt-block">近年来，越来越多的大学开始建设学习支持中心，为学生提供写作辅导、数字技能培训和同伴互助。这些服务帮助学生更快适应大学生活，也让校园学习资源得到更充分的利用。</div>' +
+          '<textarea class="answer-box" id="transBox" placeholder="在此处作答">' + (answers.t1 || "") + "</textarea>" +
+          "</div></div>";
+      }
+
+      function renderSections() {
+        document.getElementById("sections").innerHTML =
+          renderWriting() + renderListening() + renderCloze() + renderMatching() + renderCareful() + renderTrans();
+      }
+
+      function renderSheet() {
+        var html = "";
+        SHEET.forEach(function (g) {
+          var done = 0;
+          g.items.forEach(function (it) { if (answers[it.id]) done++; });
+          html += '<div class="card-sub"><div class="card-sub-title"><div class="card-sec-title">' + g.title + '</div><div class="card-sec-num">' + done + "/" + g.items.length + "</div></div>";
+          html += '<div class="card-answers">';
+          g.items.forEach(function (it) {
+            html += '<div class="sub-answer' + (answers[it.id] ? " is-on" : "") + '" data-jump="' + it.id + '" data-tab="' + g.id + '">' + it.label + "</div>";
+          });
+          html += "</div></div>";
+        });
+        document.getElementById("sheetBody").innerHTML = html;
+        document.getElementById("sheetProgress").textContent = doneCount() + "/" + ALL_IDS.length;
+      }
+
+      function paintChoice(id) {
+        document.querySelectorAll('[data-set="' + id + '"]').forEach(function (el) {
+          var on = el.getAttribute("data-val") === answers[id];
+          if (el.classList.contains("letter-btn")) el.classList.toggle("is-on", on);
+          var pre = el.querySelector(".option-pre");
+          if (pre) pre.classList.toggle("is-on", on);
+        });
+      }
+
+      function paintCloze() {
+        document.querySelectorAll(".cloze-blank").forEach(function (el) {
+          var n = Number(el.getAttribute("data-blank"));
+          var filled = answers["c" + n] || "";
+          var word = "";
+          BANK.forEach(function (w) { if (w.key === filled) word = w.word; });
+          el.textContent = n + (word ? " " + word : "");
+          el.classList.toggle("is-on", clozeActive === n);
+        });
+        document.querySelectorAll(".word-chip").forEach(function (el) {
+          var key = el.getAttribute("data-word");
+          var used = false;
+          for (var i = 26; i <= 35; i++) if (answers["c" + i] === key) used = true;
+          el.classList.toggle("is-used", used);
+          var pre = el.querySelector(".option-pre");
+          if (pre) pre.classList.toggle("is-on", answers["c" + clozeActive] === key);
+        });
+      }
+
+      var spyLock = false;
+
+      function scrollToEl(el) {
+        if (!el) return;
+        spyLock = true;
+        var top = el.getBoundingClientRect().top + window.scrollY - 130;
+        window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+        setTimeout(function () { spyLock = false; }, 700);
+      }
+
+      function showTab(id) {
+        currentTab = id;
+        renderTabs();
+        scrollToEl(document.getElementById("sec-" + id));
+      }
+
+      function bindContent() {
+        document.getElementById("tabs").addEventListener("click", function (e) {
+          var tab = e.target.closest("[data-tab]");
+          if (tab) showTab(tab.getAttribute("data-tab"));
+        });
+        var wb = document.getElementById("writeBox");
+        if (wb) wb.oninput = function () { setAns("w1", wb.value.trim()); };
+        var tb = document.getElementById("transBox");
+        if (tb) tb.oninput = function () { setAns("t1", tb.value.trim()); };
+        document.getElementById("sections").addEventListener("click", function (e) {
+          var opt = e.target.closest(".option-d");
+          if (opt) {
+            var id = opt.getAttribute("data-set");
+            setAns(id, opt.getAttribute("data-val"));
+            paintChoice(id);
+            return;
+          }
+          var letter = e.target.closest(".letter-btn");
+          if (letter) {
+            var mid = letter.getAttribute("data-set");
+            setAns(mid, letter.getAttribute("data-val"));
+            paintChoice(mid);
+            return;
+          }
+          var blank = e.target.closest(".cloze-blank");
+          if (blank) {
+            clozeActive = Number(blank.getAttribute("data-blank"));
+            paintCloze();
+            return;
+          }
+          var chip = e.target.closest(".word-chip");
+          if (chip && !chip.classList.contains("is-used")) {
+            setAns("c" + clozeActive, chip.getAttribute("data-word"));
+            if (clozeActive < 35) clozeActive += 1;
+            paintCloze();
+            return;
+          }
+          var audio = e.target.closest("[data-audio]");
+          if (audio) {
+            var k = audio.getAttribute("data-audio");
+            audioOn[k] = !audioOn[k];
+            audio.classList.toggle("is-pause", audioOn[k]);
+          }
+        });
+      }
+
+      function fillModal(prefix) {
+        document.getElementById(prefix + "Used").textContent = fmt(elapsed);
+        document.getElementById(prefix + "Done").textContent = doneCount();
+        document.getElementById(prefix + "Left").textContent = ALL_IDS.length - doneCount();
+      }
+
+      document.getElementById("sheetBody").addEventListener("click", function (e) {
+        var t = e.target.closest("[data-jump]");
+        if (!t) return;
+        currentTab = t.getAttribute("data-tab");
+        renderTabs();
+        var el = document.getElementById("q-" + t.getAttribute("data-jump")) || document.getElementById("sec-" + currentTab);
+        scrollToEl(el);
+      });
+
+      window.addEventListener("scroll", function () {
+        if (spyLock) return;
+        var ids = TABS.map(function (t) { return t.id; });
+        var cur = ids[0];
+        ids.forEach(function (id) {
+          var el = document.getElementById("sec-" + id);
+          if (el && el.getBoundingClientRect().top <= 140) cur = id;
+        });
+        if (cur !== currentTab) {
+          currentTab = cur;
+          renderTabs();
+        }
+      });
+
+      document.getElementById("exitBtn").onclick = function () {
+        fillModal("exit");
+        document.getElementById("exitMask").classList.add("is-on");
+      };
+      document.getElementById("keepBtn").onclick = function () { document.getElementById("exitMask").classList.remove("is-on"); };
+      document.getElementById("saveExitBtn").onclick = function () { document.getElementById("exitMask").classList.remove("is-on"); };
+      document.getElementById("submitBtn").onclick = function () {
+        fillModal("sub");
+        document.getElementById("submitMask").classList.add("is-on");
+      };
+      document.getElementById("keepBtn2").onclick = function () { document.getElementById("submitMask").classList.remove("is-on"); };
+      document.getElementById("doSubmitBtn").onclick = function () {
+        document.getElementById("submitMask").classList.remove("is-on");
+        document.getElementById("doneMask").classList.add("is-on");
+      };
+      document.getElementById("doneOk").onclick = function () { document.getElementById("doneMask").classList.remove("is-on"); };
+
+      setInterval(function () {
+        elapsed += 1;
+        document.getElementById("timer").textContent = fmt(elapsed);
+        Object.keys(audioOn).forEach(function (k) {
+          if (!audioOn[k]) return;
+          audioPos[k] = Math.min(audioDur, (audioPos[k] || 0) + 1);
+          if (audioPos[k] >= audioDur) audioOn[k] = false;
+        });
+        document.querySelectorAll("[data-player]").forEach(function (p) {
+          var k = p.getAttribute("data-player");
+          var pos = audioPos[k] || 0;
+          var fill = p.querySelector(".audio-fill");
+          var time = p.querySelector(".audio-time");
+          var icon = p.querySelector(".audio-icon");
+          if (fill) fill.style.width = (pos / audioDur * 100) + "%";
+          if (time) time.textContent = fmt(Math.floor(pos)) + " / " + fmt(audioDur);
+          if (icon) icon.classList.toggle("is-pause", !!audioOn[k]);
+        });
+      }, 1000);
+
+      renderTabs();
+      renderSections();
+      renderSheet();
+      bindContent();
+    })();
+  </script>
+</body>
+</html>

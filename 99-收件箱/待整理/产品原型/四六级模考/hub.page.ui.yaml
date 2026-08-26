@@ -71,6 +71,9 @@ regions:
         label: 03 成绩详情
         sample_value: 总分与解析
       - kind: list_item
+        label: 04 星火整卷做题（独立页）
+        sample_value: 整卷滚动对照还原
+      - kind: list_item
         label: 写作
         sample_value: 无分屏文本框
       - kind: list_item

@@ -63,6 +63,36 @@
     .sheet-num { background: #F0F0F0; color: #666; }
     .sheet-num.is-done { background: #3F80F4; color: #fff; }
     .sheet-num.is-cur { outline: 2px solid #3F80F4; outline-offset: 1px; }
+    /* 整卷模式：对照星火题型结构 */
+    .paper-full { background: #fff; }
+    .paper-full .q-card { background: transparent; box-shadow: none; border: 0; border-radius: 0; padding: 0; margin-bottom: 8px; }
+    .paper-part {
+      position: relative; display: flex; align-items: center;
+      background: #ecf2ff; color: #343a43; font-size: 18px; font-weight: 700;
+      line-height: 36px; padding-left: 30px;
+    }
+    .paper-part:before {
+      content: ""; position: absolute; left: 0; top: 0; width: 6px; height: 36px; background: #4c84ff;
+    }
+    .paper-sec-body { padding: 20px 30px 36px; }
+    .paper-dir { color: #343a43; font-size: 16px; line-height: 28px; }
+    .paper-group { margin: 12px 0 10px; color: #343a43; font-size: 16px; font-weight: 700; line-height: 22px; }
+    .paper-q-head { display: flex; align-items: flex-start; margin-bottom: 8px; color: #343a43; font-size: 16px; line-height: 24px; }
+    .paper-q-no { width: 36px; flex-shrink: 0; font-weight: 700; }
+    .paper-q-stem { flex: 1; }
+    .paper-q-score { color: #818a92; font-size: 14px; font-weight: 400; margin-left: 8px; }
+    .paper-opts { background: #f9fafe; padding: 16px 10px 8px; margin-bottom: 16px; }
+    .paper-opt { display: flex; align-items: flex-start; cursor: pointer; margin: 0 0 12px 11px; }
+    .paper-opt-letter {
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      width: 24px; height: 24px; border-radius: 12px; background: #edeff0; color: #818a92; font-size: 12px;
+    }
+    .paper-opt-letter.is-on { background: #4c84ff; color: #fff; font-weight: 700; }
+    .paper-opt-text { margin-left: 10px; color: #343a43; font-size: 14px; line-height: 22px; }
+    .paper-player { display: flex; align-items: center; gap: 12px; padding: 4px 0 14px; }
+    .paper-player .progress-track { position: relative; flex: 1; height: 4px; border-radius: 2px; cursor: pointer; }
+    .paper-bank { display: flex; flex-wrap: wrap; margin-top: 16px; padding: 16px 8px; background: #f9fafe; }
+    .paper-bank-item { display: flex; align-items: center; width: 33.33%; margin-bottom: 12px; padding-left: 11px; }
   </style>
 </head>
 <body class="h-screen overflow-hidden bg-page text-[#333]">
@@ -951,10 +981,216 @@
         var el = document.getElementById("qcard-" + qid);
         var scroller = document.getElementById("questionScroll");
         if (!el || !scroller) return;
-        scroller.scrollTo({ top: el.offsetTop - 8, behavior: "smooth" });
+        var top = el.getBoundingClientRect().top - scroller.getBoundingClientRect().top + scroller.scrollTop - 12;
+        scroller.scrollTo({ top: top, behavior: "smooth" });
       }
 
+      function playerHtmlSoft(q) {
+        var st = audioState[q.id];
+        return '<div class="paper-player" data-player="' + q.id + '">' +
+          '<audio class="hidden" preload="none" src="' + q.audio + '"></audio>' +
+          '<button type="button" class="play-btn grid h-8 w-8 shrink-0 place-items-center text-primary hover:opacity-80" data-play="' + q.id + '" title="播放听力">' +
+          '<svg class="icon-play h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>' +
+          '<svg class="icon-pause hidden h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>' +
+          "</button>" +
+          '<div class="progress-track"><div class="progress-fill" style="width:0"></div></div>' +
+          '<span class="cur-time text-[12px] text-[#818a92]">' + fmtTime(st.t) + "</span>" +
+          '<span class="dur-time text-[12px] text-[#818a92]"> / ' + fmtTime(st.duration) + "</span></div>";
+      }
+
+      function paperPartBar(text) {
+        return '<div class="paper-part">' + text + "</div>";
+      }
+
+      function paperQScore(q) {
+        return '<span class="paper-q-score">（' + (q.score || 1) + "分）</span>";
+      }
+
+      function paperQHead(no, stem, q) {
+        return '<div class="paper-q-head"><div class="paper-q-no">' + no + '.</div><div class="paper-q-stem">' + stem + paperQScore(q) + "</div></div>";
+      }
+
+      function paperOptionList(q) {
+        if (!q.options || !q.options.length) return "";
+        var html = '<div class="paper-opts">';
+        q.options.forEach(function (opt) {
+          var on = answers[q.id] === opt.key ? " is-on" : "";
+          html += '<label class="paper-opt" data-qid="' + q.id + '" data-key="' + opt.key + '">';
+          html += '<span class="paper-opt-letter' + on + '">' + opt.key + "</span>";
+          html += '<span class="paper-opt-text">' + opt.key + ") " + (opt.text || "") + "</span></label>";
+        });
+        return html + "</div>";
+      }
+
+      function paperClozeKeyBar(q) {
+        var usedElsewhere = {};
+        groupQuestions(q).forEach(function (sq) {
+          if (sq.id !== q.id && answers[sq.id]) usedElsewhere[answers[sq.id]] = true;
+        });
+        var html = '<div class="paper-opts"><div class="flex flex-wrap gap-2 pl-2">';
+        (q.options || []).forEach(function (opt) {
+          var on = answers[q.id] === opt.key ? " is-on" : "";
+          var labCls = "paper-opt";
+          if (usedElsewhere[opt.key]) labCls += " opacity-35";
+          html += '<label class="' + labCls + '" style="margin:0 16px 10px 0" data-qid="' + q.id + '" data-key="' + opt.key + '" title="' + (opt.text || opt.key) + '">';
+          html += '<span class="paper-opt-letter' + on + '">' + opt.key + "</span>";
+          html += '<span class="paper-opt-text">' + (opt.text || "") + "</span></label>";
+        });
+        return html + "</div></div>";
+      }
+
+      function paperQCard(q, bodyHtml) {
+        return '<article id="qcard-' + q.id + '" class="q-card mb-8">' +
+          '<div class="q-card-body">' + bodyHtml + "</div></article>";
+      }
+
+      function paperAnswerBlock(q) {
+        if (q.kind === "listening") {
+          var no = q.listenNo != null ? q.listenNo : q.id;
+          var stem = (q.stem || "").replace(/^Question\s+\d+\.\s*/i, "");
+          return paperQHead(no, stem, q) + paperOptionList(q);
+        }
+        if (q.kind === "banked_cloze") {
+          return paperQHead(q.blankNo, "Choose the best word for blank " + q.blankNo + ".", q) + paperClozeKeyBar(q);
+        }
+        if (q.kind === "matching") {
+          var mno = q.matchNo || q.id;
+          return paperQHead(mno, (q.stem || "").replace(/^\d+\.\s*/, ""), q) +
+            '<div class="paper-opts">' + matchingLetterBar(q) + "</div>";
+        }
+        if (q.kind === "careful_reading") {
+          var rno = q.readingNo || q.id;
+          return paperQHead(rno, (q.stem || "").replace(/^Question\s+\d+\.\s*/i, "").replace(/^\d+\.\s*/, ""), q) + paperOptionList(q);
+        }
+        if (q.kind === "translation") {
+          var tval = answers[q.id] || "";
+          return '<div class="paper-dir">' + q.stem + "</div>" +
+            '<p class="prompt-block mt-4 text-[16px] leading-7 text-[#343a43]">' + q.source + "</p>" +
+            '<textarea data-qid="' + q.id + '" class="mt-5 min-h-[140px] w-full resize-y rounded border border-[#dcdee2] px-3 py-2 text-[14px] leading-6 text-[#343a43] outline-none focus:border-primary" placeholder="在此处作答">' + tval + "</textarea>";
+        }
+        var wval = answers[q.id] || "";
+        return '<div class="paper-dir">' + q.stem + "</div>" +
+          '<p class="prompt-block mt-4 text-[16px] leading-7 text-[#343a43]">' + q.material + "</p>" +
+          '<textarea data-qid="' + q.id + '" class="mt-5 min-h-[200px] w-full resize-y rounded border border-[#dcdee2] px-3 py-2 text-[14px] leading-6 text-[#343a43] outline-none focus:border-primary" placeholder="在此处作答">' + wval + "</textarea>";
+      }
+
+      function renderFullPaper() {
+        var html = '<div class="paper-full">';
+
+        function emitCards(list) {
+          list.forEach(function (q) { html += paperQCard(q, paperAnswerBlock(q)); });
+        }
+
+        var writingQs = QUESTIONS.filter(function (q) { return q.kind === "writing"; });
+        if (writingQs.length) {
+          html += '<section id="paper-sec-writing">';
+          html += paperPartBar("PART Ⅰ　WRITING");
+          html += '<div class="paper-sec-body">';
+          emitCards(writingQs);
+          html += "</div></section>";
+        }
+
+        var listenQs = QUESTIONS.filter(function (q) { return q.kind === "listening"; });
+        if (listenQs.length) {
+          html += '<section id="paper-sec-listening">';
+          html += paperPartBar("PART Ⅱ　LISTENING COMPREHENSION");
+          html += '<div class="paper-sec-body">';
+          var listenGroups = [];
+          listenQs.forEach(function (q) {
+            var key = q.listenGroup || ("ln-" + q.id);
+            if (!listenGroups.length || listenGroups[listenGroups.length - 1].key !== key) {
+              listenGroups.push({ key: key, directions: q.directions, material: q.material, items: [] });
+            }
+            listenGroups[listenGroups.length - 1].items.push(q);
+          });
+          var lastDir = "";
+          listenGroups.forEach(function (g) {
+            var leader = g.items[0];
+            if (g.directions && g.directions !== lastDir) {
+              html += '<p class="paper-dir mb-4">' + g.directions + "</p>";
+              lastDir = g.directions;
+            }
+            if (g.material) html += '<div class="paper-group">' + g.material + "</div>";
+            html += playerHtmlSoft(leader);
+            emitCards(g.items);
+          });
+          html += "</div></section>";
+        }
+
+        var clozeQs = QUESTIONS.filter(function (q) { return q.kind === "banked_cloze"; });
+        if (clozeQs.length) {
+          var cq = clozeQs[0];
+          html += '<section id="paper-sec-cloze">';
+          html += paperPartBar("PART Ⅲ　READING COMPREHENSION");
+          html += '<div class="paper-sec-body">';
+          html += '<p class="paper-dir mb-4">' + (cq.directions || "") + "</p>";
+          html += '<p id="cloze-passage-full" class="text-[16px] leading-[30px] text-[#343a43]">' + clozePassageHtml(cq) + "</p>";
+          html += '<div class="paper-bank">' +
+            (cq.wordBank || []).map(function (w) {
+              return '<div class="paper-bank-item"><span class="paper-opt-letter">' + w.key + '</span><span class="paper-opt-text">' + w.word + "</span></div>";
+            }).join("") + "</div>";
+          emitCards(clozeQs);
+          html += "</div></section>";
+        }
+
+        var matchQs = QUESTIONS.filter(function (q) { return q.kind === "matching"; });
+        if (matchQs.length) {
+          var mq = matchQs[0];
+          html += '<section id="paper-sec-matching">';
+          html += paperPartBar("PART Ⅲ　READING COMPREHENSION");
+          html += '<div class="paper-sec-body">';
+          html += '<p class="paper-dir mb-4">' + (mq.directions || "") + "</p>";
+          (mq.paragraphs || []).forEach(function (p) {
+            html += '<p class="mb-3 text-[15px] leading-7 text-[#343a43]"><span class="mr-1 font-bold">' + p.key + ".</span>" + p.text + "</p>";
+          });
+          emitCards(matchQs);
+          html += "</div></section>";
+        }
+
+        var carefulQs = QUESTIONS.filter(function (q) { return q.kind === "careful_reading"; });
+        if (carefulQs.length) {
+          html += '<section id="paper-sec-careful">';
+          html += paperPartBar("PART Ⅲ　READING COMPREHENSION");
+          html += '<div class="paper-sec-body">';
+          html += '<p class="paper-dir mb-4">' + (carefulQs[0].directions || "") + "</p>";
+          var passageGroups = [];
+          carefulQs.forEach(function (q) {
+            var key = q.passageGroup || ("cr-" + q.id);
+            if (!passageGroups.length || passageGroups[passageGroups.length - 1].key !== key) {
+              passageGroups.push({ key: key, q: q, items: [] });
+            }
+            passageGroups[passageGroups.length - 1].items.push(q);
+          });
+          passageGroups.forEach(function (g) {
+            html += '<div class="paper-group">' + (g.q.passageTitle || "Passage") + "</div>";
+            String(g.q.passage || "").split(/\n\n+/).forEach(function (para) {
+              html += '<p class="mb-4 text-[16px] leading-[30px] text-[#343a43]">' + para + "</p>";
+            });
+            emitCards(g.items);
+          });
+          html += "</div></section>";
+        }
+
+        var transQs = QUESTIONS.filter(function (q) { return q.kind === "translation"; });
+        if (transQs.length) {
+          html += '<section id="paper-sec-translation">';
+          html += paperPartBar("PART Ⅳ　TRANSLATION");
+          html += '<div class="paper-sec-body">';
+          emitCards(transQs);
+          html += "</div></section>";
+        }
+
+        html += "</div>";
+        document.getElementById("questionList").innerHTML = html;
+      }
+
+
       function renderQuestions() {
+        if (viewMode === "full") {
+          renderFullPaper();
+          syncAllPlayers();
+          return;
+        }
         var box = document.getElementById("questionList");
         box.innerHTML = QUESTIONS.map(function (q, i) {
           var hidden = viewMode === "single" && i !== current ? " is-hidden" : "";
@@ -1057,13 +1293,18 @@
         var root = document.querySelector('[data-player="' + qid + '"]');
         if (!root) return;
         var pct = st.duration ? Math.min(100, (st.t / st.duration) * 100) : 0;
-        root.querySelector(".cur-time").textContent = fmtTime(st.t);
-        root.querySelector(".dur-time").textContent = fmtTime(st.duration);
-        root.querySelector(".progress-fill").style.width = pct + "%";
+        var cur = root.querySelector(".cur-time");
+        var dur = root.querySelector(".dur-time");
+        var fill = root.querySelector(".progress-fill");
         var thumb = root.querySelector(".progress-thumb");
+        var playIcon = root.querySelector(".icon-play");
+        var pauseIcon = root.querySelector(".icon-pause");
+        if (cur) cur.textContent = fmtTime(st.t);
+        if (dur) dur.textContent = fmtTime(st.duration);
+        if (fill) fill.style.width = pct + "%";
         if (thumb) thumb.style.left = pct + "%";
-        root.querySelector(".icon-play").classList.toggle("hidden", st.playing);
-        root.querySelector(".icon-pause").classList.toggle("hidden", !st.playing);
+        if (playIcon) playIcon.classList.toggle("hidden", st.playing);
+        if (pauseIcon) pauseIcon.classList.toggle("hidden", !st.playing);
       }
 
       function showOnlyCurrent() {
@@ -1137,8 +1378,16 @@
         var card = document.getElementById("qcard-" + qid);
         if (!card) return;
         var body = card.querySelector(".q-card-body");
-        if (body) body.innerHTML = innerBlock(q);
-        else card.querySelector(".mx-5.mt-2").innerHTML = innerBlock(q);
+        var blockHtml = viewMode === "full" ? paperAnswerBlock(q) : innerBlock(q);
+        if (body) body.innerHTML = blockHtml;
+        else {
+          var boxed = card.querySelector(".mx-5.mt-2");
+          if (boxed) boxed.innerHTML = blockHtml;
+        }
+        if (viewMode === "full" && q.kind === "banked_cloze") {
+          var passageEl = document.getElementById("cloze-passage-full");
+          if (passageEl) passageEl.innerHTML = clozePassageHtml(q);
+        }
         if (q.kind === "listening") syncPlayer(q.id);
         if (useSplitLayout(q)) {
           renderParentPanel();
@@ -1239,7 +1488,9 @@
       }, 200);
 
       document.getElementById("modeSingle").onclick = function () { setViewMode("single"); };
-      document.getElementById("modeFull").onclick = function () { setViewMode("full"); };
+      document.getElementById("modeFull").onclick = function () {
+        location.href = "cet-exam-full.html" + location.search;
+      };
 
       document.getElementById("questionList").addEventListener("click", function (e) {
         handleQuestionAreaClick(e);
@@ -1282,6 +1533,26 @@
           marked[mid] = !marked[mid];
           renderSheet();
           toast(marked[mid] ? "已标记本题" : "已取消标记");
+          return;
+        }
+        var paperMark = e.target.closest("[data-paper-mark]");
+        if (paperMark) {
+          var pmid = Number(paperMark.getAttribute("data-paper-mark"));
+          marked[pmid] = !marked[pmid];
+          paperMark.classList.toggle("is-on", !!marked[pmid]);
+          renderSheet();
+          toast(marked[pmid] ? "已标记本题" : "已取消标记");
+          return;
+        }
+        var paperFav = e.target.closest("[data-paper-fav]");
+        if (paperFav) {
+          var pfid = Number(paperFav.getAttribute("data-paper-fav"));
+          faved[pfid] = !faved[pfid];
+          paperFav.classList.toggle("is-on", !!faved[pfid]);
+          var star = paperFav.querySelector("svg");
+          if (star) star.setAttribute("fill", faved[pfid] ? "currentColor" : "none");
+          syncMini();
+          toast(faved[pfid] ? "已收藏本题" : "已取消收藏");
           return;
         }
         var inlineFav = e.target.closest("#inlineFavBtn");
@@ -1328,11 +1599,17 @@
         var card = document.getElementById("qcard-" + qid);
         if (card) {
           card.querySelectorAll(".opt-dot").forEach(function (dot) { dot.classList.remove("is-on"); });
+          card.querySelectorAll(".paper-opt-letter").forEach(function (dot) { dot.classList.remove("is-on"); });
           card.querySelectorAll(".cloze-opt-letter").forEach(function (dot) { dot.classList.remove("is-on"); });
+          card.querySelectorAll(".match-letter").forEach(function (dot) { dot.classList.remove("is-on"); });
           var optDot = lab.querySelector(".opt-dot");
+          var paperDot = lab.querySelector(".paper-opt-letter");
           var clozeDot = lab.querySelector(".cloze-opt-letter");
+          var matchDot = lab.querySelector(".match-letter");
           if (optDot) optDot.classList.add("is-on");
+          if (paperDot) paperDot.classList.add("is-on");
           if (clozeDot) clozeDot.classList.add("is-on");
+          if (matchDot) matchDot.classList.add("is-on");
         }
         if (ansQ && ansQ.clozeGroup) {
           groupQuestions(ansQ).forEach(function (sq) {
