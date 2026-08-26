@@ -1,0 +1,121 @@
+meta:
+  page_id: exam-matching
+  page_name: 考场·信息匹配
+  surface: b_end
+  page_type: b_detail_page
+  anti_slop: pass
+  design_plan_ref: design-plan.md
+  canvas:
+    width: 1440
+    height: 900
+  figma:
+    file_key: "1PNr2U2fqyc9ppB7YYMbuR"
+    frame_name: "P07-考场-信息匹配"
+    frame_node_id: ""
+
+shell:
+  type: none
+  title: 2026年英语四级考试真题一
+
+regions:
+  - id: exam_topbar
+    type: page_header
+    label: 考场顶栏
+    layout:
+      direction: row
+      gap: 12
+      padding: 12
+    components:
+      - kind: text
+        label: 试卷名
+        sample_value: 2026年英语四级考试真题一
+      - kind: text
+        label: 剩余时间
+        sample_value: 477分36秒
+      - kind: button
+        label: 退出考场
+        variant: danger
+
+  - id: summary_strip
+    type: summary_strip
+    label: 模式条
+    layout:
+      direction: row
+      gap: 12
+      padding: 16
+    components:
+      - kind: button
+        label: 单题模式
+        variant: primary
+      - kind: button
+        label: 整卷模式
+        variant: secondary
+
+  - id: tabs
+    type: tabs
+    label: 答题卡分组
+    layout:
+      direction: column
+      gap: 8
+      padding: 16
+    components:
+      - kind: tab
+        label: 信息匹配 36 当前
+
+  - id: parent_panel
+    type: form_section
+    label: 段落原文
+    layout:
+      direction: column
+      gap: 8
+      padding: 24
+    components:
+      - kind: text
+        label: I段
+        sample_value: Hiring managers say unemployed workers over 45 need more training.
+
+  - id: question_block
+    type: form_section
+    label: 匹配题
+    layout:
+      direction: column
+      gap: 8
+      padding: 16
+    components:
+      - kind: text
+        label: 题干
+        sample_value: 36. Hiring managers believe unemployed workers over 45 lack good skills.
+      - kind: tag
+        label: 字母条
+        sample_value: I
+
+  - id: nav_bar
+    type: action_bar
+    label: 题间导航
+    layout:
+      direction: row
+      gap: 8
+      padding: 16
+    constraints:
+      primary_actions_max: 1
+    components:
+      - kind: button
+        label: 上一题
+        variant: secondary
+      - kind: button
+        label: 下一题
+        variant: secondary
+
+  - id: answer_sheet
+    type: action_bar
+    label: 答题卡
+    layout:
+      direction: column
+      gap: 12
+      padding: 16
+    constraints:
+      primary_actions_max: 1
+    components:
+      - kind: button
+        label: 提交考卷
+        variant: danger

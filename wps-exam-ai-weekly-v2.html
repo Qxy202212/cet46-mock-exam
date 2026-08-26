@@ -141,12 +141,25 @@
             <div id="questionList"></div>
           </div>
         </div>
-        <div id="navBar" class="flex items-center justify-between px-5 py-3 select-none">
+        <div id="navBar" class="relative flex items-center px-5 py-3 select-none">
           <div class="flex items-center gap-2">
             <button id="prevBtn" type="button" class="h-8 rounded bg-[#B7D8F8] px-4 text-[13px] text-white hover:bg-[#A6CEF4]">&lt; 上一题</button>
             <button id="nextBtn" type="button" class="h-8 rounded bg-[#8EC4F5] px-4 text-[13px] text-white hover:bg-[#7BB8F0]">下一题 &gt;</button>
           </div>
-          <div class="hidden text-[12px] text-[#B0B0B0]">注：AI实训题的评分明细请在提交考卷后查看</div>
+          <div class="pointer-events-none absolute inset-0 flex items-center justify-center">
+            <button id="showAnalysisBtn" type="button" class="pointer-events-auto inline-flex h-8 items-center gap-1.5 rounded border border-[#9EC4F8] bg-white px-3.5 text-[13px] text-primary hover:bg-blue-50">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+              显示解析
+            </button>
+          </div>
+          <label class="ml-auto inline-flex cursor-pointer items-center gap-1.5 text-[13px] text-[#666] select-none">
+            <input id="autoAnalysisChk" type="checkbox" class="h-3.5 w-3.5 accent-[#3F80F4]" checked />
+            答题完自动显示解析
+          </label>
+        </div>
+        <div id="analysisPanel" class="hidden border-t border-[#F0F0F0] bg-[#FAFBFC] px-5 py-3">
+          <div class="text-[13px] font-medium text-[#333]">解析</div>
+          <div id="analysisBody" class="mt-1.5 text-[13px] leading-6 text-[#666]"></div>
         </div>
       </section>
 
@@ -195,463 +208,10 @@
 
   <div id="toast" class="pointer-events-none fixed left-1/2 top-20 z-50 hidden -translate-x-1/2 rounded bg-black/70 px-4 py-2 text-[13px] text-white"></div>
 
+  <script src="cet-exam-data.js"></script>
   <script>
     (function () {
-      var QUESTIONS = [
-        {
-          id: 1, section: "听力", kind: "listening", label: "听力题", score: 5,
-          listenGroup: "ln-1", listenRange: [1, 2],
-          audio: "https://mock.audio/cet4/listening/conversation-one.mp3", duration: 48,
-          directions: "Section A. Directions: In this section, you will hear two long conversations. At the end of each conversation, you will hear four questions. Both the conversation and the questions will be spoken only once.",
-          material: "Conversation One",
-          stem: "Question 1. What does the woman mean?",
-          options: [
-            { key: "A", text: "She will finish the report after class." },
-            { key: "B", text: "She has already submitted the assignment." },
-            { key: "C", text: "She needs more time to collect the data." },
-            { key: "D", text: "She is not going to attend the meeting." }
-          ]
-        },
-        {
-          id: 2, section: "听力", kind: "listening", label: "听力题", score: 5,
-          listenGroup: "ln-1", listenRange: [1, 2],
-          audio: "https://mock.audio/cet4/listening/conversation-one.mp3", duration: 48,
-          directions: "Section A. Directions: In this section, you will hear two long conversations. At the end of each conversation, you will hear four questions. Both the conversation and the questions will be spoken only once.",
-          material: "Conversation One",
-          stem: "Question 2. What will the man probably do next?",
-          options: [
-            { key: "A", text: "Call the professor immediately." },
-            { key: "B", text: "Share his notes with the woman." },
-            { key: "C", text: "Cancel the group discussion." },
-            { key: "D", text: "Wait for the library to open." }
-          ]
-        },
-        {
-          id: 3, section: "阅读", kind: "banked_cloze", label: "选词填空", score: 1,
-          clozeGroup: "bc-1", blankNo: 26,
-          directions: "Section A. Directions: In this section, there is a passage with ten blanks. You are required to select one word for each blank from a list of choices. You may not use any of the words in the bank more than once.",
-          wordBank: [
-            { key: "A", word: "analyze" }, { key: "B", word: "weekly" }, { key: "C", word: "inventory" },
-            { key: "D", word: "patterns" }, { key: "E", word: "support" }, { key: "F", word: "accurate" },
-            { key: "G", word: "meeting" }, { key: "H", word: "assistant" }, { key: "I", word: "sales" }, { key: "J", word: "reports" }
-          ],
-          segments: [
-            { type: "text", text: "Every Monday, the shop " },
-            { type: "blank", no: 26 },
-            { type: "text", text: " prepares a " },
-            { type: "blank", no: 27 },
-            { type: "text", text: " operation report. The " },
-            { type: "blank", no: 28 },
-            { type: "text", text: " manager uses WPS AI to " },
-            { type: "blank", no: 29 },
-            { type: "text", text: " last week's " },
-            { type: "blank", no: 30 },
-            { type: "text", text: " data and find buying " },
-            { type: "blank", no: 31 },
-            { type: "text", text: ". The report provides " },
-            { type: "blank", no: 32 },
-            { type: "text", text: " for the morning " },
-            { type: "blank", no: 33 },
-            { type: "text", text: " and helps adjust " },
-            { type: "blank", no: 34 },
-            { type: "text", text: " before the next busy week." }
-          ],
-          stem: "26. Choose the best word for blank 26.",
-          options: [
-            { key: "A", text: "analyze" }, { key: "B", text: "weekly" }, { key: "C", text: "inventory" },
-            { key: "D", text: "patterns" }, { key: "E", text: "support" }, { key: "F", text: "accurate" },
-            { key: "G", text: "meeting" }, { key: "H", text: "assistant" }, { key: "I", text: "sales" }, { key: "J", text: "reports" }
-          ]
-        },
-        {
-          id: 4, section: "阅读", kind: "banked_cloze", label: "选词填空", score: 1,
-          clozeGroup: "bc-1", blankNo: 27,
-          directions: "Section A. Directions: In this section, there is a passage with ten blanks. You are required to select one word for each blank from a list of choices. You may not use any of the words in the bank more than once.",
-          wordBank: [
-            { key: "A", word: "analyze" }, { key: "B", word: "weekly" }, { key: "C", word: "inventory" },
-            { key: "D", word: "patterns" }, { key: "E", word: "support" }, { key: "F", word: "accurate" },
-            { key: "G", word: "meeting" }, { key: "H", word: "assistant" }, { key: "I", word: "sales" }, { key: "J", word: "reports" }
-          ],
-          segments: [
-            { type: "text", text: "Every Monday, the shop " },
-            { type: "blank", no: 26 },
-            { type: "text", text: " prepares a " },
-            { type: "blank", no: 27 },
-            { type: "text", text: " operation report. The " },
-            { type: "blank", no: 28 },
-            { type: "text", text: " manager uses WPS AI to " },
-            { type: "blank", no: 29 },
-            { type: "text", text: " last week's " },
-            { type: "blank", no: 30 },
-            { type: "text", text: " data and find buying " },
-            { type: "blank", no: 31 },
-            { type: "text", text: ". The report provides " },
-            { type: "blank", no: 32 },
-            { type: "text", text: " for the morning " },
-            { type: "blank", no: 33 },
-            { type: "text", text: " and helps adjust " },
-            { type: "blank", no: 34 },
-            { type: "text", text: " before the next busy week." }
-          ],
-          stem: "27. Choose the best word for blank 27.",
-          options: [
-            { key: "A", text: "analyze" }, { key: "B", text: "weekly" }, { key: "C", text: "inventory" },
-            { key: "D", text: "patterns" }, { key: "E", text: "support" }, { key: "F", text: "accurate" },
-            { key: "G", text: "meeting" }, { key: "H", text: "assistant" }, { key: "I", text: "sales" }, { key: "J", text: "reports" }
-          ]
-        },
-        {
-          id: 5, section: "阅读", kind: "banked_cloze", label: "选词填空", score: 1,
-          clozeGroup: "bc-1", blankNo: 28,
-          directions: "Section A. Directions: In this section, there is a passage with ten blanks. You are required to select one word for each blank from a list of choices. You may not use any of the words in the bank more than once.",
-          wordBank: [
-            { key: "A", word: "analyze" }, { key: "B", word: "weekly" }, { key: "C", word: "inventory" },
-            { key: "D", word: "patterns" }, { key: "E", word: "support" }, { key: "F", word: "accurate" },
-            { key: "G", word: "meeting" }, { key: "H", word: "assistant" }, { key: "I", word: "sales" }, { key: "J", word: "reports" }
-          ],
-          segments: [
-            { type: "text", text: "Every Monday, the shop " },
-            { type: "blank", no: 26 },
-            { type: "text", text: " prepares a " },
-            { type: "blank", no: 27 },
-            { type: "text", text: " operation report. The " },
-            { type: "blank", no: 28 },
-            { type: "text", text: " manager uses WPS AI to " },
-            { type: "blank", no: 29 },
-            { type: "text", text: " last week's " },
-            { type: "blank", no: 30 },
-            { type: "text", text: " data and find buying " },
-            { type: "blank", no: 31 },
-            { type: "text", text: ". The report provides " },
-            { type: "blank", no: 32 },
-            { type: "text", text: " for the morning " },
-            { type: "blank", no: 33 },
-            { type: "text", text: " and helps adjust " },
-            { type: "blank", no: 34 },
-            { type: "text", text: " before the next busy week." }
-          ],
-          stem: "28. Choose the best word for blank 28.",
-          options: [
-            { key: "A", text: "analyze" }, { key: "B", text: "weekly" }, { key: "C", text: "inventory" },
-            { key: "D", text: "patterns" }, { key: "E", text: "support" }, { key: "F", text: "accurate" },
-            { key: "G", text: "meeting" }, { key: "H", text: "assistant" }, { key: "I", text: "sales" }, { key: "J", text: "reports" }
-          ]
-        },
-        {
-          id: 6, section: "阅读", kind: "banked_cloze", label: "选词填空", score: 1,
-          clozeGroup: "bc-1", blankNo: 29,
-          directions: "Section A. Directions: In this section, there is a passage with ten blanks. You are required to select one word for each blank from a list of choices. You may not use any of the words in the bank more than once.",
-          wordBank: [
-            { key: "A", word: "analyze" }, { key: "B", word: "weekly" }, { key: "C", word: "inventory" },
-            { key: "D", word: "patterns" }, { key: "E", word: "support" }, { key: "F", word: "accurate" },
-            { key: "G", word: "meeting" }, { key: "H", word: "assistant" }, { key: "I", word: "sales" }, { key: "J", word: "reports" }
-          ],
-          segments: [
-            { type: "text", text: "Every Monday, the shop " },
-            { type: "blank", no: 26 },
-            { type: "text", text: " prepares a " },
-            { type: "blank", no: 27 },
-            { type: "text", text: " operation report. The " },
-            { type: "blank", no: 28 },
-            { type: "text", text: " manager uses WPS AI to " },
-            { type: "blank", no: 29 },
-            { type: "text", text: " last week's " },
-            { type: "blank", no: 30 },
-            { type: "text", text: " data and find buying " },
-            { type: "blank", no: 31 },
-            { type: "text", text: ". The report provides " },
-            { type: "blank", no: 32 },
-            { type: "text", text: " for the morning " },
-            { type: "blank", no: 33 },
-            { type: "text", text: " and helps adjust " },
-            { type: "blank", no: 34 },
-            { type: "text", text: " before the next busy week." }
-          ],
-          stem: "29. Choose the best word for blank 29.",
-          options: [
-            { key: "A", text: "analyze" }, { key: "B", text: "weekly" }, { key: "C", text: "inventory" },
-            { key: "D", text: "patterns" }, { key: "E", text: "support" }, { key: "F", text: "accurate" },
-            { key: "G", text: "meeting" }, { key: "H", text: "assistant" }, { key: "I", text: "sales" }, { key: "J", text: "reports" }
-          ]
-        },
-        {
-          id: 7, section: "阅读", kind: "banked_cloze", label: "选词填空", score: 1,
-          clozeGroup: "bc-1", blankNo: 30,
-          directions: "Section A. Directions: In this section, there is a passage with ten blanks. You are required to select one word for each blank from a list of choices. You may not use any of the words in the bank more than once.",
-          wordBank: [
-            { key: "A", word: "analyze" }, { key: "B", word: "weekly" }, { key: "C", word: "inventory" },
-            { key: "D", word: "patterns" }, { key: "E", word: "support" }, { key: "F", word: "accurate" },
-            { key: "G", word: "meeting" }, { key: "H", word: "assistant" }, { key: "I", word: "sales" }, { key: "J", word: "reports" }
-          ],
-          segments: [
-            { type: "text", text: "Every Monday, the shop " },
-            { type: "blank", no: 26 },
-            { type: "text", text: " prepares a " },
-            { type: "blank", no: 27 },
-            { type: "text", text: " operation report. The " },
-            { type: "blank", no: 28 },
-            { type: "text", text: " manager uses WPS AI to " },
-            { type: "blank", no: 29 },
-            { type: "text", text: " last week's " },
-            { type: "blank", no: 30 },
-            { type: "text", text: " data and find buying " },
-            { type: "blank", no: 31 },
-            { type: "text", text: ". The report provides " },
-            { type: "blank", no: 32 },
-            { type: "text", text: " for the morning " },
-            { type: "blank", no: 33 },
-            { type: "text", text: " and helps adjust " },
-            { type: "blank", no: 34 },
-            { type: "text", text: " before the next busy week." }
-          ],
-          stem: "30. Choose the best word for blank 30.",
-          options: [
-            { key: "A", text: "analyze" }, { key: "B", text: "weekly" }, { key: "C", text: "inventory" },
-            { key: "D", text: "patterns" }, { key: "E", text: "support" }, { key: "F", text: "accurate" },
-            { key: "G", text: "meeting" }, { key: "H", text: "assistant" }, { key: "I", text: "sales" }, { key: "J", text: "reports" }
-          ]
-        },
-        {
-          id: 8, section: "阅读", kind: "banked_cloze", label: "选词填空", score: 1,
-          clozeGroup: "bc-1", blankNo: 31,
-          directions: "Section A. Directions: In this section, there is a passage with ten blanks. You are required to select one word for each blank from a list of choices. You may not use any of the words in the bank more than once.",
-          wordBank: [
-            { key: "A", word: "analyze" }, { key: "B", word: "weekly" }, { key: "C", word: "inventory" },
-            { key: "D", word: "patterns" }, { key: "E", word: "support" }, { key: "F", word: "accurate" },
-            { key: "G", word: "meeting" }, { key: "H", word: "assistant" }, { key: "I", word: "sales" }, { key: "J", word: "reports" }
-          ],
-          segments: [
-            { type: "text", text: "Every Monday, the shop " },
-            { type: "blank", no: 26 },
-            { type: "text", text: " prepares a " },
-            { type: "blank", no: 27 },
-            { type: "text", text: " operation report. The " },
-            { type: "blank", no: 28 },
-            { type: "text", text: " manager uses WPS AI to " },
-            { type: "blank", no: 29 },
-            { type: "text", text: " last week's " },
-            { type: "blank", no: 30 },
-            { type: "text", text: " data and find buying " },
-            { type: "blank", no: 31 },
-            { type: "text", text: ". The report provides " },
-            { type: "blank", no: 32 },
-            { type: "text", text: " for the morning " },
-            { type: "blank", no: 33 },
-            { type: "text", text: " and helps adjust " },
-            { type: "blank", no: 34 },
-            { type: "text", text: " before the next busy week." }
-          ],
-          stem: "31. Choose the best word for blank 31.",
-          options: [
-            { key: "A", text: "analyze" }, { key: "B", text: "weekly" }, { key: "C", text: "inventory" },
-            { key: "D", text: "patterns" }, { key: "E", text: "support" }, { key: "F", text: "accurate" },
-            { key: "G", text: "meeting" }, { key: "H", text: "assistant" }, { key: "I", text: "sales" }, { key: "J", text: "reports" }
-          ]
-        },
-        {
-          id: 9, section: "阅读", kind: "banked_cloze", label: "选词填空", score: 1,
-          clozeGroup: "bc-1", blankNo: 32,
-          directions: "Section A. Directions: In this section, there is a passage with ten blanks. You are required to select one word for each blank from a list of choices. You may not use any of the words in the bank more than once.",
-          wordBank: [
-            { key: "A", word: "analyze" }, { key: "B", word: "weekly" }, { key: "C", word: "inventory" },
-            { key: "D", word: "patterns" }, { key: "E", word: "support" }, { key: "F", word: "accurate" },
-            { key: "G", word: "meeting" }, { key: "H", word: "assistant" }, { key: "I", word: "sales" }, { key: "J", word: "reports" }
-          ],
-          segments: [
-            { type: "text", text: "Every Monday, the shop " },
-            { type: "blank", no: 26 },
-            { type: "text", text: " prepares a " },
-            { type: "blank", no: 27 },
-            { type: "text", text: " operation report. The " },
-            { type: "blank", no: 28 },
-            { type: "text", text: " manager uses WPS AI to " },
-            { type: "blank", no: 29 },
-            { type: "text", text: " last week's " },
-            { type: "blank", no: 30 },
-            { type: "text", text: " data and find buying " },
-            { type: "blank", no: 31 },
-            { type: "text", text: ". The report provides " },
-            { type: "blank", no: 32 },
-            { type: "text", text: " for the morning " },
-            { type: "blank", no: 33 },
-            { type: "text", text: " and helps adjust " },
-            { type: "blank", no: 34 },
-            { type: "text", text: " before the next busy week." }
-          ],
-          stem: "32. Choose the best word for blank 32.",
-          options: [
-            { key: "A", text: "analyze" }, { key: "B", text: "weekly" }, { key: "C", text: "inventory" },
-            { key: "D", text: "patterns" }, { key: "E", text: "support" }, { key: "F", text: "accurate" },
-            { key: "G", text: "meeting" }, { key: "H", text: "assistant" }, { key: "I", text: "sales" }, { key: "J", text: "reports" }
-          ]
-        },
-        {
-          id: 10, section: "阅读", kind: "banked_cloze", label: "选词填空", score: 1,
-          clozeGroup: "bc-1", blankNo: 33,
-          directions: "Section A. Directions: In this section, there is a passage with ten blanks. You are required to select one word for each blank from a list of choices. You may not use any of the words in the bank more than once.",
-          wordBank: [
-            { key: "A", word: "analyze" }, { key: "B", word: "weekly" }, { key: "C", word: "inventory" },
-            { key: "D", word: "patterns" }, { key: "E", word: "support" }, { key: "F", word: "accurate" },
-            { key: "G", word: "meeting" }, { key: "H", word: "assistant" }, { key: "I", word: "sales" }, { key: "J", word: "reports" }
-          ],
-          segments: [
-            { type: "text", text: "Every Monday, the shop " },
-            { type: "blank", no: 26 },
-            { type: "text", text: " prepares a " },
-            { type: "blank", no: 27 },
-            { type: "text", text: " operation report. The " },
-            { type: "blank", no: 28 },
-            { type: "text", text: " manager uses WPS AI to " },
-            { type: "blank", no: 29 },
-            { type: "text", text: " last week's " },
-            { type: "blank", no: 30 },
-            { type: "text", text: " data and find buying " },
-            { type: "blank", no: 31 },
-            { type: "text", text: ". The report provides " },
-            { type: "blank", no: 32 },
-            { type: "text", text: " for the morning " },
-            { type: "blank", no: 33 },
-            { type: "text", text: " and helps adjust " },
-            { type: "blank", no: 34 },
-            { type: "text", text: " before the next busy week." }
-          ],
-          stem: "33. Choose the best word for blank 33.",
-          options: [
-            { key: "A", text: "analyze" }, { key: "B", text: "weekly" }, { key: "C", text: "inventory" },
-            { key: "D", text: "patterns" }, { key: "E", text: "support" }, { key: "F", text: "accurate" },
-            { key: "G", text: "meeting" }, { key: "H", text: "assistant" }, { key: "I", text: "sales" }, { key: "J", text: "reports" }
-          ]
-        },
-        {
-          id: 11, section: "阅读", kind: "banked_cloze", label: "选词填空", score: 1,
-          clozeGroup: "bc-1", blankNo: 34,
-          directions: "Section A. Directions: In this section, there is a passage with ten blanks. You are required to select one word for each blank from a list of choices. You may not use any of the words in the bank more than once.",
-          wordBank: [
-            { key: "A", word: "analyze" }, { key: "B", word: "weekly" }, { key: "C", word: "inventory" },
-            { key: "D", word: "patterns" }, { key: "E", word: "support" }, { key: "F", word: "accurate" },
-            { key: "G", word: "meeting" }, { key: "H", word: "assistant" }, { key: "I", word: "sales" }, { key: "J", word: "reports" }
-          ],
-          segments: [
-            { type: "text", text: "Every Monday, the shop " },
-            { type: "blank", no: 26 },
-            { type: "text", text: " prepares a " },
-            { type: "blank", no: 27 },
-            { type: "text", text: " operation report. The " },
-            { type: "blank", no: 28 },
-            { type: "text", text: " manager uses WPS AI to " },
-            { type: "blank", no: 29 },
-            { type: "text", text: " last week's " },
-            { type: "blank", no: 30 },
-            { type: "text", text: " data and find buying " },
-            { type: "blank", no: 31 },
-            { type: "text", text: ". The report provides " },
-            { type: "blank", no: 32 },
-            { type: "text", text: " for the morning " },
-            { type: "blank", no: 33 },
-            { type: "text", text: " and helps adjust " },
-            { type: "blank", no: 34 },
-            { type: "text", text: " before the next busy week." }
-          ],
-          stem: "34. Choose the best word for blank 34.",
-          options: [
-            { key: "A", text: "analyze" }, { key: "B", text: "weekly" }, { key: "C", text: "inventory" },
-            { key: "D", text: "patterns" }, { key: "E", text: "support" }, { key: "F", text: "accurate" },
-            { key: "G", text: "meeting" }, { key: "H", text: "assistant" }, { key: "I", text: "sales" }, { key: "J", text: "reports" }
-          ]
-        },
-        {
-          id: 12, section: "阅读", kind: "matching", label: "信息匹配", score: 5,
-          matchGroup: "mt-1", matchNo: 36,
-          directions: "Section B. Directions: In this section, you are going to read a passage with ten statements attached to it. Each statement contains information given in one of the paragraphs. Identify the paragraph from which the information is derived. You may choose a paragraph more than once. Each paragraph is marked with a letter.",
-          paragraphs: [
-            { key: "A", text: "Many employers still prefer candidates with recent workplace experience. They worry that long gaps on a résumé signal outdated skills, especially when technology changes rapidly across industries." },
-            { key: "B", text: "Career counselors often advise older job seekers to rewrite their CVs around achievements rather than years of service. Clear results help hiring teams see value beyond age." },
-            { key: "C", text: "Some companies have introduced reverse mentoring, pairing senior staff with younger employees who teach digital tools while learning leadership lessons in return." },
-            { key: "D", text: "Government programs in several countries now subsidize mid-career training. The goal is to keep experienced workers productive instead of pushing them into early retirement." },
-            { key: "E", text: "Recruiters admit that automated screening systems sometimes reject résumés with graduation years that look \"too old,\" even when the applicant is highly qualified." },
-            { key: "F", text: "Flexible work arrangements can help people over 45 re-enter the labor market. Part-time roles and project-based contracts lower the risk for both sides." },
-            { key: "G", text: "After a layoff, finding a similar job can take months. Changing fields entirely is harder still, because employers may question whether the applicant can adapt quickly enough." },
-            { key: "H", text: "Professional networks matter more with age. Referrals from former colleagues often open doors that online applications alone cannot." },
-            { key: "I", text: "Hiring managers say that when they look at applicants who have been out of work for a while, especially those over 45, they often assume those candidates need more training than younger applicants. They also tend to believe older unemployed workers are less adaptable. Some managers argue that government subsidies for retraining would help, while others prefer industry-backed certificates that prove real workplace skills." },
-            { key: "J", text: "Learning new skills after 45 is possible, but not everyone joins training programs. Studies show that people from lower-income communities are less likely to enroll, even when courses are free. Those who feel least confident about returning to study are often the ones who need support the most." },
-            { key: "K", text: "A recent survey found that many employers value work experience more than a \"perfect\" degree. Candidates who can demonstrate practical problem-solving often beat applicants with stronger academic records but little real-world practice." },
-            { key: "L", text: "Ageism remains a barrier. At the same time, inexpensive or free training is widely available on platforms such as Udemy, Lynda.com and YouTube, making it easier for motivated learners to update skills without large tuition fees." },
-            { key: "M", text: "Switching careers after 45 is difficult, and getting reemployed after a layoff can be even tougher. Still, continuous learning helps people stay employable, and society benefits when experienced workers remain in the labor force." }
-          ],
-          stem: "Hiring managers believe unemployed workers over 45 lack good skills and are less adaptable."
-        },
-        {
-          id: 13, section: "阅读", kind: "matching", label: "信息匹配", score: 5,
-          matchGroup: "mt-1", matchNo: 37,
-          directions: "Section B. Directions: In this section, you are going to read a passage with ten statements attached to it. Each statement contains information given in one of the paragraphs. Identify the paragraph from which the information is derived. You may choose a paragraph more than once. Each paragraph is marked with a letter.",
-          paragraphs: [
-            { key: "A", text: "Many employers still prefer candidates with recent workplace experience. They worry that long gaps on a résumé signal outdated skills, especially when technology changes rapidly across industries." },
-            { key: "B", text: "Career counselors often advise older job seekers to rewrite their CVs around achievements rather than years of service. Clear results help hiring teams see value beyond age." },
-            { key: "C", text: "Some companies have introduced reverse mentoring, pairing senior staff with younger employees who teach digital tools while learning leadership lessons in return." },
-            { key: "D", text: "Government programs in several countries now subsidize mid-career training. The goal is to keep experienced workers productive instead of pushing them into early retirement." },
-            { key: "E", text: "Recruiters admit that automated screening systems sometimes reject résumés with graduation years that look \"too old,\" even when the applicant is highly qualified." },
-            { key: "F", text: "Flexible work arrangements can help people over 45 re-enter the labor market. Part-time roles and project-based contracts lower the risk for both sides." },
-            { key: "G", text: "After a layoff, finding a similar job can take months. Changing fields entirely is harder still, because employers may question whether the applicant can adapt quickly enough." },
-            { key: "H", text: "Professional networks matter more with age. Referrals from former colleagues often open doors that online applications alone cannot." },
-            { key: "I", text: "Hiring managers say that when they look at applicants who have been out of work for a while, especially those over 45, they often assume those candidates need more training than younger applicants. They also tend to believe older unemployed workers are less adaptable. Some managers argue that government subsidies for retraining would help, while others prefer industry-backed certificates that prove real workplace skills." },
-            { key: "J", text: "Learning new skills after 45 is possible, but not everyone joins training programs. Studies show that people from lower-income communities are less likely to enroll, even when courses are free. Those who feel least confident about returning to study are often the ones who need support the most." },
-            { key: "K", text: "A recent survey found that many employers value work experience more than a \"perfect\" degree. Candidates who can demonstrate practical problem-solving often beat applicants with stronger academic records but little real-world practice." },
-            { key: "L", text: "Ageism remains a barrier. At the same time, inexpensive or free training is widely available on platforms such as Udemy, Lynda.com and YouTube, making it easier for motivated learners to update skills without large tuition fees." },
-            { key: "M", text: "Switching careers after 45 is difficult, and getting reemployed after a layoff can be even tougher. Still, continuous learning helps people stay employable, and society benefits when experienced workers remain in the labor force." }
-          ],
-          stem: "Switching to a new career is difficult and getting reemployed after a layoff is even tougher."
-        },
-        {
-          id: 14, section: "阅读", kind: "careful_reading", label: "仔细阅读", score: 10,
-          passageGroup: "cr-1", passageTitle: "Passage One", readingNo: 46, readingRange: [46, 50],
-          directions: "Directions: There are 2 passages in this section. Each passage is followed by some questions or unfinished statements. For each of them there are four choices marked A), B), C) and D). You should decide on the best choice and mark the corresponding letter on Answer Sheet 2 with a single line through the centre.",
-          passage: "New York's Eleven Madison Park is becoming a vegan (素食主义的) restaurant. The decision surprised many diners who knew the place for its rich meat and fish dishes. The chef said the change was about creativity and the future of fine dining, not a temporary experiment. Plant-based cooking, he argued, can still deliver the same sense of luxury that high-end guests expect.\n\nThe restaurant plans to rebuild its menu around vegetables, grains and creative culinary (烹饪的) techniques. Some long-time customers worry they will miss classic flavors, while others welcome the shift as a sign that top kitchens are taking sustainability more seriously. Industry watchers note that if a famous steakhouse-style destination can go fully plant-based, more restaurants may follow.",
-          stem: "What do we learn about New York's Eleven Madison Park?",
-          options: [
-            { key: "A", text: "It has been forced to close for renovation." },
-            { key: "B", text: "It is turning into a vegan fine-dining restaurant." },
-            { key: "C", text: "It will stop serving lunch to cut costs." },
-            { key: "D", text: "It plans to open more branches overseas." }
-          ]
-        },
-        {
-          id: 15, section: "阅读", kind: "careful_reading", label: "仔细阅读", score: 10,
-          passageGroup: "cr-1", passageTitle: "Passage One", readingNo: 47, readingRange: [46, 50],
-          directions: "Directions: There are 2 passages in this section. Each passage is followed by some questions or unfinished statements. For each of them there are four choices marked A), B), C) and D). You should decide on the best choice and mark the corresponding letter on Answer Sheet 2 with a single line through the centre.",
-          passage: "New York's Eleven Madison Park is becoming a vegan (素食主义的) restaurant. The decision surprised many diners who knew the place for its rich meat and fish dishes. The chef said the change was about creativity and the future of fine dining, not a temporary experiment. Plant-based cooking, he argued, can still deliver the same sense of luxury that high-end guests expect.\n\nThe restaurant plans to rebuild its menu around vegetables, grains and creative culinary (烹饪的) techniques. Some long-time customers worry they will miss classic flavors, while others welcome the shift as a sign that top kitchens are taking sustainability more seriously. Industry watchers note that if a famous steakhouse-style destination can go fully plant-based, more restaurants may follow.",
-          stem: "What is the chef's attitude toward plant-based fine dining?",
-          options: [
-            { key: "A", text: "It is only suitable for casual restaurants." },
-            { key: "B", text: "It cannot replace traditional luxury dining." },
-            { key: "C", text: "It can still offer creativity and a luxury experience." },
-            { key: "D", text: "It should focus mainly on price competition." }
-          ]
-        },
-        {
-          id: 16, section: "翻译", kind: "translation", label: "翻译题", score: 15,
-          stem: "请将下面的中文原文译成英语。",
-          source: "云顶咖啡是校内一家小型连锁门店。每周一，店长都会根据上一周的销售流水，整理一份运营分析周报，为上午的例会提供数据支持。请用准确、通顺的英语表达上述内容。"
-        },
-        {
-          id: 17, section: "写作", kind: "writing", label: "写作题", score: 15,
-          stem: "Directions: For this part, you are allowed 30 minutes to write an essay. You should write at least 120 words but no more than 180 words.",
-          material: "写作要求：请以 “The Value of a Weekly Operation Report” 为题，结合校园咖啡店运营场景，说明周报如何帮助团队发现问题、调整库存并服务例会决策。要求观点明确、结构完整、语言规范。"
-        }
-      ];
-
-      var CLOZE_OPTIONS = [
-        { key: "A", text: "analyze" }, { key: "B", text: "weekly" }, { key: "C", text: "inventory" },
-        { key: "D", text: "patterns" }, { key: "E", text: "support" }, { key: "F", text: "accurate" },
-        { key: "G", text: "meeting" }, { key: "H", text: "assistant" }, { key: "I", text: "sales" },
-        { key: "J", text: "reports" }, { key: "K", text: "concerns" }, { key: "L", text: "expansion" },
-        { key: "M", text: "inspired" }, { key: "N", text: "potential" }, { key: "O", text: "together" }
-      ];
-      QUESTIONS.forEach(function (q) {
-        if (q.clozeGroup === "bc-1") {
-          q.options = CLOZE_OPTIONS.slice();
-          q.wordBank = CLOZE_OPTIONS.map(function (o) { return { key: o.key, word: o.text }; });
-        }
-      });
+      var QUESTIONS = CET_EXAM.buildQuestions();
 
       var remain = 477 * 60 + 36;
       var timerEl = document.getElementById("timer");
@@ -674,6 +234,41 @@
       var pending = null;
       var toastEl = document.getElementById("toast");
       var toastTimer = null;
+      var analysisForced = false;
+
+      function analysisText(q) {
+        return "本题分值 " + q.score + " 分。标准答案与详细解析请在提交考卷后查看。";
+      }
+
+      function setAnalysisVisible(show) {
+        var panel = document.getElementById("analysisPanel");
+        var body = document.getElementById("analysisBody");
+        var btn = document.getElementById("showAnalysisBtn");
+        if (!panel || !body || !btn) return;
+        if (show) {
+          body.textContent = analysisText(QUESTIONS[current]);
+          panel.classList.remove("hidden");
+          btn.innerHTML = '<svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>隐藏解析';
+        } else {
+          panel.classList.add("hidden");
+          btn.innerHTML = '<svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>显示解析';
+        }
+      }
+
+      function syncAnalysisPanel() {
+        var auto = document.getElementById("autoAnalysisChk");
+        var autoOn = auto && auto.checked;
+        var done = isDone(QUESTIONS[current]);
+        setAnalysisVisible(analysisForced || (autoOn && done));
+      }
+
+      function maybeAutoShowAnalysis() {
+        var auto = document.getElementById("autoAnalysisChk");
+        if (auto && auto.checked && isDone(QUESTIONS[current])) {
+          analysisForced = true;
+          setAnalysisVisible(true);
+        }
+      }
 
       function toast(msg) {
         toastEl.textContent = msg;
@@ -705,7 +300,29 @@
         if (e.target === mask) closeDialog();
       });
 
+      function displayNo(q) {
+        if (q.kind === "writing") return "写作";
+        if (q.kind === "translation") return "翻译";
+        if (q.blankNo != null) return String(q.blankNo);
+        if (q.matchNo != null) return String(q.matchNo);
+        if (q.readingNo != null) return String(q.readingNo);
+        if (q.listenNo != null) return String(q.listenNo);
+        return String(q.id);
+      }
+
+      function sheetLabel(q) {
+        if (q.kind === "writing") return "写";
+        if (q.kind === "translation") return "译";
+        return displayNo(q);
+      }
+
       function qTitle(q) {
+        if (q.kind === "writing") {
+          return "写作 · 【" + q.label + "·" + q.score + "分】";
+        }
+        if (q.kind === "translation") {
+          return "翻译 · 【" + q.label + "·" + q.score + "分】";
+        }
         if (q.kind === "banked_cloze" && q.blankNo) {
           return q.blankNo + ". 【" + q.label + "·" + q.score + "分】";
         }
@@ -715,7 +332,14 @@
         if (q.kind === "careful_reading" && q.readingNo) {
           return q.readingNo + ". 【" + q.label + "·" + q.score + "分】";
         }
+        if (q.kind === "listening" && q.listenNo != null) {
+          return q.listenNo + ". 【" + q.label + "·" + q.score + "分】";
+        }
         return q.id + ". 【" + q.label + "·" + q.score + "分】";
+      }
+
+      function scoreBracket(q) {
+        return "【" + q.label + "·" + q.score + "分】";
       }
 
       function getClozeAnswerMap(q) {
@@ -998,6 +622,7 @@
         return '<div class="relative px-5 py-4 md:px-6 md:py-5">' +
           '<div class="flex items-start justify-between gap-3">' +
           '<p class="min-w-0 flex-1 text-[15px] font-semibold leading-[1.85] text-[#222]">' + no + ". " +
+          '<span class="font-normal text-[#666]">' + scoreBracket(q) + "</span> " +
           q.stem.replace(/^Question\s+\d+\.\s*/i, "").replace(/^\d+\.\s*/, "") + "</p></div>" +
           readingOptionList(q) +
           '<div class="mt-4 hidden justify-end gap-3 text-primary">' +
@@ -1019,21 +644,24 @@
       }
 
       function listeningParentHtml(q) {
-        var range = q.listenRange || [q.id, q.id];
+        var range = q.listenRange || [q.listenNo || q.id, q.listenNo || q.id];
         var leader = groupQuestions(q)[0];
-        return '<div class="relative px-10 py-5">' +
-          playerHtmlReadonly(leader) +
-          '<div class="relative mt-5">' + headingBars() +
-          '<h1 class="text-[22px] font-bold leading-snug text-black">听力理解</h1></div>' +
-          '<p class="mt-3 text-[14px] leading-[1.9] text-[#555]">' + q.directions + "</p>" +
-          '<h2 class="mt-6 text-[18px] font-bold text-black">' + q.material + "</h2>" +
-          '<p class="mt-3 text-[14px] leading-[1.85] text-[#666]">Questions ' + range[0] + " to " + range[1] +
+        return '<div class="relative px-8 py-4 md:px-10">' +
+          '<p class="text-[13px] font-semibold text-[#888]">Part II  Listening Comprehension</p>' +
+          '<p class="mt-3 text-[14px] leading-[1.9] text-[#555]"><span class="font-semibold text-[#333]">Directions: </span>' +
+          q.directions.replace(/^Section B\.\s*Directions:\s*/i, "") + "</p>" +
+          '<h2 class="mt-5 text-[17px] font-bold text-black">' + q.material + "</h2>" +
+          '<p class="mt-2 text-[14px] leading-[1.85] text-[#666]">Questions ' + range[0] + " to " + range[1] +
           " are based on the conversation you have just heard.</p>" +
+          '<div class="mt-4">' + playerHtmlReadonly(leader) + "</div>" +
           "</div>";
       }
 
       function listeningChildBlock(q) {
-        return '<p class="text-[15px] leading-[1.9] text-[#222]">' + q.stem + "</p>" +
+        var no = q.listenNo != null ? q.listenNo : q.id;
+        var stem = q.stem.replace(/^Question\s+\d+\.\s*/i, "");
+        return '<p class="text-[15px] font-medium leading-[1.9] text-[#222]"><span class="mr-1">' + no + ".</span>" +
+          '<span class="font-normal text-[#666]">' + scoreBracket(q) + "</span> " + stem + "</p>" +
           optionList(q);
       }
 
@@ -1087,7 +715,8 @@
       function bankedClozeChildBlock(q) {
         return '<div class="px-5 py-4 md:px-6 md:py-5">' +
           '<div class="mb-4">' +
-          '<span class="text-[16px] font-semibold text-[#333]">' + q.blankNo + ".</span></div>" +
+          '<span class="text-[16px] font-semibold text-[#333]">' + q.blankNo + ".</span> " +
+          '<span class="text-[14px] text-[#666]">' + scoreBracket(q) + "</span></div>" +
           clozeOptionGrid(q) +
           "</div>";
       }
@@ -1167,11 +796,18 @@
       }
 
       function listeningBlock(q) {
-        return playerHtml(q) +
-          '<div class="relative">' + headingBars() + '<h1 class="text-[22px] font-bold leading-snug text-black">听力理解</h1></div>' +
-          '<p class="mt-3 text-[14px] leading-[1.9] text-[#555]">' + q.directions + "</p>" +
-          '<h2 class="mt-6 text-[18px] font-bold text-black">' + q.material + "</h2>" +
-          '<p class="mt-3 text-[15px] leading-[1.9] text-[#222]">' + q.stem + "</p>" +
+        var range = q.listenRange || [q.listenNo || q.id, q.listenNo || q.id];
+        var no = q.listenNo != null ? q.listenNo : q.id;
+        var stem = q.stem.replace(/^Question\s+\d+\.\s*/i, "");
+        return '<p class="text-[13px] font-semibold text-[#888]">Part II  Listening Comprehension</p>' +
+          '<p class="mt-3 text-[14px] leading-[1.9] text-[#555]"><span class="font-semibold text-[#333]">Directions: </span>' +
+          q.directions.replace(/^Section B\.\s*Directions:\s*/i, "") + "</p>" +
+          '<h2 class="mt-5 text-[17px] font-bold text-black">' + q.material + "</h2>" +
+          '<p class="mt-2 text-[14px] leading-[1.85] text-[#666]">Questions ' + range[0] + " to " + range[1] +
+          " are based on the conversation you have just heard.</p>" +
+          '<div class="mt-4">' + playerHtml(q) + "</div>" +
+          '<p class="mt-6 text-[15px] font-medium leading-[1.9] text-[#222]"><span class="mr-1">' + no + ".</span>" +
+          '<span class="font-normal text-[#666]">' + scoreBracket(q) + "</span> " + stem + "</p>" +
           optionList(q);
       }
 
@@ -1201,6 +837,7 @@
         var no = q.matchNo || q.id;
         return '<div class="px-1">' +
           '<p class="text-[15px] font-semibold leading-[1.85] text-[#222]"><span class="mr-1">' + no + ".</span>" +
+          '<span class="font-normal text-[#666]">' + scoreBracket(q) + "</span> " +
           q.stem.replace(/^\d+\.\s*/, "") + "</p>" +
           matchingLetterBar(q) +
           "</div>";
@@ -1255,7 +892,7 @@
 
       function translationBlock(q) {
         var val = answers[q.id] || "";
-        return '<div class="relative">' + headingBars() + '<h1 class="text-[22px] font-bold leading-snug text-black">翻译</h1></div>' +
+        return '<p class="text-[13px] font-semibold text-[#888]">Part IV  Translation (30 minutes)</p>' +
           '<p class="mt-3 text-[15px] leading-[1.9] text-[#222]">' + q.stem + "</p>" +
           '<p class="mt-4 text-[15px] leading-[1.9] text-[#222]">' + q.source + "</p>" +
           '<textarea data-qid="' + q.id + '" class="mt-5 min-h-[140px] w-full resize-y rounded border border-[#E6E6E6] px-3 py-2 text-[15px] leading-[1.9] text-[#222] outline-none" placeholder="请在此输入英文译文">' + val + "</textarea>";
@@ -1263,7 +900,7 @@
 
       function writingBlock(q) {
         var val = answers[q.id] || "";
-        return '<div class="relative">' + headingBars() + '<h1 class="text-[22px] font-bold leading-snug text-black">写作</h1></div>' +
+        return '<p class="text-[13px] font-semibold text-[#888]">Part I  Writing (30 minutes)</p>' +
           '<p class="mt-3 text-[15px] leading-[1.9] text-[#222]">' + q.stem + "</p>" +
           '<p class="mt-4 text-[15px] leading-[1.9] text-[#222]">' + q.material + "</p>" +
           '<textarea data-qid="' + q.id + '" class="mt-5 min-h-[220px] w-full resize-y rounded border border-[#E6E6E6] px-3 py-2 text-[15px] leading-[1.9] text-[#222] outline-none" placeholder="请在此输入作文">' + val + "</textarea>";
@@ -1338,9 +975,20 @@
                 '<div class="q-card-body px-5 pb-5 pt-2 md:px-8">' + innerBlock(q) + "</div>" +
                 "</article>";
             }
+            if (q.kind === "listening") {
+              return '<article id="qcard-' + q.id + '" class="q-card' + hidden + '">' +
+                '<div class="q-card-body px-5 pb-5 pt-2 md:px-8">' + innerBlock(q) + "</div>" +
+                "</article>";
+            }
             return '<article id="qcard-' + q.id + '" class="q-card' + hidden + '">' +
               '<div class="px-10 pt-1 text-[13px] text-[#999]">' + qTitle(q) + "</div>" +
               '<div class="q-card-body px-10 pb-5 pt-3">' + innerBlock(q) + "</div>" +
+              "</article>";
+          }
+          if (q.kind === "writing" || q.kind === "translation") {
+            return '<article id="qcard-' + q.id + '" class="q-card' + hidden + '">' +
+              '<div class="px-5 pt-3 text-[14px] text-[#666]">' + qTitle(q) + "</div>" +
+              '<div class="q-card-body px-5 pb-5 pt-2 md:px-8">' + innerBlock(q) + "</div>" +
               "</article>";
           }
           return '<article id="qcard-' + q.id + '" class="q-card pb-4' + hidden + '">' +
@@ -1363,6 +1011,7 @@
             if (el) el.classList.remove("is-hidden");
           });
           navBar.classList.add("hidden");
+          document.getElementById("analysisPanel").classList.add("hidden");
         } else {
           QUESTIONS.forEach(function (q, i) {
             var el = document.getElementById("qcard-" + q.id);
@@ -1373,6 +1022,7 @@
           navBar.classList.remove("hidden");
           document.getElementById("prevBtn").style.opacity = current === 0 ? "0.55" : "1";
           document.getElementById("nextBtn").style.opacity = current === QUESTIONS.length - 1 ? "0.55" : "1";
+          syncAnalysisPanel();
         }
         updateModeButtons();
         renderSheet();
@@ -1430,13 +1080,7 @@
       }
 
       function sheetSectionName(q) {
-        if (q.kind === "listening") return "听力";
-        if (q.kind === "banked_cloze") return "Section A 选词填空";
-        if (q.kind === "matching") return "Section B 信息匹配";
-        if (q.kind === "careful_reading") return "Section C 篇章阅读";
-        if (q.kind === "translation") return "翻译";
-        if (q.kind === "writing") return "写作";
-        return q.section || q.label;
+        return CET_EXAM.sheetSectionName(q);
       }
 
       function renderSheet() {
@@ -1450,7 +1094,7 @@
           }
           groupMap[name].items.push(q);
         });
-        var preferred = ["写作", "听力", "Section A 选词填空", "Section B 信息匹配", "Section C 篇章阅读", "翻译"];
+        var preferred = CET_EXAM.SHEET_ORDER.slice();
         var groups = [];
         preferred.forEach(function (name) {
           if (groupMap[name]) groups.push(groupMap[name]);
@@ -1466,12 +1110,12 @@
             if (done) cls += "is-done";
             if (cur) cls += " is-cur";
             var dot = marked[q.id] ? '<span class="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-[#E85D5D]"></span>' : "";
-            return '<button type="button" data-jump="' + q.id + '" class="' + cls + '">' + (q.blankNo || q.matchNo || q.readingNo || q.id) + dot + "</button>";
+            return '<button type="button" data-jump="' + q.id + '" class="' + cls + '">' + sheetLabel(q) + dot + "</button>";
           }).join("");
           return '<div class="mb-1">' +
             '<div class="sheet-sec-bar flex items-center gap-2 px-4 py-2 text-[13px] font-semibold text-[#333]">' +
             g.name + ' <span class="font-normal text-[#999]">共' + g.items.length + "题</span></div>" +
-            '<div class="grid grid-cols-5 gap-2 px-4 py-3">' + btns + "</div></div>";
+            '<div class="flex flex-wrap gap-2 px-4 py-3">' + btns + "</div></div>";
         }).join("");
         document.getElementById("sheetProgress").textContent = doneCount() + "/" + QUESTIONS.length;
       }
@@ -1516,10 +1160,12 @@
         var prev = QUESTIONS[current];
         if (prev && prev.kind === "listening") syncPlayer(prev.id);
         current = index;
+        analysisForced = false;
         showOnlyCurrent();
         renderSheet();
         syncMini();
         renderParentPanel();
+        syncAnalysisPanel();
         document.getElementById("questionScroll").scrollTop = 0;
         if (focusAnswer) {
           var card = document.getElementById("qcard-" + QUESTIONS[current].id);
@@ -1528,10 +1174,58 @@
         }
       }
 
+      function startFromQuery() {
+        var p = new URLSearchParams(location.search);
+        var kind = (p.get("kind") || "").toLowerCase();
+        if (!kind) return 0;
+        var pref = CET_EXAM.jumpPrefer[kind];
+        if (!pref && kind === "banked_cloze") pref = CET_EXAM.jumpPrefer.cloze;
+        if (!pref && kind === "careful_reading") pref = CET_EXAM.jumpPrefer.careful;
+        if (!pref) return 0;
+        var idx = QUESTIONS.findIndex(function (q) {
+          if (pref.kind && q.kind === pref.kind) return true;
+          if (pref.listenNo != null && q.listenNo === pref.listenNo) return true;
+          if (pref.blankNo != null && q.blankNo === pref.blankNo) return true;
+          if (pref.matchNo != null && q.matchNo === pref.matchNo) return true;
+          if (pref.readingNo != null && q.readingNo === pref.readingNo) return true;
+          return false;
+        });
+        if (kind === "listening") {
+          var q8 = QUESTIONS.find(function (q) { return q.listenNo === 8; });
+          var q9 = QUESTIONS.find(function (q) { return q.listenNo === 9; });
+          if (q8) answers[q8.id] = "A";
+          if (q9) answers[q9.id] = "B";
+        }
+        if (kind === "cloze" || kind === "banked_cloze") {
+          var qc = QUESTIONS.find(function (q) { return q.blankNo === 26; });
+          if (qc) answers[qc.id] = "H";
+        }
+        if (kind === "matching") {
+          var qm = QUESTIONS.find(function (q) { return q.matchNo === 36; });
+          if (qm) answers[qm.id] = "I";
+        }
+        if (kind === "careful" || kind === "careful_reading") {
+          var qr = QUESTIONS.find(function (q) { return q.readingNo === 47; });
+          if (qr) answers[qr.id] = "A";
+        }
+        if (kind === "translation") {
+          var qt = QUESTIONS.find(function (q) { return q.kind === "translation"; });
+          if (qt) answers[qt.id] = "Yunding Coffee is a small campus chain. Every Monday the shop manager prepares a weekly operation report from last week's sales to support the morning meeting.";
+        }
+        if (kind === "writing") {
+          var qw = QUESTIONS.find(function (q) { return q.kind === "writing"; });
+          if (qw) answers[qw.id] = "A weekly operation report helps the campus cafe find problems, adjust inventory, and prepare for Monday meetings.";
+        }
+        return idx < 0 ? 0 : idx;
+      }
+
+      current = startFromQuery();
       renderQuestions();
       applyViewMode();
+      renderSheet();
       syncMini();
       initSplitDrag();
+      syncAnalysisPanel();
 
       setInterval(function () {
         QUESTIONS.forEach(function (q) {
@@ -1614,6 +1308,7 @@
           refreshQuestionCard(mqid);
           renderSheet();
           syncMini();
+          maybeAutoShowAnalysis();
           return;
         }
         var lab = e.target.closest("label[data-qid]");
@@ -1650,6 +1345,7 @@
         renderSheet();
         syncMini();
         if (useSplitLayout(QUESTIONS[current])) updateSubPillsOnly(QUESTIONS[current]);
+        maybeAutoShowAnalysis();
       }
 
       document.getElementById("questionList").addEventListener("input", function (e) {
@@ -1658,6 +1354,7 @@
         answers[qid] = e.target.value;
         renderSheet();
         syncMini();
+        maybeAutoShowAnalysis();
       });
 
       document.getElementById("sheetGroups").addEventListener("click", function (e) {
@@ -1676,6 +1373,20 @@
         if (viewMode !== "single") return;
         if (current >= QUESTIONS.length - 1) { toast("已经是最后一题"); return; }
         goTo(current + 1);
+      };
+
+      document.getElementById("showAnalysisBtn").onclick = function () {
+        var panel = document.getElementById("analysisPanel");
+        analysisForced = panel.classList.contains("hidden");
+        setAnalysisVisible(analysisForced);
+      };
+      document.getElementById("autoAnalysisChk").onchange = function () {
+        if (!this.checked) {
+          analysisForced = false;
+          setAnalysisVisible(false);
+        } else {
+          syncAnalysisPanel();
+        }
       };
 
       document.getElementById("miniWinBtn").onclick = function () {

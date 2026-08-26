@@ -1,0 +1,90 @@
+meta:
+  page_id: hub
+  page_name: 原型入口
+  surface: b_end
+  page_type: b_dashboard
+  anti_slop: pass
+  design_plan_ref: design-plan.md
+  canvas:
+    width: 1440
+    height: 900
+  figma:
+    file_key: "1PNr2U2fqyc9ppB7YYMbuR"
+    frame_name: "P01-原型入口"
+    frame_node_id: "1:2"
+
+shell:
+  type: none
+  title: 四六级模考原型入口
+
+regions:
+  - id: page_header
+    type: page_header
+    label: 蓝顶栏
+    layout:
+      direction: row
+      gap: 8
+      padding: 16
+    components:
+      - kind: text
+        label: 平台名
+        sample_value: WPS 教学平台
+      - kind: text
+        label: 副标题
+        sample_value: 四六级模考原型入口
+
+  - id: kpi_row
+    type: kpi_row
+    label: 试卷规模
+    layout:
+      direction: row
+      gap: 16
+      padding: 16
+    constraints:
+      max_items: 3
+    components:
+      - kind: kpi_card
+        label: 题数
+        sample_value: "17"
+      - kind: kpi_card
+        label: 满分
+        sample_value: "79"
+      - kind: kpi_card
+        label: 及格分
+        sample_value: "48"
+
+  - id: quick_actions
+    type: quick_actions
+    label: 三页入口
+    layout:
+      direction: row
+      gap: 16
+      padding: 16
+    components:
+      - kind: list_item
+        label: 01 试卷详情
+        sample_value: 只读整卷预览
+      - kind: list_item
+        label: 02 考场作答
+        sample_value: 单题/整卷模考
+      - kind: list_item
+        label: 03 成绩详情
+        sample_value: 总分与解析
+      - kind: list_item
+        label: 写作
+        sample_value: 无分屏文本框
+      - kind: list_item
+        label: 听力
+        sample_value: 音频+选项
+      - kind: list_item
+        label: 选词填空
+        sample_value: 篇章空格+词库
+      - kind: list_item
+        label: 信息匹配
+        sample_value: 段落+字母条
+      - kind: list_item
+        label: 仔细阅读
+        sample_value: 篇章+单选
+      - kind: list_item
+        label: 翻译
+        sample_value: 中文原文+译文框

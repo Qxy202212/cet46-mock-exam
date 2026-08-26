@@ -1,0 +1,100 @@
+meta:
+  page_id: paper-preview
+  page_name: 试卷详情
+  surface: b_end
+  page_type: b_detail_page
+  anti_slop: pass
+  design_plan_ref: design-plan.md
+  canvas:
+    width: 1440
+    height: 900
+  figma:
+    file_key: "1PNr2U2fqyc9ppB7YYMbuR"
+    frame_name: "P02-试卷详情"
+    frame_node_id: "1:3"
+
+shell:
+  type: none
+  title: 试卷详情
+  show_back: false
+
+regions:
+  - id: page_header
+    type: page_header
+    label: 顶栏
+    layout:
+      direction: row
+      gap: 16
+      padding: 16
+    components:
+      - kind: text
+        label: 标题
+        sample_value: 试卷详情
+      - kind: button
+        label: 关闭
+        variant: ghost
+
+  - id: summary_strip
+    type: summary_strip
+    label: 卷名元信息
+    layout:
+      direction: column
+      gap: 8
+      padding: 24
+    components:
+      - kind: text
+        label: 试卷名
+        sample_value: 2026年英语四级考试真题一
+      - kind: text
+        label: 元信息
+        sample_value: 总分: 79    题数: 17    及格分: 48
+
+  - id: tabs
+    type: tabs
+    label: 卷面分节
+    layout:
+      direction: row
+      gap: 16
+      padding: 16
+    components:
+      - kind: tab
+        label: 一、写作
+      - kind: tab
+        label: 二、听力理解
+      - kind: tab
+        label: 三、阅读理解
+      - kind: tab
+        label: 四、翻译
+
+  - id: paper_body
+    type: form_section
+    label: 整卷正文
+    layout:
+      direction: column
+      gap: 16
+      padding: 24
+    components:
+      - kind: text
+        label: 写作要求
+        sample_value: The Value of a Weekly Operation Report
+      - kind: text
+        label: 听力题干
+        sample_value: Question 1. What does the woman mean?
+      - kind: text
+        label: 选词填空篇章
+        sample_value: Every Monday, the shop 26 prepares a 27 operation report.
+
+  - id: struct_nav
+    type: action_bar
+    label: 试卷结构
+    layout:
+      direction: column
+      gap: 12
+      padding: 16
+    components:
+      - kind: text
+        label: 结构标题
+        sample_value: 试卷结构
+      - kind: tag
+        label: 题号格
+        sample_value: "1"

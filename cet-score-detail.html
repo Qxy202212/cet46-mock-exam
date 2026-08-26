@@ -60,7 +60,7 @@
     <div class="mx-auto max-w-[1280px]">
       <section class="flex gap-4">
         <article class="flex h-[220px] w-[320px] shrink-0 flex-col rounded-lg bg-white px-6 py-5 shadow-card">
-          <div class="text-[13px] text-[#888]">全题型试卷满分79</div>
+          <div class="text-[13px] text-[#888]">全题型试卷满分<span id="metaMax">95</span></div>
           <div class="flex min-h-0 flex-1 items-center justify-center">
             <div class="relative h-[148px] w-[148px]">
               <svg viewBox="0 0 148 148" class="h-full w-full">
@@ -69,7 +69,7 @@
               </svg>
               <div class="absolute inset-0 flex flex-col items-center justify-center">
                 <div id="totalGot" class="text-[32px] font-semibold leading-none">0</div>
-                <div id="totalMax" class="mt-1.5 text-[12px] text-[#999]">总分79</div>
+                <div id="totalMax" class="mt-1.5 text-[12px] text-[#999]">总分95</div>
               </div>
             </div>
           </div>
@@ -106,164 +106,16 @@
     <div id="drawerBody" class="min-h-0 flex-1 overflow-auto px-6 py-5"></div>
   </aside>
 
+  <script src="cet-exam-data.js"></script>
   <script>
     (function () {
-      var CLOZE_OPTIONS = [
-        { key: "A", text: "analyze" }, { key: "B", text: "weekly" }, { key: "C", text: "inventory" },
-        { key: "D", text: "patterns" }, { key: "E", text: "support" }, { key: "F", text: "accurate" },
-        { key: "G", text: "meeting" }, { key: "H", text: "assistant" }, { key: "I", text: "sales" },
-        { key: "J", text: "reports" }, { key: "K", text: "concerns" }, { key: "L", text: "expansion" },
-        { key: "M", text: "inspired" }, { key: "N", text: "potential" }, { key: "O", text: "together" }
-      ];
-
-      var CLOZE_PASSAGE = [
-        { type: "text", text: "Every Monday, the shop " },
-        { type: "blank", no: 26 },
-        { type: "text", text: " prepares a " },
-        { type: "blank", no: 27 },
-        { type: "text", text: " operation report. The " },
-        { type: "blank", no: 28 },
-        { type: "text", text: " manager uses WPS AI to " },
-        { type: "blank", no: 29 },
-        { type: "text", text: " last week's " },
-        { type: "blank", no: 30 },
-        { type: "text", text: " data and find buying " },
-        { type: "blank", no: 31 },
-        { type: "text", text: ". The report provides " },
-        { type: "blank", no: 32 },
-        { type: "text", text: " for the morning " },
-        { type: "blank", no: 33 },
-        { type: "text", text: " and helps adjust " },
-        { type: "blank", no: 34 },
-        { type: "text", text: " before the next busy week." }
-      ];
-
-      var MATCH_PARAS = [
-        { key: "A", text: "Many employers still prefer candidates with recent workplace experience. They worry that long gaps on a résumé signal outdated skills, especially when technology changes rapidly across industries." },
-        { key: "B", text: "Career counselors often advise older job seekers to rewrite their CVs around achievements rather than years of service. Clear results help hiring teams see value beyond age." },
-        { key: "C", text: "Some companies have introduced reverse mentoring, pairing senior staff with younger employees who teach digital tools while learning leadership lessons in return." },
-        { key: "D", text: "Government programs in several countries now subsidize mid-career training. The goal is to keep experienced workers productive instead of pushing them into early retirement." },
-        { key: "E", text: "Recruiters admit that automated screening systems sometimes reject résumés with graduation years that look \"too old,\" even when the applicant is highly qualified." },
-        { key: "F", text: "Flexible work arrangements can help people over 45 re-enter the labor market. Part-time roles and project-based contracts lower the risk for both sides." },
-        { key: "G", text: "After a layoff, finding a similar job can take months. Changing fields entirely is harder still, because employers may question whether the applicant can adapt quickly enough." },
-        { key: "H", text: "Professional networks matter more with age. Referrals from former colleagues often open doors that online applications alone cannot." },
-        { key: "I", text: "Hiring managers say that when they look at applicants who have been out of work for a while, especially those over 45, they often assume those candidates need more training than younger applicants. They also tend to believe older unemployed workers are less adaptable. Some managers argue that government subsidies for retraining would help, while others prefer industry-backed certificates that prove real workplace skills." },
-        { key: "J", text: "Learning new skills after 45 is possible, but not everyone joins training programs. Studies show that people from lower-income communities are less likely to enroll, even when courses are free. Those who feel least confident about returning to study are often the ones who need support the most." },
-        { key: "K", text: "A recent survey found that many employers value work experience more than a \"perfect\" degree. Candidates who can demonstrate practical problem-solving often beat applicants with stronger academic records but little real-world practice." },
-        { key: "L", text: "Ageism remains a barrier. At the same time, inexpensive or free training is widely available on platforms such as Udemy, Lynda.com and YouTube, making it easier for motivated learners to update skills without large tuition fees." },
-        { key: "M", text: "Switching careers after 45 is difficult, and getting reemployed after a layoff can be even tougher. Still, continuous learning helps people stay employable, and society benefits when experienced workers remain in the labor force." }
-      ];
-
-      var CAREFUL_PASSAGE = "New York's Eleven Madison Park is becoming a vegan (素食主义的) restaurant. The decision surprised many diners who knew the place for its rich meat and fish dishes. The chef said the change was about creativity and the future of fine dining, not a temporary experiment. Plant-based cooking, he argued, can still deliver the same sense of luxury that high-end guests expect.\n\nThe restaurant plans to rebuild its menu around vegetables, grains and creative culinary (烹饪的) techniques. Some long-time customers worry they will miss classic flavors, while others welcome the shift as a sign that top kitchens are taking sustainability more seriously. Industry watchers note that if a famous steakhouse-style destination can go fully plant-based, more restaurants may follow.";
-
-      var ITEMS = [
-        {
-          id: "w1", no: 1, cetNo: "写作", section: "写作", type: "写作题", kind: "writing", max: 15, got: 8,
-          stem: "Directions: For this part, you are allowed 30 minutes to write an essay. You should write at least 120 words but no more than 180 words.",
-          material: "请以 “The Value of a Weekly Operation Report” 为题，结合校园咖啡店运营场景，说明周报如何帮助团队发现问题、调整库存并服务例会决策。要求观点明确、结构完整、语言规范。",
-          mine: "The Value of a Weekly Operation Report\n\nEvery Monday, the campus coffee shop makes a weekly report. I think this report is very useful. It can help the manager see the sales of last week and know which drinks are popular.\n\nIf the inventory is too much, the shop can buy less next week. If some products sell well, they can prepare more. The report also give data for the morning meeting, so the team can talk about problems together.\n\nIn conclusion, weekly operation report is important for a small shop to work better.",
-          correct: "The Value of a Weekly Operation Report\n\nA weekly operation report is more than a pile of numbers. For a campus coffee shop, it is a shared map of what happened last week and what should be done next.\n\nFirst, the report helps the team spot problems early. A sudden drop in afternoon sales, for example, may show that a promotion failed or that a machine broke down. Second, it guides inventory. By comparing drinks sold with stock left, the shop can order milk and coffee beans more accurately and reduce waste. Finally, the report supports the Monday meeting. With clear figures on the table, staff do not argue from memory; they decide from evidence.\n\nIn short, a short weekly report turns daily busywork into decisions, and that is why it is valuable.",
-          analysis: "本题按四级写作量表评分。考生审题基本准确，能点到销售、库存和例会三个方向，但论证较浅、存在主谓一致等语法错误（The report also give），结尾公式化，字数略紧，故判 8/15。范文补足了“发现问题—调整库存—服务例会”的完整链条，并保持校园咖啡店场景与作答卷一致。"
-        },
-        {
-          id: "l1", no: 2, cetNo: 1, section: "听力", type: "听力题", kind: "listening", max: 5, got: 0,
-          material: "Conversation One",
-          stem: "Question 1. What does the woman mean?",
-          options: [
-            { key: "A", text: "She will finish the report after class." },
-            { key: "B", text: "She has already submitted the assignment." },
-            { key: "C", text: "She needs more time to collect the data." },
-            { key: "D", text: "She is not going to attend the meeting." }
-          ],
-          mine: "A", correct: "C",
-          analysis: "对话中女士表示上周的销售数据还没收齐，因此无法在课前交报告，对应 C。A 只复述了“课后补报告”，并非她的真实意图；B 与“尚未提交”相反；D 原文未提及缺席例会。"
-        },
-        {
-          id: "l2", no: 3, cetNo: 2, section: "听力", type: "听力题", kind: "listening", max: 5, got: 5,
-          material: "Conversation One",
-          stem: "Question 2. What will the man probably do next?",
-          options: [
-            { key: "A", text: "Call the professor immediately." },
-            { key: "B", text: "Share his notes with the woman." },
-            { key: "C", text: "Cancel the group discussion." },
-            { key: "D", text: "Wait for the library to open." }
-          ],
-          mine: "B", correct: "B",
-          analysis: "男士答应把课堂笔记发给女士，方便她补全周报里的数据说明，故选 B。A、C、D 均为对话中出现过的干扰信息，并非他接下来要做的事。"
-        },
-        clozeItem(4, 26, "H", "H", "空格作 shop 后的名词，指“店员/助理”。assistant 与后文 prepares a weekly operation report 搭配，也与作答卷中的校园门店场景一致。"),
-        clozeItem(5, 27, "B", "B", "修饰 operation report，应选形容词 weekly，与原文“每周一整理运营周报”同义。"),
-        clozeItem(6, 28, "I", "I", "The ____ manager 需填部门属性。sales manager（销售经理）使用 WPS AI 分析数据，符合周报服务于销售例会的设定。"),
-        clozeItem(7, 29, "A", "A", "uses WPS AI to ____ 后接动词原形，analyze 表示“分析上周数据”，为固定搭配。"),
-        clozeItem(8, 30, "C", "F", "空格修饰 data。标准答案 accurate 强调“准确的数据”；inventory 虽与后文调库存有关，但该词应留给第 34 空。"),
-        clozeItem(9, 31, "D", "D", "buying ____ 为名词搭配，buying patterns（购买规律）与“分析销售数据”逻辑衔接。"),
-        clozeItem(10, 32, "E", "E", "provides ____ for 表示“为……提供支持”，support 与“为上午例会提供数据支持”的翻译题原文同义复现。"),
-        clozeItem(11, 33, "J", "G", "morning ____ 指周一上午的例会，应选 meeting。reports 与主语 The report 重复，且不能与 morning 自然搭配。"),
-        clozeItem(12, 34, "K", "C", "helps adjust ____ 应填 inventory，即根据周报调整库存。concerns 语义偏离，且 inventory 已被误用到第 30 空。"),
-        {
-          id: "m36", no: 13, cetNo: 36, section: "阅读", type: "信息匹配", kind: "matching", max: 5, got: 5,
-          stem: "Hiring managers believe unemployed workers over 45 lack good skills and are less adaptable.",
-          mine: "I", correct: "I",
-          analysis: "题干中 unemployed workers over 45、need more training、less adaptable 与 I 段 hiring managers 的原话同义转述。G 段只谈转行和再就业难度，未提到“技能不足、适应性差”这一招聘官偏见。"
-        },
-        {
-          id: "m37", no: 14, cetNo: 37, section: "阅读", type: "信息匹配", kind: "matching", max: 5, got: 0,
-          stem: "Switching to a new career is difficult and getting reemployed after a layoff is even tougher.",
-          mine: "G", correct: "M",
-          analysis: "G 段确实提到裁员后再找同类工作和转行都很难，但完整对应“转行难，裁员后再就业更难，且持续学习仍有价值”的是 M 段。题干两个分句的比较结构（even tougher）与 M 段 Switching careers... even tougher 几乎原词复现，故应选 M。"
-        },
-        {
-          id: "r46", no: 15, cetNo: 46, section: "阅读", type: "仔细阅读", kind: "careful_reading", max: 10, got: 10,
-          stem: "What do we learn about New York's Eleven Madison Park?",
-          options: [
-            { key: "A", text: "It has been forced to close for renovation." },
-            { key: "B", text: "It is turning into a vegan fine-dining restaurant." },
-            { key: "C", text: "It will stop serving lunch to cut costs." },
-            { key: "D", text: "It plans to open more branches overseas." }
-          ],
-          mine: "B", correct: "B",
-          analysis: "首句即点明 Eleven Madison Park is becoming a vegan restaurant，且后文强调 fine dining / luxury，故 B 正确。A、C、D 原文均未提及。"
-        },
-        {
-          id: "r47", no: 16, cetNo: 47, section: "阅读", type: "仔细阅读", kind: "careful_reading", max: 10, got: 0,
-          stem: "What is the chef's attitude toward plant-based fine dining?",
-          options: [
-            { key: "A", text: "It is only suitable for casual restaurants." },
-            { key: "B", text: "It cannot replace traditional luxury dining." },
-            { key: "C", text: "It can still offer creativity and a luxury experience." },
-            { key: "D", text: "It should focus mainly on price competition." }
-          ],
-          mine: "A", correct: "C",
-          analysis: "厨师认为转型关乎 creativity and the future of fine dining，并且 plant-based cooking can still deliver the same sense of luxury，态度是肯定的，选 C。A 把 fine dining 降格为休闲餐厅，与原文相反；B、D 无依据。"
-        },
-        {
-          id: "t1", no: 17, cetNo: "翻译", section: "翻译", type: "翻译题", kind: "translation", max: 15, got: 12,
-          stem: "请将下面的中文原文译成英语。",
-          source: "云顶咖啡是校内一家小型连锁门店。每周一，店长都会根据上一周的销售流水，整理一份运营分析周报，为上午的例会提供数据支持。",
-          mine: "Yunding Coffee is a small chain store in the campus. Every Monday, the manager will make a operation analysis weekly report according to last week's sales, and provide data support for the morning meeting.",
-          correct: "Yunding Coffee is a small campus chain. Every Monday, the shop manager compiles a weekly operation analysis report based on the previous week's sales figures, providing data support for the morning meeting.",
-          analysis: "信息点覆盖完整，校园连锁店、周一、销售流水、运营周报、上午例会均有译出，故给 12/15。扣分主要在冠词（a operation）、in the campus 不够地道，以及 make a report 动词搭配偏口语。范文用 compiles / based on / campus chain，与选词填空、写作同一场景，便于对照。"
-        }
-      ];
-
-      function clozeItem(no, blankNo, mine, correct, analysis) {
-        return {
-          id: "c" + blankNo,
-          no: no,
-          cetNo: blankNo,
-          section: "阅读",
-          type: "选词填空",
-          kind: "banked_cloze",
-          blankNo: blankNo,
-          max: 1,
-          got: mine === correct ? 1 : 0,
-          stem: blankNo + ". Choose the best word for blank " + blankNo + ".",
-          options: CLOZE_OPTIONS,
-          mine: mine,
-          correct: correct,
-          analysis: analysis
-        };
-      }
+      var META = CET_EXAM.META;
+      var CLOZE_OPTIONS = CET_EXAM.CLOZE_OPTIONS.map(function (o) { return { key: o.key, text: o.word }; });
+      var CLOZE_PASSAGE = CET_EXAM.CLOZE_SEGS;
+      var MATCH_PARAS = CET_EXAM.MATCH_PARAS;
+      var CAREFUL_P1 = CET_EXAM.CAREFUL_P1;
+      var CAREFUL_P2 = CET_EXAM.CAREFUL_P2;
+      var ITEMS = CET_EXAM.buildScoreItems();
 
       var SECTIONS = [
         { key: "写作", label: "写作" },
@@ -273,6 +125,16 @@
       ];
 
       var activeId = "r47";
+
+      function displayNo(it) {
+        if (it.kind === "writing") return "写作";
+        if (it.kind === "translation") return "翻译";
+        if (it.blankNo != null) return String(it.blankNo);
+        if (it.matchNo != null) return String(it.matchNo);
+        if (it.readingNo != null) return String(it.readingNo);
+        if (it.listenNo != null) return String(it.listenNo);
+        return String(it.no);
+      }
 
       function esc(s) {
         return String(s == null ? "" : s)
@@ -370,7 +232,7 @@
           var active = it.id === activeId ? " row-active" : "";
           return (
             '<tr class="cursor-pointer border-b border-[#F5F5F5] last:border-0 hover:bg-[#FAFBFC]' + active + '" data-open="' + it.id + '">' +
-              '<td class="px-6 py-3.5 text-[#666]">' + it.no + "</td>" +
+              '<td class="px-6 py-3.5 text-[#666]">' + esc(displayNo(it)) + "</td>" +
               '<td class="px-4 py-3.5">' + esc(it.type) + "</td>" +
               '<td class="px-4 py-3.5">' + it.max + "</td>" +
               '<td class="px-4 py-3.5 ' + (low ? "text-danger" : "") + '">' + it.got + "</td>" +
@@ -386,18 +248,20 @@
 
         html += secTitle("题目内容");
         if (it.kind === "listening") {
-          html += '<div class="text-[13px] leading-7 text-[#333]"><div class="mb-1 text-[12px] text-[#999]">' + esc(it.material) + " · 题号 " + it.cetNo + "</div>";
+          html += '<div class="text-[13px] leading-7 text-[#333]"><div class="mb-1 text-[12px] text-[#999]">' + esc(it.material) + " · 题号 " + displayNo(it) + "</div>";
           html += "<div class=\"mb-2\">" + esc(it.stem) + "</div>" + optionLines(it.options) + "</div>";
         } else if (it.kind === "banked_cloze") {
           html += '<div class="passage-box mb-3 px-3 py-3 text-[13px] leading-7">' + renderPassageHtml(it.blankNo) + "</div>";
           html += '<div class="text-[13px] leading-7"><div class="mb-2">' + esc(it.stem) + "</div>" + optionLines(it.options) + "</div>";
         } else if (it.kind === "matching") {
-          html += '<div class="text-[13px] leading-7"><div class="mb-1 text-[12px] text-[#999]">Section B · 题号 ' + it.cetNo + "</div>";
+          html += '<div class="text-[13px] leading-7"><div class="mb-1 text-[12px] text-[#999]">Section B · 题号 ' + displayNo(it) + "</div>";
           html += "<div>" + esc(it.stem) + "</div>";
           html += '<div class="mt-2 text-[12px] text-[#999]">请选出信息来源段落（A–M）。</div></div>';
         } else if (it.kind === "careful_reading") {
-          html += '<div class="passage-box mb-3 px-3 py-3 text-[13px] leading-7 essay-box">' + esc(CAREFUL_PASSAGE) + "</div>";
-          html += '<div class="text-[13px] leading-7"><div class="mb-1 text-[12px] text-[#999]">Passage One · 题号 ' + it.cetNo + "</div>";
+          var passage = (it.readingNo != null && it.readingNo >= 51) ? CAREFUL_P2 : CAREFUL_P1;
+          var pTitle = (it.readingNo != null && it.readingNo >= 51) ? "Passage Two" : "Passage One";
+          html += '<div class="passage-box mb-3 px-3 py-3 text-[13px] leading-7 essay-box">' + esc(passage) + "</div>";
+          html += '<div class="text-[13px] leading-7"><div class="mb-1 text-[12px] text-[#999]">' + esc(pTitle) + " · 题号 " + displayNo(it) + "</div>";
           html += "<div class=\"mb-2\">" + esc(it.stem) + "</div>" + optionLines(it.options) + "</div>";
         } else if (it.kind === "translation") {
           html += '<div class="text-[13px] leading-7">' + esc(it.stem) + "</div>";
@@ -460,6 +324,7 @@
       renderGauge();
       renderCards();
       renderTable();
+      document.getElementById("metaMax").textContent = META.maxScore;
       openItem(activeId);
     })();
   </script>
