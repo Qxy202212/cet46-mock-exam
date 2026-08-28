@@ -50,7 +50,8 @@
       <h1 class="text-[16px] font-medium">成绩详情</h1>
     </div>
     <div class="flex items-center gap-4">
-      <a href="wps-exam-ai-weekly-v2.html" class="text-[13px] text-[#888] hover:text-primary">考场作答</a>
+      <a href="wps-exam-ai-weekly-v2.html" class="text-[13px] text-[#888] hover:text-primary">测验作答</a>
+      <a href="cet-exam-system.html" class="text-[13px] text-[#888] hover:text-primary">考试作答</a>
       <a href="cet-paper-preview.html" class="text-[13px] text-primary hover:underline">试卷详情</a>
       <div class="text-[12px] text-[#B0B0B0]">创建时间：2026-08-21 15:01:30</div>
     </div>
@@ -221,7 +222,7 @@
 
       function answerCell(it) {
         if (it.kind === "writing" || it.kind === "translation") {
-          return '<button type="button" class="text-primary hover:underline" data-open="' + it.id + '">查看详情</button>';
+          return '<a class="text-primary hover:underline" href="cet-score-report.html#' + it.kind + '">查看详情</a>';
         }
         return esc(it.correct);
       }
@@ -315,6 +316,7 @@
       }
 
       document.getElementById("scoreRows").addEventListener("click", function (e) {
+        if (e.target.closest("a")) return;
         var row = e.target.closest("[data-open]");
         if (!row) return;
         openItem(row.getAttribute("data-open"));

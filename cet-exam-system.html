@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WPS 教学平台 | 考试系统 · 四级单题</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#4A90E8",
+            page: "#F2F3F5",
+            time: "#22C55A",
+            ink: "#222222",
+            muted: "#888888",
+          },
+          boxShadow: {
+            card: "0 1px 4px rgba(0,0,0,.06)",
+            win: "0 8px 24px rgba(0,0,0,.18)",
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    html, body { height: 100%; }
+    body { font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif; }
+    .opt-radio {
+      width: 16px; height: 16px; border-radius: 50%;
+      box-shadow: inset 0 0 0 1.5px #C5C5C5; background: #fff;
+    }
+    .opt-radio.is-on { box-shadow: inset 0 0 0 5px #4A90E8; }
+    .opt-row:hover { background: #F7FAFF; }
+    .progress-track { height: 4px; background: #E6E6E6; border-radius: 999px; }
+    .progress-fill { height: 4px; background: #4A90E8; border-radius: 999px; }
+    .passage-scroll::-webkit-scrollbar { width: 6px; }
+    .passage-scroll::-webkit-scrollbar-thumb { background: #D0D0D0; border-radius: 3px; }
+    .sheet-num {
+      position: relative;
+      display: grid; place-items: center;
+      width: 32px; height: 32px;
+      border: 1px solid #D8D8D8; border-radius: 4px;
+      background: #fff; color: #666; font-size: 13px;
+    }
+    .sheet-num.is-done { background: #8EC4F5; border-color: #8EC4F5; color: #fff; }
+    .sheet-num.is-cur { border: 2px solid #4A90E8; background: #fff; color: #4A90E8; font-weight: 600; }
+    .sheet-num.is-cur.is-done { background: #4A90E8; border-color: #4A90E8; color: #fff; }
+    .sheet-num .mark-dot {
+      position: absolute; top: -3px; right: -3px;
+      width: 8px; height: 8px; border-radius: 50%; background: #E85D5D;
+    }
+    .cloze-blank {
+      display: inline-block; min-width: 52px; margin: 0 2px;
+      border-bottom: 1.5px solid #333; color: #4A90E8; font-weight: 600;
+      text-align: center; cursor: pointer; line-height: 1.4;
+    }
+    .cloze-blank.is-active { background: #EBF3FF; border-radius: 2px; }
+    .cloze-blank.is-filled { color: #222; }
+    .cloze-opt-letter {
+      box-shadow: inset 0 0 0 1px #D0D0D0; background: #F3F3F3; color: #666;
+    }
+    .cloze-opt-letter.is-on { box-shadow: none; background: #4A90E8; color: #fff; }
+    .match-letter { background: #EDEDED; color: #666; }
+    .match-letter.is-on { background: #4A90E8; color: #fff; }
+    .split-divider {
+      position: relative; z-index: 10; height: 14px; flex-shrink: 0;
+      cursor: ns-resize; user-select: none; touch-action: none;
+    }
+    .split-divider::before {
+      content: ""; position: absolute; left: 0; right: 0; top: 50%;
+      height: 1px; background: #E6E6E6; transform: translateY(-50%);
+    }
+    .split-handle {
+      position: absolute; left: 50%; top: 50%; z-index: 1;
+      display: flex; width: 48px; height: 16px; flex-direction: column;
+      align-items: center; justify-content: center; gap: 2px;
+      border: 1px solid #E6E6E6; border-radius: 6px; background: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,.1); transform: translate(-50%, -50%);
+    }
+    .split-handle i { display: block; width: 20px; height: 2px; border-radius: 1px; background: #D0D0D0; }
+    .split-divider:hover .split-handle, .split-divider.is-dragging .split-handle { border-color: #C5D9F7; }
+    body.is-split-dragging { cursor: ns-resize !important; user-select: none !important; }
+    .wm-layer { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+    .wm-layer span {
+      position: absolute; white-space: nowrap; color: #1a1a1a;
+      font-size: 13px; opacity: .055; transform: rotate(-24deg); letter-spacing: 1px;
+    }
+    .mark-btn.is-on { color: #E85D5D; }
+    .mark-btn.is-on svg { fill: #E85D5D; stroke: #E85D5D; }
+    textarea:focus { border-color: #4A90E8; outline: none; }
+    .nav-link {
+      color: #4A90E8; font-size: 14px; padding: 4px 2px;
+    }
+    .nav-link:hover { color: #3374d0; }
+    .nav-link:disabled { color: #C5C5C5; cursor: default; }
+  </style>
+</head>
+<body class="h-screen overflow-hidden bg-page text-ink">
+  <div class="flex h-full flex-col">
+    <header class="relative z-20 grid h-14 shrink-0 grid-cols-[1fr_auto_1fr] items-center border-b border-[#E6E6E6] bg-white px-4 select-none">
+      <div class="flex min-w-0 items-center gap-2">
+        <svg class="h-7 w-7 shrink-0" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <path d="M4 7.2h7.1l4.9 17.6H9.2L4 7.2z" fill="#F5A623"/>
+          <path d="M12.2 7.2h7.4L24.8 24.8h-7.1L12.2 7.2z" fill="#ED6A0C"/>
+          <path d="M20.6 7.2H28L23.2 24.8h-7.2L20.6 7.2z" fill="#D83B01"/>
+        </svg>
+        <span class="text-[15px] font-semibold text-[#222]">WPS 教学平台</span>
+        <span class="mx-1 h-4 w-px bg-[#D8D8D8]"></span>
+        <span class="text-[14px] text-[#666]">考试系统</span>
+      </div>
+      <div class="px-4 text-[15px] font-medium text-[#333]">2026年英语四级考试真题一</div>
+      <div class="flex items-center justify-end gap-3">
+        <div class="flex items-center gap-2">
+          <div class="flex h-8 w-8 items-center justify-center rounded-full bg-[#C9A0DC] text-[11px] font-medium text-white">老师</div>
+          <span class="text-[13px] text-[#555]">老师</span>
+          <span class="text-[13px] text-[#333]">邱老师</span>
+        </div>
+        <div class="flex h-10 items-center rounded-[4px] bg-time px-3 text-white">
+          <span class="text-[12px]">考生剩余时间</span>
+          <span id="remainTimer" class="ml-2 text-[15px] font-semibold tabular-nums">01时22分40秒</span>
+        </div>
+        <div class="ml-1 flex items-center gap-1 text-[#888]">
+          <button type="button" class="grid h-7 w-7 place-items-center rounded hover:bg-gray-100" title="置顶">
+            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.9 6.8 19.6l1-5.8L3.6 9.7l5.8-.8L12 3.6z"/></svg>
+          </button>
+          <button type="button" class="grid h-7 w-7 place-items-center rounded hover:bg-gray-100" title="最小化">
+            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M5 12h14"/></svg>
+          </button>
+          <button type="button" class="grid h-7 w-7 place-items-center rounded hover:bg-gray-100" title="最大化">
+            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14"/></svg>
+          </button>
+          <button type="button" class="grid h-7 w-7 place-items-center rounded hover:bg-gray-100" title="关闭" id="closeWinBtn">
+            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="flex min-h-0 flex-1 gap-0">
+      <section class="relative m-3 mr-0 flex min-w-0 flex-1 flex-col overflow-hidden rounded-lg bg-white shadow-card">
+        <div id="wmLayer" class="wm-layer" aria-hidden="true"></div>
+
+        <div class="relative z-10 flex shrink-0 items-center justify-between px-6 pt-5 pb-2">
+          <div id="qMeta" class="text-[15px] text-[#333]">第 1 题（单选题、1分）</div>
+          <button id="markBtn" type="button" class="mark-btn inline-flex items-center gap-1 text-[13px] text-primary hover:opacity-80">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M6 4h9a1 1 0 0 1 1 1v15l-5.5-3L5 20V5a1 1 0 0 1 1-1z"/></svg>
+            标记
+          </button>
+        </div>
+
+        <div id="answerArea" class="relative z-10 flex min-h-0 flex-1 flex-col">
+          <div id="parentPanel" class="hidden min-h-0 shrink-0 flex-col overflow-hidden">
+            <div id="parentPanelInner" class="flex min-h-0 flex-1 flex-col overflow-hidden"></div>
+          </div>
+          <div id="splitDivider" class="split-divider hidden" title="拖动调整材料与题目区域高度">
+            <div class="split-handle" aria-hidden="true"><i></i><i></i><i></i></div>
+          </div>
+          <div id="questionScroll" class="min-h-0 flex-1 overflow-auto">
+            <div id="questionBody" class="px-6 pb-4 pt-2"></div>
+          </div>
+        </div>
+
+        <div class="relative z-10 flex shrink-0 items-center gap-5 px-6 py-4">
+          <button id="prevBtn" type="button" class="nav-link h-8 rounded border border-[#9EC4F8] bg-white px-4 text-[13px] text-primary hover:bg-blue-50">上一题</button>
+          <button id="nextBtn" type="button" class="nav-link h-8 rounded border border-[#9EC4F8] bg-white px-4 text-[13px] text-primary hover:bg-blue-50">下一题</button>
+        </div>
+      </section>
+
+      <aside class="m-3 ml-3 flex w-[280px] shrink-0 flex-col overflow-hidden rounded-lg bg-white shadow-card select-none">
+        <div class="px-5 pt-5 text-[17px] font-bold text-[#333]">答题卡</div>
+        <div class="mt-3 flex items-center justify-center gap-4 px-3 text-[12px] text-[#999]">
+          <span class="inline-flex items-center gap-1"><i class="inline-block h-3 w-3 rounded-[2px] bg-[#8EC4F5]"></i>已做 <span id="doneCount">0</span></span>
+          <span class="inline-flex items-center gap-1"><i class="inline-block h-3 w-3 rounded-[2px] border border-[#D0D0D0] bg-white"></i>未做 <span id="todoCount">0</span></span>
+          <span class="inline-flex items-center gap-1"><i class="inline-block h-2.5 w-2.5 rounded-full bg-[#E85D5D]"></i>标记 <span id="markCount">0</span></span>
+        </div>
+        <div id="sheetGroups" class="mt-4 min-h-0 flex-1 overflow-auto px-4 pb-2"></div>
+        <div class="mt-auto px-5 pb-5 pt-3">
+          <button id="submitBtn" type="button" class="h-10 w-full rounded-[4px] bg-[#8EC4F5] text-[15px] font-medium text-white hover:bg-[#7BB8F0]">提交试卷</button>
+          <p id="submitLock" class="mt-2 text-center text-[12px] text-[#999]">距离可交卷还剩 <span id="lockTimer">22分38秒</span></p>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="relative h-7 shrink-0 bg-transparent">
+      <a href="cet-index.html" class="absolute bottom-1.5 left-5 text-[12px] text-[#9A9A9A] hover:text-[#666]">原型入口</a>
+      <div class="absolute bottom-1.5 right-5 flex items-center gap-5 text-[12px] text-[#9A9A9A]">
+        <button id="tipBtn" type="button" class="hover:text-[#666]">作答提示</button>
+        <button id="feedbackBtn" type="button" class="hover:text-[#666]">意见反馈</button>
+      </div>
+    </footer>
+  </div>
+
+  <div id="mask" class="fixed inset-0 z-40 hidden items-center justify-center bg-black/35">
+    <div class="w-[400px] rounded-lg bg-white p-6 shadow-win">
+      <div id="dialogTitle" class="text-[16px] font-medium text-[#333]">提示</div>
+      <div id="dialogText" class="mt-3 text-[14px] leading-relaxed text-[#666]"></div>
+      <div class="mt-6 flex justify-end gap-2">
+        <button id="dialogCancel" type="button" class="h-8 rounded border border-[#D9D9D9] px-4 text-[13px] text-[#666] hover:bg-gray-50">取消</button>
+        <button id="dialogOk" type="button" class="h-8 rounded bg-primary px-4 text-[13px] text-white hover:bg-[#3374e8]">确定</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="pointer-events-none fixed left-1/2 top-20 z-50 hidden -translate-x-1/2 rounded bg-black/70 px-4 py-2 text-[13px] text-white"></div>
+
+  <script src="cet-exam-data.js"></script>
+  <script>
+    (function () {
+      var QUESTIONS = CET_EXAM.buildQuestions();
+      var current = 0;
+      var answers = {};
+      var marked = {};
+      var remainSec = 1 * 3600 + 22 * 60 + 40;
+      var lockSec = 22 * 60 + 38;
+      var lastParentKey = "";
+      var splitRatio = 0.48;
+      var splitMinPx = 140;
+      var splitDragging = false;
+      var pending = null;
+
+      var audioState = {};
+      QUESTIONS.forEach(function (q) {
+        if (q.kind === "listening") {
+          audioState[q.id] = { playing: false, t: 0, duration: q.duration || 48 };
+        }
+      });
+
+      function toast(msg) {
+        var el = document.getElementById("toast");
+        el.textContent = msg;
+        el.classList.remove("hidden");
+        clearTimeout(toast._t);
+        toast._t = setTimeout(function () { el.classList.add("hidden"); }, 1600);
+      }
+
+      function openDialog(title, text, onOk) {
+        pending = onOk || null;
+        document.getElementById("dialogTitle").textContent = title;
+        document.getElementById("dialogText").textContent = text;
+        var mask = document.getElementById("mask");
+        mask.classList.remove("hidden");
+        mask.classList.add("flex");
+      }
+      function closeDialog() {
+        document.getElementById("mask").classList.add("hidden");
+        document.getElementById("mask").classList.remove("flex");
+        pending = null;
+      }
+      document.getElementById("dialogCancel").onclick = closeDialog;
+      document.getElementById("dialogOk").onclick = function () {
+        if (pending) pending();
+        closeDialog();
+      };
+      document.getElementById("mask").addEventListener("click", function (e) {
+        if (e.target === this) closeDialog();
+      });
+
+      function kindLabel(q) {
+        if (q.kind === "writing") return "写作题";
+        if (q.kind === "translation") return "翻译题";
+        if (q.kind === "banked_cloze") return "选词填空";
+        if (q.kind === "matching") return "信息匹配";
+        if (q.kind === "listening" || q.kind === "careful_reading") return "单选题";
+        return q.label || "单选题";
+      }
+
+      function displayNo(q) {
+        if (q.kind === "writing") return null;
+        if (q.kind === "translation") return null;
+        if (q.blankNo != null) return q.blankNo;
+        if (q.matchNo != null) return q.matchNo;
+        if (q.readingNo != null) return q.readingNo;
+        if (q.listenNo != null) return q.listenNo;
+        return q.id;
+      }
+
+      function sheetLabel(q) {
+        if (q.kind === "writing") return "写";
+        if (q.kind === "translation") return "译";
+        return String(displayNo(q));
+      }
+
+      function qMetaText(q) {
+        var no = displayNo(q);
+        var type = kindLabel(q);
+        var score = q.score || 1;
+        if (no == null) return type + "（" + score + "分）";
+        return "第 " + no + " 题（" + type + "、" + score + "分）";
+      }
+
+      function isDone(q) {
+        var v = answers[q.id];
+        return !!(v && String(v).trim());
+      }
+
+      function isSplit(q) {
+        return !!(q.passageGroup || q.listenGroup || q.clozeGroup || q.matchGroup);
+      }
+
+      function groupQuestions(q) {
+        if (q.passageGroup) return QUESTIONS.filter(function (x) { return x.passageGroup === q.passageGroup; });
+        if (q.listenGroup) return QUESTIONS.filter(function (x) { return x.listenGroup === q.listenGroup; });
+        if (q.clozeGroup) return QUESTIONS.filter(function (x) { return x.clozeGroup === q.clozeGroup; });
+        if (q.matchGroup) return QUESTIONS.filter(function (x) { return x.matchGroup === q.matchGroup; });
+        return [q];
+      }
+
+      function indexByQid(qid) {
+        for (var i = 0; i < QUESTIONS.length; i++) if (QUESTIONS[i].id === qid) return i;
+        return -1;
+      }
+
+      function fmtClock(sec) {
+        sec = Math.max(0, Math.floor(sec));
+        var h = Math.floor(sec / 3600);
+        var m = Math.floor((sec % 3600) / 60);
+        var s = sec % 60;
+        return (h < 10 ? "0" : "") + h + "时" + (m < 10 ? "0" : "") + m + "分" + (s < 10 ? "0" : "") + s + "秒";
+      }
+
+      function fmtMmSs(sec) {
+        sec = Math.max(0, Math.floor(sec));
+        var m = Math.floor(sec / 60);
+        var s = sec % 60;
+        return m + "分" + (s < 10 ? "0" : "") + s + "秒";
+      }
+
+      function fmtAudio(sec) {
+        sec = Math.max(0, Math.floor(sec));
+        var m = Math.floor(sec / 60);
+        var s = sec % 60;
+        return (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+      }
+
+      function getClozeAnswerMap(q) {
+        var map = {};
+        groupQuestions(q).forEach(function (sq) {
+          if (answers[sq.id]) map[sq.blankNo] = answers[sq.id];
+        });
+        return map;
+      }
+
+      function findClozeByBlank(groupQ, blankNo) {
+        var list = groupQuestions(groupQ);
+        for (var i = 0; i < list.length; i++) if (list[i].blankNo === blankNo) return list[i];
+        return null;
+      }
+
+      function radioOptions(q) {
+        var html = '<div class="mt-5 space-y-1">';
+        (q.options || []).forEach(function (opt) {
+          var on = answers[q.id] === opt.key ? " is-on" : "";
+          html += '<label class="opt-row flex cursor-pointer items-start gap-3 rounded px-1 py-2.5" data-qid="' + q.id + '" data-key="' + opt.key + '">';
+          html += '<span class="opt-radio mt-1 shrink-0' + on + '"></span>';
+          html += '<span class="text-[15px] leading-[1.9] text-[#222]">' + opt.key + ". " + opt.text + "</span></label>";
+        });
+        return html + "</div>";
+      }
+
+      function playerHtml(qid) {
+        var st = audioState[qid];
+        if (!st) return "";
+        var pct = st.duration ? (st.t / st.duration) * 100 : 0;
+        return '<div class="mt-4 flex items-center gap-3 rounded border border-[#E6E6E6] bg-[#F7F9FC] px-4 py-3" data-player="' + qid + '">' +
+          '<button type="button" class="play-btn grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary text-white hover:bg-[#3374e8]" data-play="' + qid + '">' +
+          '<svg class="icon-play h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>' +
+          '<svg class="icon-pause hidden h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg></button>' +
+          '<span class="cur-time w-10 shrink-0 text-[12px] text-[#888]">' + fmtAudio(st.t) + "</span>" +
+          '<div class="relative h-4 flex-1 select-none pointer-events-none">' +
+          '<div class="progress-track absolute left-0 right-0 top-1/2 overflow-hidden -translate-y-1/2"><div class="progress-fill" style="width:' + pct + '%"></div></div></div>' +
+          '<span class="dur-time w-10 shrink-0 text-right text-[12px] text-[#888]">' + fmtAudio(st.duration) + "</span></div>";
+      }
+
+      function carefulParent(q) {
+        var range = q.readingRange || [q.readingNo, q.readingNo];
+        var paras = String(q.passage).split(/\n\n+/).map(function (p) {
+          return '<p class="mb-4 text-[15px] leading-[2] text-[#222]">' + p + "</p>";
+        }).join("");
+        return '<div class="flex min-h-0 flex-1 flex-col overflow-hidden px-6">' +
+          '<p class="shrink-0 text-[13px] italic leading-[1.85] text-[#666]">' + q.directions + "</p>" +
+          '<h2 class="mt-3 shrink-0 text-[17px] font-bold">' + (q.passageTitle || "Passage") + "</h2>" +
+          '<p class="mt-1 shrink-0 text-[13px] italic text-[#666]">Questions ' + range[0] + " to " + range[1] + " are based on the following passage.</p>" +
+          '<div class="passage-scroll mt-3 min-h-0 flex-1 overflow-y-auto pr-1">' + paras + "</div></div>";
+      }
+
+      function listenParent(q) {
+        var range = q.listenRange || [q.listenNo, q.listenNo];
+        var leader = groupQuestions(q)[0];
+        return '<div class="px-6 pt-1 pb-2">' +
+          '<p class="text-[13px] font-semibold text-[#888]">Part II  Listening Comprehension</p>' +
+          '<p class="mt-2 text-[14px] leading-[1.85] text-[#555]">' + q.directions + "</p>" +
+          '<h2 class="mt-3 text-[16px] font-bold">' + q.material + "</h2>" +
+          '<p class="mt-1 text-[13px] text-[#666]">Questions ' + range[0] + " to " + range[1] + " are based on the recording you have just heard.</p>" +
+          playerHtml(leader.id) +
+          "</div>";
+      }
+
+      function clozePassageHtml(q) {
+        var map = getClozeAnswerMap(q);
+        return q.segments.map(function (seg) {
+          if (seg.type === "text") return seg.text;
+          var val = map[seg.no];
+          var cls = "cloze-blank";
+          if (q.blankNo === seg.no) cls += " is-active";
+          if (val) cls += " is-filled";
+          var word = "";
+          if (val) {
+            for (var i = 0; i < q.wordBank.length; i++) {
+              if (q.wordBank[i].key === val) { word = q.wordBank[i].word; break; }
+            }
+          }
+          return '<span class="' + cls + '" data-blank-jump="' + seg.no + '">' + (word || seg.no) + "</span>";
+        }).join("");
+      }
+
+      function clozeParent(q) {
+        return '<div class="flex min-h-0 flex-1 flex-col overflow-hidden px-6">' +
+          '<p class="shrink-0 text-[14px] leading-[1.85] text-[#555]">' + q.directions + "</p>" +
+          '<div class="passage-scroll mt-3 min-h-0 flex-1 overflow-y-auto pr-1">' +
+          '<p class="text-[15px] leading-[2.15] text-[#222]">' + clozePassageHtml(q) + "</p></div></div>";
+      }
+
+      function matchParent(q) {
+        var paras = q.paragraphs.map(function (p) {
+          return '<div class="mb-4 text-[15px] leading-[1.95] text-[#222]"><span class="mr-1 font-bold">' + p.key + ".</span>" + p.text + "</div>";
+        }).join("");
+        return '<div class="flex min-h-0 flex-1 flex-col overflow-hidden px-6">' +
+          '<p class="shrink-0 text-[14px] leading-[1.85] text-[#555]">' + q.directions + "</p>" +
+          '<div class="passage-scroll mt-3 min-h-0 flex-1 overflow-y-auto pr-1">' + paras + "</div></div>";
+      }
+
+      function clozeChild(q) {
+        var used = {};
+        groupQuestions(q).forEach(function (sq) {
+          if (sq.id !== q.id && answers[sq.id]) used[answers[sq.id]] = true;
+        });
+        var html = '<div><div class="mb-3 text-[15px] text-[#333]"><span class="font-semibold">' + q.blankNo + '.</span> <span class="text-[#888]">为当前空格选择最佳单词</span></div>';
+        html += '<div class="grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">';
+        q.options.forEach(function (opt) {
+          var on = answers[q.id] === opt.key;
+          var dim = used[opt.key] ? " opacity-35" : "";
+          html += '<label class="inline-flex cursor-pointer items-center gap-2 text-[14px]' + dim + '" data-qid="' + q.id + '" data-key="' + opt.key + '">';
+          html += '<span class="cloze-opt-letter grid h-7 w-7 place-items-center rounded-full text-[13px] font-medium' + (on ? " is-on" : "") + '">' + opt.key + "</span>";
+          html += "<span>" + opt.text + "</span></label>";
+        });
+        return html + "</div></div>";
+      }
+
+      function matchChild(q) {
+        var picked = answers[q.id] || "";
+        var letters = q.paragraphs.map(function (p) {
+          var on = picked === p.key ? " is-on" : "";
+          return '<button type="button" class="match-letter grid h-8 w-8 place-items-center rounded-full text-[13px] font-medium' + on + '" data-match-qid="' + q.id + '" data-match-key="' + p.key + '">' + p.key + "</button>";
+        }).join("");
+        return '<p class="text-[15px] leading-[1.85] text-[#222]"><span class="mr-1 font-semibold">' + q.matchNo + ".</span>" + q.stem + "</p>" +
+          '<div class="mt-3 flex flex-wrap gap-2">' + letters + "</div>";
+      }
+
+      function listenChild(q) {
+        var no = q.listenNo;
+        var stem = (q.stem || "").replace(/^Question\s+\d+\.\s*/i, "");
+        return '<p class="text-[15px] leading-[1.9] text-[#222]"><span class="mr-1 font-semibold">' + no + ".</span>" + stem + "</p>" + radioOptions(q);
+      }
+
+      function carefulChild(q) {
+        var no = q.readingNo;
+        var stem = (q.stem || "").replace(/^Question\s+\d+\.\s*/i, "").replace(/^\d+\.\s*/, "");
+        return '<p class="text-[15px] leading-[1.9] text-[#222]"><span class="mr-1 font-semibold">' + no + ".</span>" + stem + "</p>" + radioOptions(q);
+      }
+
+      function writingBlock(q) {
+        var val = answers[q.id] || "";
+        return '<p class="text-[13px] font-semibold text-[#888]">Part I  Writing (30 minutes)</p>' +
+          '<p class="mt-3 text-[15px] leading-[1.9]">' + q.stem + "</p>" +
+          '<p class="mt-4 text-[15px] leading-[1.9]">' + q.material + "</p>" +
+          '<textarea data-qid="' + q.id + '" class="mt-5 min-h-[220px] w-full resize-y rounded border border-[#E6E6E6] px-3 py-2 text-[15px] leading-[1.9]" placeholder="请在此输入作文">' + val + "</textarea>";
+      }
+
+      function translationBlock(q) {
+        var val = answers[q.id] || "";
+        return '<p class="text-[13px] font-semibold text-[#888]">Part IV  Translation (30 minutes)</p>' +
+          '<p class="mt-3 text-[15px] leading-[1.9]">' + q.stem + "</p>" +
+          '<p class="mt-4 text-[15px] leading-[1.9]">' + q.source + "</p>" +
+          '<textarea data-qid="' + q.id + '" class="mt-5 min-h-[160px] w-full resize-y rounded border border-[#E6E6E6] px-3 py-2 text-[15px] leading-[1.9]" placeholder="请在此输入英文译文">' + val + "</textarea>";
+      }
+
+      function childHtml(q) {
+        if (q.kind === "careful_reading") return carefulChild(q);
+        if (q.kind === "listening") return listenChild(q);
+        if (q.kind === "banked_cloze") return clozeChild(q);
+        if (q.kind === "matching") return matchChild(q);
+        if (q.kind === "translation") return translationBlock(q);
+        return writingBlock(q);
+      }
+
+      function applySplit() {
+        var area = document.getElementById("answerArea");
+        var panel = document.getElementById("parentPanel");
+        var divider = document.getElementById("splitDivider");
+        var q = QUESTIONS[current];
+        if (!isSplit(q)) {
+          panel.classList.add("hidden");
+          panel.classList.remove("flex");
+          divider.classList.add("hidden");
+          panel.style.height = "";
+          panel.style.flex = "";
+          return;
+        }
+        panel.classList.remove("hidden");
+        panel.classList.add("flex");
+        divider.classList.remove("hidden");
+        var dividerH = divider.offsetHeight || 14;
+        var total = area.clientHeight - dividerH;
+        if (total <= splitMinPx * 2) {
+          panel.style.height = "";
+          panel.style.flex = "0 0 " + Math.round(splitRatio * 100) + "%";
+          return;
+        }
+        var parentH = Math.round(total * splitRatio);
+        parentH = Math.max(splitMinPx, Math.min(parentH, total - splitMinPx));
+        splitRatio = parentH / total;
+        panel.style.flex = "0 0 auto";
+        panel.style.height = parentH + "px";
+      }
+
+      function renderParent() {
+        var panel = document.getElementById("parentPanel");
+        var inner = document.getElementById("parentPanelInner");
+        var q = QUESTIONS[current];
+        if (!isSplit(q)) {
+          panel.classList.add("hidden");
+          panel.classList.remove("flex");
+          document.getElementById("splitDivider").classList.add("hidden");
+          panel.style.height = "";
+          lastParentKey = "";
+          return;
+        }
+        var key = (q.passageGroup || q.listenGroup || q.clozeGroup || q.matchGroup || "") + ":" + q.kind;
+        var scrollEl = inner.querySelector(".passage-scroll");
+        var saved = scrollEl ? scrollEl.scrollTop : 0;
+        if (q.kind === "banked_cloze") {
+          inner.innerHTML = clozeParent(q);
+        } else if (key !== lastParentKey) {
+          if (q.kind === "careful_reading") inner.innerHTML = carefulParent(q);
+          else if (q.kind === "listening") inner.innerHTML = listenParent(q);
+          else if (q.kind === "matching") inner.innerHTML = matchParent(q);
+        } else if (q.kind === "listening") {
+          lastParentKey = key;
+          applySplit();
+          syncPlayer(groupQuestions(q)[0].id);
+          return;
+        } else {
+          lastParentKey = key;
+          applySplit();
+          return;
+        }
+        lastParentKey = key;
+        scrollEl = inner.querySelector(".passage-scroll");
+        if (scrollEl) scrollEl.scrollTop = saved;
+        if (q.kind === "listening") syncPlayer(groupQuestions(q)[0].id);
+        applySplit();
+        requestAnimationFrame(function () {
+          if (isSplit(QUESTIONS[current])) applySplit();
+        });
+      }
+
+      function syncPlayer(qid) {
+        var st = audioState[qid];
+        if (!st) return;
+        var root = document.querySelector('[data-player="' + qid + '"]');
+        if (!root) return;
+        var pct = st.duration ? Math.min(100, (st.t / st.duration) * 100) : 0;
+        var cur = root.querySelector(".cur-time");
+        var fill = root.querySelector(".progress-fill");
+        var playIcon = root.querySelector(".icon-play");
+        var pauseIcon = root.querySelector(".icon-pause");
+        if (cur) cur.textContent = fmtAudio(st.t);
+        if (fill) fill.style.width = pct + "%";
+        if (playIcon) playIcon.classList.toggle("hidden", st.playing);
+        if (pauseIcon) pauseIcon.classList.toggle("hidden", !st.playing);
+      }
+
+      function pauseAllAudio() {
+        QUESTIONS.forEach(function (q) {
+          if (audioState[q.id]) audioState[q.id].playing = false;
+        });
+      }
+
+      function renderQuestion() {
+        var q = QUESTIONS[current];
+        document.getElementById("qMeta").textContent = qMetaText(q);
+        document.getElementById("markBtn").classList.toggle("is-on", !!marked[q.id]);
+        document.getElementById("questionBody").innerHTML = childHtml(q);
+        document.getElementById("prevBtn").disabled = current === 0;
+        document.getElementById("nextBtn").disabled = current === QUESTIONS.length - 1;
+        document.getElementById("prevBtn").style.opacity = current === 0 ? "0.45" : "1";
+        document.getElementById("nextBtn").style.opacity = current === QUESTIONS.length - 1 ? "0.45" : "1";
+        renderParent();
+        document.getElementById("questionScroll").scrollTop = 0;
+      }
+
+      function renderSheet() {
+        var groupMap = {};
+        var groupOrder = [];
+        QUESTIONS.forEach(function (q) {
+          var name = CET_EXAM.sheetSectionName(q);
+          if (!groupMap[name]) {
+            groupMap[name] = { name: name, items: [] };
+            groupOrder.push(name);
+          }
+          groupMap[name].items.push(q);
+        });
+        var groups = [];
+        CET_EXAM.SHEET_ORDER.forEach(function (name) {
+          if (groupMap[name]) groups.push(groupMap[name]);
+        });
+        groupOrder.forEach(function (name) {
+          if (CET_EXAM.SHEET_ORDER.indexOf(name) < 0 && groupMap[name]) groups.push(groupMap[name]);
+        });
+        var cn = ["一", "二", "三", "四", "五", "六", "七", "八"];
+        document.getElementById("sheetGroups").innerHTML = groups.map(function (g, gi) {
+          var score = 0;
+          g.items.forEach(function (q) { score += q.score || 0; });
+          var btns = g.items.map(function (q) {
+            var done = isDone(q);
+            var cur = QUESTIONS[current].id === q.id;
+            var cls = "sheet-num";
+            if (done) cls += " is-done";
+            if (cur) cls += " is-cur";
+            var dot = marked[q.id] ? '<span class="mark-dot"></span>' : "";
+            return '<button type="button" data-jump="' + q.id + '" class="' + cls + '">' + sheetLabel(q) + dot + "</button>";
+          }).join("");
+          var title = (cn[gi] || (gi + 1)) + "、" + g.name.replace(/^Part [IVX]+  /, "");
+          return '<div class="mb-3">' +
+            '<div class="text-[12px] leading-5 text-[#666]">' + title +
+            '<span class="text-[#999]">（共' + g.items.length + "题，共" + score + "分）</span></div>" +
+            '<div class="mt-2 flex flex-wrap gap-2">' + btns + "</div></div>";
+        }).join("");
+        var done = QUESTIONS.filter(isDone).length;
+        document.getElementById("doneCount").textContent = String(done);
+        document.getElementById("todoCount").textContent = String(QUESTIONS.length - done);
+        document.getElementById("markCount").textContent = String(Object.keys(marked).filter(function (k) { return marked[k]; }).length);
+      }
+
+      function goTo(index) {
+        if (index < 0 || index >= QUESTIONS.length) return;
+        var ta = document.querySelector("#questionBody textarea[data-qid]");
+        if (ta) answers[Number(ta.getAttribute("data-qid"))] = ta.value;
+        pauseAllAudio();
+        current = index;
+        lastParentKey = "";
+        renderQuestion();
+        renderSheet();
+      }
+
+      function startFromQuery() {
+        var p = new URLSearchParams(location.search);
+        var kind = (p.get("kind") || "").toLowerCase();
+        if (!kind) {
+          var q8 = QUESTIONS.findIndex(function (q) { return q.listenNo === 8; });
+          return q8 < 0 ? 0 : q8;
+        }
+        var pref = CET_EXAM.jumpPrefer[kind];
+        if (!pref && kind === "banked_cloze") pref = CET_EXAM.jumpPrefer.cloze;
+        if (!pref && kind === "careful_reading") pref = CET_EXAM.jumpPrefer.careful;
+        if (!pref) return 0;
+        var idx = QUESTIONS.findIndex(function (q) {
+          if (pref.kind && q.kind === pref.kind) return true;
+          if (pref.listenNo != null && q.listenNo === pref.listenNo) return true;
+          if (pref.blankNo != null && q.blankNo === pref.blankNo) return true;
+          if (pref.matchNo != null && q.matchNo === pref.matchNo) return true;
+          if (pref.readingNo != null && q.readingNo === pref.readingNo) return true;
+          return false;
+        });
+        return idx < 0 ? 0 : idx;
+      }
+
+      function seedDemo() {
+        var q1 = QUESTIONS.find(function (q) { return q.listenNo === 1; });
+        var q2 = QUESTIONS.find(function (q) { return q.listenNo === 2; });
+        var q8 = QUESTIONS.find(function (q) { return q.listenNo === 8; });
+        if (q1) answers[q1.id] = "B";
+        if (q2) answers[q2.id] = "A";
+        if (q8) answers[q8.id] = "A";
+        var w = QUESTIONS.find(function (q) { return q.kind === "writing"; });
+        if (w) marked[w.id] = true;
+      }
+
+      function buildWatermark() {
+        var layer = document.getElementById("wmLayer");
+        var html = "";
+        var i, r, c;
+        for (r = 0; r < 8; r++) {
+          for (c = 0; c < 6; c++) {
+            i = r * 6 + c;
+            html += '<span style="top:' + (r * 92 + 18) + "px;left:" + (c * 180 - 20) + 'px"\>' + "邱老师/8327</span>";
+          }
+        }
+        layer.innerHTML = html;
+      }
+
+      function initSplitDrag() {
+        var divider = document.getElementById("splitDivider");
+        function onMove(clientY) {
+          var area = document.getElementById("answerArea");
+          var panel = document.getElementById("parentPanel");
+          var rect = area.getBoundingClientRect();
+          var dividerH = divider.offsetHeight || 14;
+          var total = area.clientHeight - dividerH;
+          var y = clientY - rect.top;
+          var parentH = Math.max(splitMinPx, Math.min(y, total - splitMinPx));
+          splitRatio = parentH / total;
+          panel.style.flex = "0 0 auto";
+          panel.style.height = parentH + "px";
+        }
+        divider.addEventListener("mousedown", function (e) {
+          if (divider.classList.contains("hidden")) return;
+          splitDragging = true;
+          divider.classList.add("is-dragging");
+          document.body.classList.add("is-split-dragging");
+          e.preventDefault();
+        });
+        document.addEventListener("mousemove", function (e) {
+          if (splitDragging) onMove(e.clientY);
+        });
+        document.addEventListener("mouseup", function () {
+          if (!splitDragging) return;
+          splitDragging = false;
+          divider.classList.remove("is-dragging");
+          document.body.classList.remove("is-split-dragging");
+        });
+        window.addEventListener("resize", function () {
+          if (isSplit(QUESTIONS[current])) applySplit();
+        });
+      }
+
+      document.getElementById("questionBody").addEventListener("click", handleClick);
+      document.getElementById("parentPanel").addEventListener("click", handleClick);
+
+      function handleClick(e) {
+        var playBtn = e.target.closest("[data-play]");
+        if (playBtn) {
+          var pid = Number(playBtn.getAttribute("data-play"));
+          var st = audioState[pid];
+          if (!st.playing) {
+            QUESTIONS.forEach(function (q) {
+              if (audioState[q.id] && q.id !== pid) {
+                audioState[q.id].playing = false;
+                syncPlayer(q.id);
+              }
+            });
+          }
+          st.playing = !st.playing;
+          if (st.t >= st.duration) st.t = 0;
+          syncPlayer(pid);
+          return;
+        }
+        var blankJump = e.target.closest("[data-blank-jump]");
+        if (blankJump) {
+          var target = findClozeByBlank(QUESTIONS[current], Number(blankJump.getAttribute("data-blank-jump")));
+          if (target) goTo(indexByQid(target.id));
+          return;
+        }
+        var matchBtn = e.target.closest("[data-match-key]");
+        if (matchBtn) {
+          answers[Number(matchBtn.getAttribute("data-match-qid"))] = matchBtn.getAttribute("data-match-key");
+          renderQuestion();
+          renderSheet();
+          return;
+        }
+        var lab = e.target.closest("label[data-qid]");
+        if (!lab) return;
+        var qid = Number(lab.getAttribute("data-qid"));
+        var picked = lab.getAttribute("data-key");
+        var ansQ = QUESTIONS[indexByQid(qid)];
+        if (ansQ && ansQ.clozeGroup) {
+          groupQuestions(ansQ).forEach(function (sq) {
+            if (sq.id !== qid && answers[sq.id] === picked) delete answers[sq.id];
+          });
+        }
+        answers[qid] = picked;
+        if (ansQ && ansQ.clozeGroup) lastParentKey = "";
+        renderQuestion();
+        renderSheet();
+      }
+
+      document.getElementById("questionBody").addEventListener("input", function (e) {
+        if (e.target.tagName !== "TEXTAREA") return;
+        answers[Number(e.target.getAttribute("data-qid"))] = e.target.value;
+        renderSheet();
+      });
+
+      document.getElementById("sheetGroups").addEventListener("click", function (e) {
+        var btn = e.target.closest("button[data-jump]");
+        if (!btn) return;
+        goTo(indexByQid(Number(btn.getAttribute("data-jump"))));
+      });
+
+      document.getElementById("prevBtn").onclick = function () {
+        if (current <= 0) { toast("已经是第一题"); return; }
+        goTo(current - 1);
+      };
+      document.getElementById("nextBtn").onclick = function () {
+        if (current >= QUESTIONS.length - 1) { toast("已经是最后一题"); return; }
+        goTo(current + 1);
+      };
+      document.getElementById("markBtn").onclick = function () {
+        var id = QUESTIONS[current].id;
+        marked[id] = !marked[id];
+        renderQuestion();
+        renderSheet();
+        toast(marked[id] ? "已标记本题" : "已取消标记");
+      };
+      document.getElementById("submitBtn").onclick = function () {
+        if (lockSec > 0) {
+          openDialog("暂不可交卷", "距离可交卷还剩 " + fmtMmSs(lockSec) + "。请继续作答。", function () {});
+          return;
+        }
+        var undone = QUESTIONS.length - QUESTIONS.filter(isDone).length;
+        openDialog("提交试卷", undone ? ("还有 " + undone + " 题未作答，确认提交？提交后将无法继续作答。") : "确认提交试卷？提交后将无法继续作答。", function () {
+          window.location.href = "cet-score-detail.html";
+        });
+      };
+      document.getElementById("closeWinBtn").onclick = function () {
+        openDialog("离开考试", "确认离开考试系统？未提交的作答可能不会保存。", function () {
+          window.location.href = "cet-index.html";
+        });
+      };
+      document.getElementById("tipBtn").onclick = function () {
+        openDialog("作答提示", "本页为四六级单题模式：一次只展示 1 道题。听力 / 选词填空 / 信息匹配 / 仔细阅读为材料 + 小题分屏，可用答题卡跳转，标记题号会显示红点。", null);
+      };
+      document.getElementById("feedbackBtn").onclick = function () {
+        toast("意见反馈入口（演示）");
+      };
+
+      setInterval(function () {
+        if (remainSec > 0) remainSec -= 1;
+        document.getElementById("remainTimer").textContent = fmtClock(remainSec);
+        if (lockSec > 0) {
+          lockSec -= 1;
+          document.getElementById("lockTimer").textContent = fmtMmSs(lockSec);
+        } else {
+          document.getElementById("submitLock").textContent = "现在可以交卷";
+        }
+        QUESTIONS.forEach(function (q) {
+          var st = audioState[q.id];
+          if (!st || !st.playing) return;
+          st.t = Math.min(st.t + 1, st.duration);
+          if (st.t >= st.duration) st.playing = false;
+          syncPlayer(q.id);
+        });
+      }, 1000);
+
+      seedDemo();
+      buildWatermark();
+      current = startFromQuery();
+      renderQuestion();
+      renderSheet();
+      initSplitDrag();
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          if (isSplit(QUESTIONS[current])) applySplit();
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
