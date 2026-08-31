@@ -14,7 +14,10 @@
             page: "#F2F3F5",
             ink: "#333333",
           },
-          boxShadow: { card: "0 1px 4px rgba(0,0,0,.06)" },
+          boxShadow: {
+            card: "0 1px 4px rgba(0,0,0,.06)",
+            drawer: "-4px 0 24px rgba(0,0,0,.08)",
+          },
         },
       },
     };
@@ -31,48 +34,81 @@
     }
     .nav-num:hover { border-color: #3F80F4; color: #3F80F4; }
     .nav-num.is-on { border-color: #3F80F4; background: #F5F9FF; color: #3F80F4; }
-    .q-block.is-flash { background: #F5F9FF; }
+    .q-block {
+      margin: 0 0 8px;
+      padding: 8px 4px 20px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .q-block.is-on {
+      margin: 0 -8px 16px;
+      padding: 16px 20px 12px;
+      border-color: #E8E8E8;
+      background: #fff;
+    }
+    .q-foot {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 16px;
+      font-size: 13px;
+      color: #999;
+    }
+    .q-block.is-on .q-foot { display: flex; }
+    .q-detail { color: #3F80F4; }
+    .q-detail:hover { text-decoration: underline; }
     .blank-no {
       display: inline-block; min-width: 42px; margin: 0 2px; padding: 0 2px;
       border-bottom: 1.5px solid #333; text-align: center; font-weight: 600; color: #666;
     }
     .blank-no.is-on { background: #EBF3FF; color: #3F80F4; border-color: #3F80F4; }
-    .opt-dot { box-shadow: inset 0 0 0 1px #C5C5C5; }
+    .player-static { pointer-events: none; user-select: none; }
+    .sec-bar { width: 4px; height: 14px; border-radius: 1px; background: #3F80F4; }
+    .passage-box { background: #FAFBFC; border: 1px solid #F0F0F0; border-radius: 8px; }
+    .drawer-enter { animation: slideIn .22s ease; }
+    @keyframes slideIn {
+      from { transform: translateX(24px); opacity: .6; }
+      to { transform: translateX(0); opacity: 1; }
+    }
   </style>
 </head>
 <body class="flex h-screen flex-col overflow-hidden bg-page text-ink">
-  <header class="flex h-12 shrink-0 items-center justify-between bg-white px-5 shadow-[0_1px_0_#EEE]">
-    <div class="flex items-center gap-3">
-      <a href="cet-index.html" class="text-[13px] text-[#888] hover:text-primary">原型入口</a>
-      <h1 class="text-[16px] font-medium">试卷详情</h1>
-    </div>
-    <div class="flex items-center gap-3">
-      <a href="wps-exam-ai-weekly-v2.html" class="h-8 rounded border border-[#9EC4F8] bg-white px-3.5 text-[13px] leading-8 text-primary hover:bg-blue-50">测验作答</a>
-      <a href="cet-exam-system.html" class="h-8 rounded bg-primary px-3.5 text-[13px] leading-8 text-white hover:bg-[#3374e8]">考试作答</a>
-      <a href="cet-index.html" class="grid h-8 w-8 place-items-center rounded text-[#999] hover:bg-gray-50 hover:text-[#666]" title="关闭">
-        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
-      </a>
-    </div>
+  <header class="flex h-12 shrink-0 items-center px-5">
+    <a href="cet-index.html" class="grid h-8 w-8 place-items-center rounded hover:bg-white/80" title="返回">
+      <svg class="h-5 w-5 text-[#666]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+    </a>
+    <h1 class="text-[16px] font-medium">试卷详情</h1>
   </header>
 
-  <main class="flex min-h-0 flex-1 gap-4 p-4">
+  <main class="flex min-h-0 flex-1 gap-4 px-4 pb-4">
     <section id="paperScroll" class="paper-scroll min-w-0 flex-1 overflow-auto rounded-lg bg-white px-14 py-12 shadow-card">
-      <h2 class="text-center text-[22px] font-bold leading-snug">2026年英语四级考试真题一</h2>
-      <p class="mt-3 text-center text-[13px] text-[#999]">
-        总分: 95&nbsp;&nbsp;&nbsp;题数: 57&nbsp;&nbsp;&nbsp;及格分: 57
+      <h2 id="paperTitle" class="text-center text-[22px] font-bold leading-snug">2026年英语四级考试真题一</h2>
+      <p id="paperMeta" class="mt-3 text-center text-[13px] text-[#999]">
+        总分：95&nbsp;&nbsp;&nbsp;题数：57&nbsp;&nbsp;&nbsp;及格分：57
       </p>
-
       <div id="paperBody" class="mt-12"></div>
     </section>
 
     <aside class="flex w-[300px] shrink-0 flex-col overflow-auto rounded-lg bg-white px-5 py-5 shadow-card">
       <div class="mb-4 flex items-center gap-1.5">
         <span class="text-[15px] font-medium">试卷结构</span>
-        <span class="grid h-4 w-4 place-items-center rounded-full border border-[#D0D0D0] text-[10px] text-[#999]" title="点击题号可跳转到对应题目">?</span>
+        <span class="grid h-4 w-4 place-items-center rounded-full border border-[#D0D0D0] text-[10px] leading-none text-[#999]" title="点击题号可跳转到对应题目">i</span>
       </div>
       <div id="structNav"></div>
     </aside>
   </main>
+
+  <div id="drawerMask" class="fixed inset-0 z-20 hidden bg-black/20"></div>
+  <aside id="drawer" class="drawer-enter fixed inset-y-0 right-0 z-30 hidden w-[480px] flex-col bg-white shadow-drawer">
+    <div class="flex h-14 shrink-0 items-center justify-between border-b border-[#F0F0F0] px-5">
+      <div id="drawerTitle" class="text-[16px] font-medium">题目详情</div>
+      <button id="closeDrawer" type="button" class="grid h-8 w-8 place-items-center rounded text-[#999] hover:bg-gray-50 hover:text-[#666]">
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div id="drawerBody" class="min-h-0 flex-1 overflow-auto px-6 py-5"></div>
+  </aside>
 
   <script src="cet-exam-data.js"></script>
   <script>
@@ -85,13 +121,17 @@
       var CAREFUL_P2 = CET_EXAM.CAREFUL_P2;
       var ITEMS = CET_EXAM.buildPreviewItems();
 
+      document.getElementById("paperTitle").textContent = META.title;
+      document.getElementById("paperMeta").innerHTML =
+        "总分：" + META.maxScore + "&nbsp;&nbsp;&nbsp;题数：" + META.totalItems + "&nbsp;&nbsp;&nbsp;及格分：" + META.passScore;
+
       var GROUPS = [
-        { key: "writing", title: "Part I  写作", heading: "Part I  Writing", extra: "" },
-        { key: "listening", title: "Part II  听力理解", heading: "Part II  Listening Comprehension", extra: "" },
-        { key: "cloze", title: "Part III  Section A", heading: "Part III  Reading Comprehension", extra: "Section A  选词填空" },
-        { key: "matching", title: "Part III  Section B", heading: "", extra: "Section B  信息匹配" },
-        { key: "careful", title: "Part III  Section C", heading: "", extra: "Section C  仔细阅读" },
-        { key: "translation", title: "Part IV  翻译", heading: "Part IV  Translation", extra: "" }
+        { key: "writing", title: "写作", heading: "一、写作", extra: "" },
+        { key: "listening", title: "听力理解", heading: "二、听力理解", extra: "" },
+        { key: "cloze", title: "选词填空", heading: "三、阅读理解", extra: "Section A  选词填空" },
+        { key: "matching", title: "信息匹配", heading: "", extra: "Section B  信息匹配" },
+        { key: "careful", title: "仔细阅读", heading: "", extra: "Section C  仔细阅读" },
+        { key: "translation", title: "翻译", heading: "四、翻译", extra: "" }
       ];
 
       function esc(s) {
@@ -110,12 +150,32 @@
         return { count: list.length, score: score };
       }
 
+      function findItem(no) {
+        for (var i = 0; i < ITEMS.length; i++) if (ITEMS[i].no === no) return ITEMS[i];
+        return ITEMS[0];
+      }
+
+      function difficultyOf(it) {
+        if (it.kind === "writing" || it.kind === "translation" || it.kind === "careful") return "较难";
+        if (it.kind === "listening") return "简单";
+        return "中等";
+      }
+
+      function typeOf(it) {
+        if (it.kind === "writing") return "写作题";
+        if (it.kind === "listening") return "听力题";
+        if (it.kind === "cloze") return "选词填空";
+        if (it.kind === "matching") return "信息匹配";
+        if (it.kind === "careful") return "仔细阅读";
+        if (it.kind === "translation") return "翻译题";
+        return it.label || "题目";
+      }
+
       function optionBlock(options) {
         if (!options) return "";
-        return '<div class="mt-3 space-y-2 pl-5">' + options.map(function (o) {
-          return '<div class="flex items-start gap-3 text-[14px] leading-[1.85] text-[#333]">' +
-            '<span class="opt-dot mt-1.5 inline-block h-3.5 w-3.5 shrink-0 rounded-full bg-white"></span>' +
-            "<span>" + esc(o.key) + ". " + esc(o.text) + "</span></div>";
+        return '<div class="mt-2 space-y-1.5 pl-5">' + options.map(function (o) {
+          return '<div class="text-[14px] leading-[1.85] text-[#333]">' +
+            esc(o.key) + ". " + esc(o.text) + "</div>";
         }).join("") + "</div>";
       }
 
@@ -141,12 +201,21 @@
         return '<div class="text-[15px] leading-[1.9] text-[#222]"><span class="mr-1 font-medium">' + prefix + "</span>";
       }
 
+      function qArticle(it, innerHtml) {
+        return '<article id="q-' + it.no + '" class="q-block" data-q="' + it.no + '">' +
+          innerHtml +
+          '<div class="q-foot">' +
+            "<span>" + esc(difficultyOf(it)) + " | 分值 " + it.score + " 分</span>" +
+            '<button type="button" class="q-detail" data-detail="' + it.no + '">查看详情</button>' +
+          "</div></article>";
+      }
+
       function playerBar() {
-        return '<div class="mb-5 flex items-center gap-3 rounded border border-[#E6E6E6] bg-[#F7F9FC] px-4 py-3">' +
-          '<div class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary text-white">' +
+        return '<div class="player-static mb-5 flex items-center gap-3 rounded border border-[#E6E6E6] bg-[#F7F9FC] px-4 py-3">' +
+          '<div class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#C5C5C5] text-white">' +
           '<svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>' +
           '<span class="w-10 shrink-0 text-[12px] text-[#888]">00:00</span>' +
-          '<div class="relative h-1.5 flex-1 overflow-hidden rounded-full bg-[#E6E6E6]"><div class="h-full w-0 rounded-full bg-primary"></div></div>' +
+          '<div class="relative h-1.5 flex-1 overflow-hidden rounded-full bg-[#E6E6E6]"><div class="h-full w-0 rounded-full bg-[#C5C5C5]"></div></div>' +
           '<span class="w-10 shrink-0 text-right text-[12px] text-[#888]">00:48</span></div>';
       }
 
@@ -177,9 +246,8 @@
 
           if (g.key === "writing") {
             var w = list[0];
-            html += '<article id="q-' + w.no + '" class="q-block rounded-md px-1 py-2 transition-colors">' +
-              qHead(w) + esc(w.stem) + "</div>" +
-              '<p class="mt-3 text-[15px] leading-[1.9] text-[#222]">' + esc(w.material) + "</p></article>";
+            html += qArticle(w, qHead(w) + esc(w.stem) + "</div>" +
+              '<p class="mt-3 text-[15px] leading-[1.9] text-[#222]">' + esc(w.material) + "</p>");
           }
 
           if (g.key === "listening") {
@@ -211,8 +279,7 @@
               }
               html += playerBar();
               blk.items.forEach(function (it) {
-                html += '<article id="q-' + it.no + '" class="q-block mb-8 rounded-md px-1 py-2 transition-colors">' +
-                  qHead(it) + esc(String(it.stem || "").replace(/^Question\s+\d+\.\s*/i, "")) + "</div>" + optionBlock(it.options) + "</article>";
+                html += qArticle(it, qHead(it) + esc(String(it.stem || "").replace(/^Question\s+\d+\.\s*/i, "")) + "</div>" + optionBlock(it.options));
               });
             });
           }
@@ -223,8 +290,7 @@
             html += '<p class="text-[15px] leading-[2.15] text-[#222]">' + clozePassage() + "</p>";
             html += wordBank();
             list.forEach(function (it) {
-              html += '<article id="q-' + it.no + '" class="q-block mt-6 rounded-md px-1 py-2 transition-colors">' +
-                qHead(it) + it.blankNo + ". Choose the best word for blank " + it.blankNo + ".</div></article>";
+              html += qArticle(it, qHead(it) + "Choose the best word for blank " + it.blankNo + ".</div>");
             });
           }
 
@@ -235,9 +301,7 @@
               html += '<p class="mb-3 text-[15px] leading-[1.95] text-[#222]"><span class="mr-1 font-bold">' + esc(p.key) + ".</span>" + esc(p.text) + "</p>";
             });
             list.forEach(function (it) {
-              html += '<article id="q-' + it.no + '" class="q-block mt-6 rounded-md px-1 py-2 transition-colors">' +
-                qHead(it) + esc(it.stem) + "</div>" +
-                '<p class="mt-2 pl-5 text-[13px] text-[#999]">请选出信息来源段落（A–M）</p></article>';
+              html += qArticle(it, qHead(it) + esc(it.stem) + "</div>");
             });
           }
 
@@ -252,8 +316,7 @@
                 html += '<p class="mb-4 text-[15px] leading-[2] text-[#222]">' + esc(para) + "</p>";
               });
               qList.forEach(function (it) {
-                html += '<article id="q-' + it.no + '" class="q-block mt-6 rounded-md px-1 py-2 transition-colors">' +
-                  qHead(it) + esc(it.stem) + "</div>" + optionBlock(it.options) + "</article>";
+                html += qArticle(it, qHead(it) + esc(it.stem) + "</div>" + optionBlock(it.options));
               });
             }
             renderCarefulPassage("Passage One", CAREFUL_P1, p1List, "Questions 46 to 50 are based on the following passage.");
@@ -262,9 +325,8 @@
 
           if (g.key === "translation") {
             var t = list[0];
-            html += '<article id="q-' + t.no + '" class="q-block rounded-md px-1 py-2 transition-colors">' +
-              qHead(t) + esc(t.stem) + "</div>" +
-              '<p class="mt-4 pl-5 text-[15px] leading-[1.9] text-[#222]">' + esc(t.source) + "</p></article>";
+            html += qArticle(t, qHead(t) + esc(t.stem) + "</div>" +
+              '<p class="mt-4 text-[15px] leading-[1.9] text-[#222]">' + esc(t.source) + "</p>");
           }
         });
         document.getElementById("paperBody").innerHTML = html;
@@ -276,7 +338,7 @@
           var list = itemsOf(g.key);
           return '<div class="mb-6">' +
             '<div class="mb-3 text-[13px] text-[#666]">' + esc(g.title) +
-            " (共" + m.count + "题；共" + m.score + "分)</div>" +
+            " (共" + m.count + "题; 共" + m.score + "分)</div>" +
             '<div class="flex flex-wrap gap-2">' + list.map(function (it) {
               return '<button type="button" class="nav-num" data-jump="' + it.no + '">' + navCellLabel(it) + "</button>";
             }).join("") + "</div></div>";
@@ -284,18 +346,97 @@
         document.getElementById("structNav").innerHTML = html;
       }
 
-      var activeNo = 1;
-      var flashTimer = null;
+      function secTitle(text) {
+        return '<div class="mb-2 mt-5 flex items-center gap-2 first:mt-0"><i class="sec-bar"></i><span class="text-[14px] font-medium">' + esc(text) + "</span></div>";
+      }
 
-      function setActive(no) {
+      function optionLines(options) {
+        return (options || []).map(function (o) {
+          return '<div class="flex gap-2 text-[13px] leading-7"><span class="w-5 shrink-0 text-[#666]">' +
+            esc(o.key) + '.</span><span>' + esc(o.text) + "</span></div>";
+        }).join("");
+      }
+
+      function renderPassageHtml(highlightNo) {
+        return CLOZE_SEGS.map(function (seg) {
+          if (seg.type !== "blank") return esc(seg.text);
+          var on = seg.no === highlightNo;
+          return '<span class="inline-block min-w-[42px] border-b border-[#333] px-1 text-center font-semibold ' +
+            (on ? "bg-[#EBF3FF] text-primary" : "text-[#666]") + '">' + seg.no + "</span>";
+        }).join("");
+      }
+
+      function renderDrawer(it) {
+        document.getElementById("drawerTitle").textContent = typeOf(it);
+        var html = "";
+        html += '<div class="mb-4 text-[13px] text-[#999]">' + esc(difficultyOf(it)) + " | 分值 " + it.score + " 分</div>";
+        html += secTitle("题目内容");
+
+        if (it.kind === "listening") {
+          html += '<div class="text-[13px] leading-7 text-[#333]"><div class="mb-1 text-[12px] text-[#999]">' +
+            esc(it.material) + " · 题号 " + displayNo(it) + "</div>";
+          html += "<div class=\"mb-2\">" + esc(it.stem) + "</div>" + optionLines(it.options) + "</div>";
+        } else if (it.kind === "cloze") {
+          html += '<div class="passage-box mb-3 px-3 py-3 text-[13px] leading-7">' + renderPassageHtml(it.blankNo) + "</div>";
+          html += '<div class="text-[13px] leading-7"><div class="mb-2">' + esc(it.stem) + "</div>" + optionLines(it.options) + "</div>";
+        } else if (it.kind === "matching") {
+          html += '<div class="text-[13px] leading-7"><div class="mb-1 text-[12px] text-[#999]">Section B · 题号 ' + displayNo(it) + "</div>";
+          html += "<div>" + esc(it.stem) + "</div></div>";
+        } else if (it.kind === "careful") {
+          var passage = (it.readingNo != null && it.readingNo >= 51) ? CAREFUL_P2 : CAREFUL_P1;
+          var pTitle = (it.readingNo != null && it.readingNo >= 51) ? "Passage Two" : "Passage One";
+          html += '<div class="passage-box mb-3 whitespace-pre-wrap px-3 py-3 text-[13px] leading-7">' + esc(passage) + "</div>";
+          html += '<div class="text-[13px] leading-7"><div class="mb-1 text-[12px] text-[#999]">' + esc(pTitle) + " · 题号 " + displayNo(it) + "</div>";
+          html += "<div class=\"mb-2\">" + esc(it.stem) + "</div>" + optionLines(it.options) + "</div>";
+        } else if (it.kind === "translation") {
+          html += '<div class="text-[13px] leading-7">' + esc(it.stem) + "</div>";
+          html += '<div class="passage-box mt-2 px-3 py-3 text-[13px] leading-7">' + esc(it.source) + "</div>";
+        } else if (it.kind === "writing") {
+          html += '<div class="text-[13px] leading-7">' + esc(it.stem) + "</div>";
+          html += '<div class="passage-box mt-2 px-3 py-3 text-[13px] leading-7">' + esc(it.material) + "</div>";
+        }
+
+        html += '<p class="mt-8 text-[12px] text-[#B0B0B0]">预览模式，不可作答</p>';
+        document.getElementById("drawerBody").innerHTML = html;
+        document.getElementById("drawer").classList.remove("hidden");
+        document.getElementById("drawer").classList.add("flex");
+        document.getElementById("drawerMask").classList.remove("hidden");
+      }
+
+      function closeDrawer() {
+        document.getElementById("drawer").classList.add("hidden");
+        document.getElementById("drawer").classList.remove("flex");
+        document.getElementById("drawerMask").classList.add("hidden");
+      }
+
+      var activeNo = 1;
+      var focusedNo = 1;
+
+      function setNav(no) {
         activeNo = no;
         document.querySelectorAll(".nav-num").forEach(function (btn) {
           btn.classList.toggle("is-on", Number(btn.getAttribute("data-jump")) === no);
         });
         document.querySelectorAll(".blank-no").forEach(function (el) {
-          var it = ITEMS.filter(function (x) { return x.no === no; })[0];
+          var it = findItem(focusedNo);
           el.classList.toggle("is-on", !!(it && it.blankNo && Number(el.getAttribute("data-blank")) === it.blankNo));
         });
+      }
+
+      function setCard(no) {
+        focusedNo = no;
+        document.querySelectorAll(".q-block").forEach(function (el) {
+          el.classList.toggle("is-on", Number(el.getAttribute("data-q")) === no);
+        });
+        document.querySelectorAll(".blank-no").forEach(function (el) {
+          var it = findItem(no);
+          el.classList.toggle("is-on", !!(it && it.blankNo && Number(el.getAttribute("data-blank")) === it.blankNo));
+        });
+      }
+
+      function setActive(no) {
+        setNav(no);
+        setCard(no);
       }
 
       function jumpTo(no) {
@@ -303,11 +444,7 @@
         var scroller = document.getElementById("paperScroll");
         if (!el || !scroller) return;
         setActive(no);
-        var top = el.offsetTop - 24;
-        scroller.scrollTo({ top: top, behavior: "smooth" });
-        el.classList.add("is-flash");
-        clearTimeout(flashTimer);
-        flashTimer = setTimeout(function () { el.classList.remove("is-flash"); }, 900);
+        scroller.scrollTo({ top: el.offsetTop - 24, behavior: "smooth" });
       }
 
       function syncActiveByScroll() {
@@ -318,7 +455,7 @@
           var el = document.getElementById("q-" + it.no);
           if (el && el.offsetTop <= y) current = it.no;
         });
-        if (current !== activeNo) setActive(current);
+        if (current !== activeNo) setNav(current);
       }
 
       renderPaper();
@@ -330,7 +467,31 @@
         if (!btn) return;
         jumpTo(Number(btn.getAttribute("data-jump")));
       });
+
+      document.getElementById("paperScroll").addEventListener("click", function (e) {
+        var detail = e.target.closest("[data-detail]");
+        if (detail) {
+          e.stopPropagation();
+          var no = Number(detail.getAttribute("data-detail"));
+          setActive(no);
+          renderDrawer(findItem(no));
+          return;
+        }
+        var blank = e.target.closest("[data-blank]");
+        if (blank) {
+          var blankNo = Number(blank.getAttribute("data-blank"));
+          for (var i = 0; i < ITEMS.length; i++) {
+            if (ITEMS[i].blankNo === blankNo) { jumpTo(ITEMS[i].no); return; }
+          }
+          return;
+        }
+        var block = e.target.closest(".q-block");
+        if (block) setActive(Number(block.getAttribute("data-q")));
+      });
+
       document.getElementById("paperScroll").addEventListener("scroll", syncActiveByScroll);
+      document.getElementById("closeDrawer").onclick = closeDrawer;
+      document.getElementById("drawerMask").onclick = closeDrawer;
     })();
   </script>
 </body>
