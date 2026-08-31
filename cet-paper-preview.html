@@ -14,10 +14,7 @@
             page: "#F2F3F5",
             ink: "#333333",
           },
-          boxShadow: {
-            card: "0 1px 4px rgba(0,0,0,.06)",
-            drawer: "-4px 0 24px rgba(0,0,0,.08)",
-          },
+          boxShadow: { card: "0 1px 4px rgba(0,0,0,.06)" },
         },
       },
     };
@@ -25,8 +22,10 @@
   <style>
     html, body { height: 100%; }
     body { font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif; }
-    .paper-scroll::-webkit-scrollbar { width: 8px; }
-    .paper-scroll::-webkit-scrollbar-thumb { background: #D8D8D8; border-radius: 4px; }
+    .paper-scroll::-webkit-scrollbar,
+    .struct-scroll::-webkit-scrollbar { width: 8px; }
+    .paper-scroll::-webkit-scrollbar-thumb,
+    .struct-scroll::-webkit-scrollbar-thumb { background: #D8D8D8; border-radius: 4px; }
     .nav-num {
       display: grid; place-items: center; width: 36px; height: 36px;
       border: 1px solid #E6E6E6; border-radius: 4px; background: #fff;
@@ -34,63 +33,50 @@
     }
     .nav-num:hover { border-color: #3F80F4; color: #3F80F4; }
     .nav-num.is-on { border-color: #3F80F4; background: #F5F9FF; color: #3F80F4; }
-    .q-block {
-      margin: 0 0 8px;
-      padding: 8px 4px 20px;
-      border: 1px solid transparent;
-      border-radius: 8px;
-      cursor: pointer;
+    .paper-sheet { position: relative; }
+    .paper-watermark {
+      position: absolute; inset: 0; z-index: 0; overflow: hidden;
+      pointer-events: none; user-select: none;
     }
-    .q-block.is-on {
-      margin: 0 -8px 16px;
-      padding: 16px 20px 12px;
-      border-color: #E8E8E8;
-      background: #fff;
+    .paper-watermark span {
+      display: inline-block; margin: 42px 28px; color: rgba(51,51,51,.07);
+      font-size: 15px; letter-spacing: .04em; transform: rotate(-22deg); white-space: nowrap;
     }
-    .q-foot {
-      display: none;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 16px;
-      font-size: 13px;
-      color: #999;
-    }
-    .q-block.is-on .q-foot { display: flex; }
-    .q-detail { color: #3F80F4; }
-    .q-detail:hover { text-decoration: underline; }
+    .paper-inner { position: relative; z-index: 1; }
+    .part-h { margin: 40px 0 12px; font-size: 16px; font-weight: 700; color: #222; }
+    .part-h:first-child { margin-top: 0; }
+    .sec-h { margin: 28px 0 10px; font-size: 15px; font-weight: 700; color: #222; }
+    .dir { margin: 0 0 16px; font-size: 14px; line-height: 1.9; color: #555; }
+    .q-block, .blank-no { scroll-margin-top: 20px; }
+    .q-block { margin: 0 0 18px; }
+    .q-stem { font-size: 15px; line-height: 1.9; color: #222; }
+    .q-opt { margin-top: 4px; padding-left: 22px; font-size: 14px; line-height: 1.85; color: #333; }
     .blank-no {
-      display: inline-block; min-width: 42px; margin: 0 2px; padding: 0 2px;
-      border-bottom: 1.5px solid #333; text-align: center; font-weight: 600; color: #666;
+      display: inline-block; min-width: 48px; margin: 0 3px; padding: 0 4px;
+      border-bottom: 1px solid #333; text-align: center; font-weight: 600; color: #333;
     }
     .blank-no.is-on { background: #EBF3FF; color: #3F80F4; border-color: #3F80F4; }
-    .player-static { pointer-events: none; user-select: none; }
-    .sec-bar { width: 4px; height: 14px; border-radius: 1px; background: #3F80F4; }
-    .passage-box { background: #FAFBFC; border: 1px solid #F0F0F0; border-radius: 8px; }
-    .drawer-enter { animation: slideIn .22s ease; }
-    @keyframes slideIn {
-      from { transform: translateX(24px); opacity: .6; }
-      to { transform: translateX(0); opacity: 1; }
-    }
   </style>
 </head>
 <body class="flex h-screen flex-col overflow-hidden bg-page text-ink">
-  <header class="flex h-12 shrink-0 items-center px-5">
-    <a href="cet-index.html" class="grid h-8 w-8 place-items-center rounded hover:bg-white/80" title="返回">
-      <svg class="h-5 w-5 text-[#666]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
-    </a>
+  <header class="flex h-12 shrink-0 items-center justify-between bg-white px-5 shadow-[0_1px_0_#EEE]">
     <h1 class="text-[16px] font-medium">试卷详情</h1>
+    <a href="cet-index.html" class="grid h-8 w-8 place-items-center rounded text-[#999] hover:bg-gray-50 hover:text-[#666]" title="关闭">
+      <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </a>
   </header>
 
-  <main class="flex min-h-0 flex-1 gap-4 px-4 pb-4">
-    <section id="paperScroll" class="paper-scroll min-w-0 flex-1 overflow-auto rounded-lg bg-white px-14 py-12 shadow-card">
-      <h2 id="paperTitle" class="text-center text-[22px] font-bold leading-snug">2026年英语四级考试真题一</h2>
-      <p id="paperMeta" class="mt-3 text-center text-[13px] text-[#999]">
-        总分：95&nbsp;&nbsp;&nbsp;题数：57&nbsp;&nbsp;&nbsp;及格分：57
-      </p>
-      <div id="paperBody" class="mt-12"></div>
+  <main class="flex min-h-0 flex-1 gap-4 p-4">
+    <section id="paperScroll" class="paper-scroll paper-sheet min-w-0 flex-1 overflow-auto rounded-lg bg-white shadow-card">
+      <div id="watermark" class="paper-watermark" aria-hidden="true"></div>
+      <div class="paper-inner px-16 py-12">
+        <h2 id="paperTitle" class="text-center text-[22px] font-bold leading-snug">2026年英语四级考试真题一</h2>
+        <p id="paperMeta" class="mt-3 text-center text-[13px] text-[#999]">总分: 95&nbsp;&nbsp;&nbsp;题数: 57&nbsp;&nbsp;&nbsp;及格分: 57</p>
+        <div id="paperBody" class="mt-12"></div>
+      </div>
     </section>
 
-    <aside class="flex w-[300px] shrink-0 flex-col overflow-auto rounded-lg bg-white px-5 py-5 shadow-card">
+    <aside class="struct-scroll flex w-[300px] shrink-0 flex-col overflow-auto rounded-lg bg-white px-5 py-5 shadow-card">
       <div class="mb-4 flex items-center gap-1.5">
         <span class="text-[15px] font-medium">试卷结构</span>
         <span class="grid h-4 w-4 place-items-center rounded-full border border-[#D0D0D0] text-[10px] leading-none text-[#999]" title="点击题号可跳转到对应题目">i</span>
@@ -98,17 +84,6 @@
       <div id="structNav"></div>
     </aside>
   </main>
-
-  <div id="drawerMask" class="fixed inset-0 z-20 hidden bg-black/20"></div>
-  <aside id="drawer" class="drawer-enter fixed inset-y-0 right-0 z-30 hidden w-[480px] flex-col bg-white shadow-drawer">
-    <div class="flex h-14 shrink-0 items-center justify-between border-b border-[#F0F0F0] px-5">
-      <div id="drawerTitle" class="text-[16px] font-medium">题目详情</div>
-      <button id="closeDrawer" type="button" class="grid h-8 w-8 place-items-center rounded text-[#999] hover:bg-gray-50 hover:text-[#666]">
-        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
-      </button>
-    </div>
-    <div id="drawerBody" class="min-h-0 flex-1 overflow-auto px-6 py-5"></div>
-  </aside>
 
   <script src="cet-exam-data.js"></script>
   <script>
@@ -123,15 +98,19 @@
 
       document.getElementById("paperTitle").textContent = META.title;
       document.getElementById("paperMeta").innerHTML =
-        "总分：" + META.maxScore + "&nbsp;&nbsp;&nbsp;题数：" + META.totalItems + "&nbsp;&nbsp;&nbsp;及格分：" + META.passScore;
+        "总分: " + META.maxScore + "&nbsp;&nbsp;&nbsp;题数: " + META.totalItems + "&nbsp;&nbsp;&nbsp;及格分: " + META.passScore;
+
+      var wm = "";
+      for (var i = 0; i < 80; i++) wm += "<span>邱老师/7701</span>";
+      document.getElementById("watermark").innerHTML = wm;
 
       var GROUPS = [
-        { key: "writing", title: "写作", heading: "一、写作", extra: "" },
-        { key: "listening", title: "听力理解", heading: "二、听力理解", extra: "" },
-        { key: "cloze", title: "选词填空", heading: "三、阅读理解", extra: "Section A  选词填空" },
-        { key: "matching", title: "信息匹配", heading: "", extra: "Section B  信息匹配" },
-        { key: "careful", title: "仔细阅读", heading: "", extra: "Section C  仔细阅读" },
-        { key: "translation", title: "翻译", heading: "四、翻译", extra: "" }
+        { key: "writing", title: "写作" },
+        { key: "listening", title: "听力理解" },
+        { key: "cloze", title: "选词填空" },
+        { key: "matching", title: "信息匹配" },
+        { key: "careful", title: "仔细阅读" },
+        { key: "translation", title: "翻译" }
       ];
 
       function esc(s) {
@@ -155,33 +134,9 @@
         return ITEMS[0];
       }
 
-      function difficultyOf(it) {
-        if (it.kind === "writing" || it.kind === "translation" || it.kind === "careful") return "较难";
-        if (it.kind === "listening") return "简单";
-        return "中等";
-      }
-
-      function typeOf(it) {
-        if (it.kind === "writing") return "写作题";
-        if (it.kind === "listening") return "听力题";
-        if (it.kind === "cloze") return "选词填空";
-        if (it.kind === "matching") return "信息匹配";
-        if (it.kind === "careful") return "仔细阅读";
-        if (it.kind === "translation") return "翻译题";
-        return it.label || "题目";
-      }
-
-      function optionBlock(options) {
-        if (!options) return "";
-        return '<div class="mt-2 space-y-1.5 pl-5">' + options.map(function (o) {
-          return '<div class="text-[14px] leading-[1.85] text-[#333]">' +
-            esc(o.key) + ". " + esc(o.text) + "</div>";
-        }).join("") + "</div>";
-      }
-
       function displayNo(it) {
-        if (it.kind === "writing") return "写作";
-        if (it.kind === "translation") return "翻译";
+        if (it.kind === "writing") return "写";
+        if (it.kind === "translation") return "译";
         if (it.blankNo != null) return String(it.blankNo);
         if (it.matchNo != null) return String(it.matchNo);
         if (it.readingNo != null) return String(it.readingNo);
@@ -189,45 +144,33 @@
         return String(it.no);
       }
 
-      function navCellLabel(it) {
-        if (it.kind === "writing") return "写";
-        if (it.kind === "translation") return "译";
-        return displayNo(it);
+      function optionBlock(options) {
+        if (!options) return "";
+        return options.map(function (o) {
+          return '<div class="q-opt">' + esc(o.key) + ". " + esc(o.text) + "</div>";
+        }).join("");
       }
 
-      function qHead(it) {
-        var label = displayNo(it);
-        var prefix = (it.kind === "writing" || it.kind === "translation") ? "" : label + ".";
-        return '<div class="text-[15px] leading-[1.9] text-[#222]"><span class="mr-1 font-medium">' + prefix + "</span>";
+      function dirHtml(text) {
+        return '<p class="dir"><span class="font-semibold text-[#333]">Directions: </span>' + esc(text) + "</p>";
       }
 
-      function qArticle(it, innerHtml) {
-        return '<article id="q-' + it.no + '" class="q-block" data-q="' + it.no + '">' +
-          innerHtml +
-          '<div class="q-foot">' +
-            "<span>" + esc(difficultyOf(it)) + " | 分值 " + it.score + " 分</span>" +
-            '<button type="button" class="q-detail" data-detail="' + it.no + '">查看详情</button>' +
-          "</div></article>";
-      }
-
-      function playerBar() {
-        return '<div class="player-static mb-5 flex items-center gap-3 rounded border border-[#E6E6E6] bg-[#F7F9FC] px-4 py-3">' +
-          '<div class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#C5C5C5] text-white">' +
-          '<svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>' +
-          '<span class="w-10 shrink-0 text-[12px] text-[#888]">00:00</span>' +
-          '<div class="relative h-1.5 flex-1 overflow-hidden rounded-full bg-[#E6E6E6]"><div class="h-full w-0 rounded-full bg-[#C5C5C5]"></div></div>' +
-          '<span class="w-10 shrink-0 text-right text-[12px] text-[#888]">00:48</span></div>';
+      function qWrap(it, inner) {
+        return '<article id="q-' + it.no + '" class="q-block" data-q="' + it.no + '">' + inner + "</article>";
       }
 
       function clozePassage() {
+        var byBlank = {};
+        ITEMS.forEach(function (it) { if (it.blankNo != null) byBlank[it.blankNo] = it.no; });
         return CLOZE_SEGS.map(function (seg) {
           if (seg.type !== "blank") return esc(seg.text);
-          return '<span class="blank-no" data-blank="' + seg.no + '">' + seg.no + "</span>";
+          var qNo = byBlank[seg.no] || seg.no;
+          return '<span id="q-' + qNo + '" class="blank-no" data-q="' + qNo + '" data-blank="' + seg.no + '">' + seg.no + "</span>";
         }).join("");
       }
 
       function wordBank() {
-        return '<div class="mt-5 grid grid-cols-3 gap-x-6 gap-y-2 text-[14px] leading-[1.8] text-[#333] sm:grid-cols-5">' +
+        return '<div class="mt-5 grid grid-cols-3 gap-x-8 gap-y-2 text-[14px] leading-[1.8] text-[#333] sm:grid-cols-5">' +
           CLOZE_BANK.map(function (w) {
             return "<div>" + esc(w.key) + ") " + esc(w.word) + "</div>";
           }).join("") + "</div>";
@@ -235,198 +178,96 @@
 
       function renderPaper() {
         var html = "";
-        GROUPS.forEach(function (g) {
-          var list = itemsOf(g.key);
-          if (g.heading) {
-            html += '<h3 class="mb-5 mt-12 text-[16px] font-bold first:mt-0">' + esc(g.heading) + "</h3>";
-          }
-          if (g.extra) {
-            html += '<h4 class="mb-3 mt-10 text-[15px] font-bold text-[#222]">' + esc(g.extra) + "</h4>";
-          }
+        var writing = itemsOf("writing")[0];
+        var listening = itemsOf("listening");
+        var cloze = itemsOf("cloze");
+        var matching = itemsOf("matching");
+        var careful = itemsOf("careful");
+        var translation = itemsOf("translation")[0];
 
-          if (g.key === "writing") {
-            var w = list[0];
-            html += qArticle(w, qHead(w) + esc(w.stem) + "</div>" +
-              '<p class="mt-3 text-[15px] leading-[1.9] text-[#222]">' + esc(w.material) + "</p>");
-          }
+        html += '<h3 class="part-h">PART I  Writing</h3>';
+        html += qWrap(writing, '<div class="q-stem">' + esc(writing.stem) + "</div>" +
+          '<p class="mt-3 text-[15px] leading-[1.9] text-[#222]">' + esc(writing.material) + "</p>");
 
-          if (g.key === "listening") {
-            var listenBlocks = [];
-            list.forEach(function (it) {
-              var gk = it.listenGroup || it.material || "ln";
-              if (!listenBlocks.length || listenBlocks[listenBlocks.length - 1].key !== gk) {
-                listenBlocks.push({
-                  key: gk,
-                  material: it.material,
-                  directions: it.directions,
-                  range: it.listenRange,
-                  items: []
-                });
-              }
-              listenBlocks[listenBlocks.length - 1].items.push(it);
-            });
-            var lastDir = "";
-            listenBlocks.forEach(function (blk) {
-              if (blk.directions && blk.directions !== lastDir) {
-                html += '<p class="mb-4 mt-8 text-[14px] leading-[1.9] text-[#555] first:mt-0"><span class="font-semibold text-[#333]">Directions: </span>' +
-                  esc(blk.directions.replace(/^Section [ABC]\.\s*Directions:\s*/i, "")) + "</p>";
-                lastDir = blk.directions;
-              }
-              html += '<h4 class="mb-2 text-[16px] font-bold">' + esc(blk.material || "Listening") + "</h4>";
-              if (blk.range) {
-                html += '<p class="mb-4 text-[14px] leading-[1.85] text-[#666]">Questions ' + blk.range[0] + " to " + blk.range[1] +
-                  " are based on the recording you have just heard.</p>";
-              }
-              html += playerBar();
-              blk.items.forEach(function (it) {
-                html += qArticle(it, qHead(it) + esc(String(it.stem || "").replace(/^Question\s+\d+\.\s*/i, "")) + "</div>" + optionBlock(it.options));
-              });
-            });
+        html += '<h3 class="part-h">PART II  Listening Comprehension</h3>';
+        var lastSec = "";
+        var lastGroup = "";
+        listening.forEach(function (it) {
+          if (it.listenSection && it.listenSection !== lastSec) {
+            html += '<h4 class="sec-h">Section ' + esc(it.listenSection) + "</h4>";
+            html += dirHtml(String(it.directions || "").replace(/^Section [ABC]\.\s*Directions:\s*/i, ""));
+            lastSec = it.listenSection;
           }
-
-          if (g.key === "cloze") {
-            html += '<p class="mb-4 text-[14px] leading-[1.9] text-[#555]"><span class="font-semibold text-[#333]">Directions: </span>' +
-              "In this section, there is a passage with ten blanks. You are required to select one word for each blank from a list of choices. You may not use any of the words in the bank more than once.</p>";
-            html += '<p class="text-[15px] leading-[2.15] text-[#222]">' + clozePassage() + "</p>";
-            html += wordBank();
-            list.forEach(function (it) {
-              html += qArticle(it, qHead(it) + "Choose the best word for blank " + it.blankNo + ".</div>");
-            });
+          var gk = it.listenGroup || "";
+          if (gk !== lastGroup) {
+            var range = it.listenRange;
+            html += '<p class="mb-3 mt-5 text-[14px] leading-[1.85] text-[#666]">Questions ' +
+              (range ? range[0] + " to " + range[1] : displayNo(it)) +
+              " are based on the recording you have just heard.</p>";
+            lastGroup = gk;
           }
-
-          if (g.key === "matching") {
-            html += '<p class="mb-4 text-[14px] leading-[1.9] text-[#555]"><span class="font-semibold text-[#333]">Directions: </span>' +
-              "You are going to read a passage with ten statements attached to it. Each statement contains information given in one of the paragraphs. Identify the paragraph from which the information is derived. You may choose a paragraph more than once.</p>";
-            MATCH_PARAS.forEach(function (p) {
-              html += '<p class="mb-3 text-[15px] leading-[1.95] text-[#222]"><span class="mr-1 font-bold">' + esc(p.key) + ".</span>" + esc(p.text) + "</p>";
-            });
-            list.forEach(function (it) {
-              html += qArticle(it, qHead(it) + esc(it.stem) + "</div>");
-            });
-          }
-
-          if (g.key === "careful") {
-            html += '<p class="mb-3 text-[13px] italic leading-[1.85] text-[#666]">Directions: There are 2 passages in this section. Each passage is followed by some questions or unfinished statements. For each of them there are four choices marked A), B), C) and D).</p>';
-            var p1List = list.filter(function (it) { return it.readingNo == null || it.readingNo < 51; });
-            var p2List = list.filter(function (it) { return it.readingNo != null && it.readingNo >= 51; });
-            function renderCarefulPassage(title, passage, qList, rangeLabel) {
-              html += '<h4 class="mb-2 mt-8 text-[16px] font-bold first:mt-0">' + esc(title) + "</h4>";
-              html += '<p class="mb-4 text-[13px] italic leading-[1.85] text-[#666]">' + esc(rangeLabel) + "</p>";
-              String(passage || "").split(/\n\n+/).forEach(function (para) {
-                html += '<p class="mb-4 text-[15px] leading-[2] text-[#222]">' + esc(para) + "</p>";
-              });
-              qList.forEach(function (it) {
-                html += qArticle(it, qHead(it) + esc(it.stem) + "</div>" + optionBlock(it.options));
-              });
-            }
-            renderCarefulPassage("Passage One", CAREFUL_P1, p1List, "Questions 46 to 50 are based on the following passage.");
-            renderCarefulPassage("Passage Two", CAREFUL_P2, p2List, "Questions 51 to 55 are based on the following passage.");
-          }
-
-          if (g.key === "translation") {
-            var t = list[0];
-            html += qArticle(t, qHead(t) + esc(t.stem) + "</div>" +
-              '<p class="mt-4 text-[15px] leading-[1.9] text-[#222]">' + esc(t.source) + "</p>");
-          }
+          var stem = String(it.stem || "").replace(/^Question\s+\d+\.\s*/i, "");
+          html += qWrap(it, '<div class="q-stem"><span class="font-medium">' + displayNo(it) + ". </span>" + esc(stem) + "</div>" + optionBlock(it.options));
         });
+
+        html += '<h3 class="part-h">PART III  Reading Comprehension</h3>';
+        html += '<h4 class="sec-h">Section A</h4>';
+        html += dirHtml("In this section, there is a passage with ten blanks. You are required to select one word for each blank from a list of choices given in a word bank following the passage. You may not use any of the words in the bank more than once.");
+        html += '<p class="text-[15px] leading-[2.15] text-[#222]">' + clozePassage() + "</p>";
+        html += wordBank();
+
+        html += '<h4 class="sec-h">Section B</h4>';
+        html += dirHtml("In this section, you are going to read a passage with ten statements attached to it. Each statement contains information given in one of the paragraphs. Identify the paragraph from which the information is derived. You may choose a paragraph more than once.");
+        MATCH_PARAS.forEach(function (p) {
+          html += '<p class="mb-3 text-[15px] leading-[1.95] text-[#222]"><span class="mr-1 font-bold">' + esc(p.key) + ".</span>" + esc(p.text) + "</p>";
+        });
+        matching.forEach(function (it) {
+          html += qWrap(it, '<div class="q-stem"><span class="font-medium">' + displayNo(it) + ". </span>" + esc(it.stem) + "</div>");
+        });
+
+        html += '<h4 class="sec-h">Section C</h4>';
+        html += '<p class="dir italic">Directions: There are 2 passages in this section. Each passage is followed by some questions or unfinished statements. For each of them there are four choices marked A), B), C) and D).</p>';
+        var p1List = careful.filter(function (it) { return it.readingNo == null || it.readingNo < 51; });
+        var p2List = careful.filter(function (it) { return it.readingNo != null && it.readingNo >= 51; });
+        function renderCareful(title, passage, qList, rangeLabel) {
+          html += '<h4 class="mb-2 mt-8 text-[15px] font-bold">' + esc(title) + "</h4>";
+          html += '<p class="mb-4 text-[13px] italic leading-[1.85] text-[#666]">' + esc(rangeLabel) + "</p>";
+          String(passage || "").split(/\n\n+/).forEach(function (para) {
+            html += '<p class="mb-4 text-[15px] leading-[2] text-[#222]">' + esc(para) + "</p>";
+          });
+          qList.forEach(function (it) {
+            html += qWrap(it, '<div class="q-stem"><span class="font-medium">' + displayNo(it) + ". </span>" + esc(it.stem) + "</div>" + optionBlock(it.options));
+          });
+        }
+        renderCareful("Passage One", CAREFUL_P1, p1List, "Questions 46 to 50 are based on the following passage.");
+        renderCareful("Passage Two", CAREFUL_P2, p2List, "Questions 51 to 55 are based on the following passage.");
+
+        html += '<h3 class="part-h">PART IV  Translation</h3>';
+        html += qWrap(translation, '<div class="q-stem">' + esc(translation.stem) + "</div>" +
+          '<p class="mt-4 text-[15px] leading-[1.9] text-[#222]">' + esc(translation.source) + "</p>");
+
         document.getElementById("paperBody").innerHTML = html;
       }
 
       function renderNav() {
-        var html = GROUPS.map(function (g) {
+        document.getElementById("structNav").innerHTML = GROUPS.map(function (g) {
           var m = groupMeta(g.key);
           var list = itemsOf(g.key);
           return '<div class="mb-6">' +
             '<div class="mb-3 text-[13px] text-[#666]">' + esc(g.title) +
             " (共" + m.count + "题; 共" + m.score + "分)</div>" +
             '<div class="flex flex-wrap gap-2">' + list.map(function (it) {
-              return '<button type="button" class="nav-num" data-jump="' + it.no + '">' + navCellLabel(it) + "</button>";
+              return '<button type="button" class="nav-num" data-jump="' + it.no + '">' + displayNo(it) + "</button>";
             }).join("") + "</div></div>";
         }).join("");
-        document.getElementById("structNav").innerHTML = html;
-      }
-
-      function secTitle(text) {
-        return '<div class="mb-2 mt-5 flex items-center gap-2 first:mt-0"><i class="sec-bar"></i><span class="text-[14px] font-medium">' + esc(text) + "</span></div>";
-      }
-
-      function optionLines(options) {
-        return (options || []).map(function (o) {
-          return '<div class="flex gap-2 text-[13px] leading-7"><span class="w-5 shrink-0 text-[#666]">' +
-            esc(o.key) + '.</span><span>' + esc(o.text) + "</span></div>";
-        }).join("");
-      }
-
-      function renderPassageHtml(highlightNo) {
-        return CLOZE_SEGS.map(function (seg) {
-          if (seg.type !== "blank") return esc(seg.text);
-          var on = seg.no === highlightNo;
-          return '<span class="inline-block min-w-[42px] border-b border-[#333] px-1 text-center font-semibold ' +
-            (on ? "bg-[#EBF3FF] text-primary" : "text-[#666]") + '">' + seg.no + "</span>";
-        }).join("");
-      }
-
-      function renderDrawer(it) {
-        document.getElementById("drawerTitle").textContent = typeOf(it);
-        var html = "";
-        html += '<div class="mb-4 text-[13px] text-[#999]">' + esc(difficultyOf(it)) + " | 分值 " + it.score + " 分</div>";
-        html += secTitle("题目内容");
-
-        if (it.kind === "listening") {
-          html += '<div class="text-[13px] leading-7 text-[#333]"><div class="mb-1 text-[12px] text-[#999]">' +
-            esc(it.material) + " · 题号 " + displayNo(it) + "</div>";
-          html += "<div class=\"mb-2\">" + esc(it.stem) + "</div>" + optionLines(it.options) + "</div>";
-        } else if (it.kind === "cloze") {
-          html += '<div class="passage-box mb-3 px-3 py-3 text-[13px] leading-7">' + renderPassageHtml(it.blankNo) + "</div>";
-          html += '<div class="text-[13px] leading-7"><div class="mb-2">' + esc(it.stem) + "</div>" + optionLines(it.options) + "</div>";
-        } else if (it.kind === "matching") {
-          html += '<div class="text-[13px] leading-7"><div class="mb-1 text-[12px] text-[#999]">Section B · 题号 ' + displayNo(it) + "</div>";
-          html += "<div>" + esc(it.stem) + "</div></div>";
-        } else if (it.kind === "careful") {
-          var passage = (it.readingNo != null && it.readingNo >= 51) ? CAREFUL_P2 : CAREFUL_P1;
-          var pTitle = (it.readingNo != null && it.readingNo >= 51) ? "Passage Two" : "Passage One";
-          html += '<div class="passage-box mb-3 whitespace-pre-wrap px-3 py-3 text-[13px] leading-7">' + esc(passage) + "</div>";
-          html += '<div class="text-[13px] leading-7"><div class="mb-1 text-[12px] text-[#999]">' + esc(pTitle) + " · 题号 " + displayNo(it) + "</div>";
-          html += "<div class=\"mb-2\">" + esc(it.stem) + "</div>" + optionLines(it.options) + "</div>";
-        } else if (it.kind === "translation") {
-          html += '<div class="text-[13px] leading-7">' + esc(it.stem) + "</div>";
-          html += '<div class="passage-box mt-2 px-3 py-3 text-[13px] leading-7">' + esc(it.source) + "</div>";
-        } else if (it.kind === "writing") {
-          html += '<div class="text-[13px] leading-7">' + esc(it.stem) + "</div>";
-          html += '<div class="passage-box mt-2 px-3 py-3 text-[13px] leading-7">' + esc(it.material) + "</div>";
-        }
-
-        html += '<p class="mt-8 text-[12px] text-[#B0B0B0]">预览模式，不可作答</p>';
-        document.getElementById("drawerBody").innerHTML = html;
-        document.getElementById("drawer").classList.remove("hidden");
-        document.getElementById("drawer").classList.add("flex");
-        document.getElementById("drawerMask").classList.remove("hidden");
-      }
-
-      function closeDrawer() {
-        document.getElementById("drawer").classList.add("hidden");
-        document.getElementById("drawer").classList.remove("flex");
-        document.getElementById("drawerMask").classList.add("hidden");
       }
 
       var activeNo = 1;
-      var focusedNo = 1;
 
-      function setNav(no) {
+      function setActive(no) {
         activeNo = no;
         document.querySelectorAll(".nav-num").forEach(function (btn) {
           btn.classList.toggle("is-on", Number(btn.getAttribute("data-jump")) === no);
-        });
-        document.querySelectorAll(".blank-no").forEach(function (el) {
-          var it = findItem(focusedNo);
-          el.classList.toggle("is-on", !!(it && it.blankNo && Number(el.getAttribute("data-blank")) === it.blankNo));
-        });
-      }
-
-      function setCard(no) {
-        focusedNo = no;
-        document.querySelectorAll(".q-block").forEach(function (el) {
-          el.classList.toggle("is-on", Number(el.getAttribute("data-q")) === no);
         });
         document.querySelectorAll(".blank-no").forEach(function (el) {
           var it = findItem(no);
@@ -434,9 +275,8 @@
         });
       }
 
-      function setActive(no) {
-        setNav(no);
-        setCard(no);
+      function yInScroller(el, scroller) {
+        return el.getBoundingClientRect().top - scroller.getBoundingClientRect().top + scroller.scrollTop;
       }
 
       function jumpTo(no) {
@@ -444,7 +284,7 @@
         var scroller = document.getElementById("paperScroll");
         if (!el || !scroller) return;
         setActive(no);
-        scroller.scrollTo({ top: el.offsetTop - 24, behavior: "smooth" });
+        scroller.scrollTo({ top: yInScroller(el, scroller) - 24, behavior: "smooth" });
       }
 
       function syncActiveByScroll() {
@@ -453,9 +293,9 @@
         var current = ITEMS[0].no;
         ITEMS.forEach(function (it) {
           var el = document.getElementById("q-" + it.no);
-          if (el && el.offsetTop <= y) current = it.no;
+          if (el && yInScroller(el, scroller) <= y) current = it.no;
         });
-        if (current !== activeNo) setNav(current);
+        if (current !== activeNo) setActive(current);
       }
 
       renderPaper();
@@ -467,31 +307,12 @@
         if (!btn) return;
         jumpTo(Number(btn.getAttribute("data-jump")));
       });
-
-      document.getElementById("paperScroll").addEventListener("click", function (e) {
-        var detail = e.target.closest("[data-detail]");
-        if (detail) {
-          e.stopPropagation();
-          var no = Number(detail.getAttribute("data-detail"));
-          setActive(no);
-          renderDrawer(findItem(no));
-          return;
-        }
-        var blank = e.target.closest("[data-blank]");
-        if (blank) {
-          var blankNo = Number(blank.getAttribute("data-blank"));
-          for (var i = 0; i < ITEMS.length; i++) {
-            if (ITEMS[i].blankNo === blankNo) { jumpTo(ITEMS[i].no); return; }
-          }
-          return;
-        }
-        var block = e.target.closest(".q-block");
-        if (block) setActive(Number(block.getAttribute("data-q")));
-      });
-
       document.getElementById("paperScroll").addEventListener("scroll", syncActiveByScroll);
-      document.getElementById("closeDrawer").onclick = closeDrawer;
-      document.getElementById("drawerMask").onclick = closeDrawer;
+      document.getElementById("paperScroll").addEventListener("click", function (e) {
+        var blank = e.target.closest("[data-blank]");
+        if (!blank) return;
+        jumpTo(Number(blank.getAttribute("data-q")));
+      });
     })();
   </script>
 </body>
