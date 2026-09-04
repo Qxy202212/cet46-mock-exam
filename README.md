@@ -13,6 +13,7 @@ WPS 教学平台模考试室的英语四级演示卷，含主链路三页、六�
 | 入口 | [cet-index.html](cet-index.html) | 三个页面的汇聚入口 |
 | 试卷详情 | [cet-paper-preview.html](cet-paper-preview.html) | 只读整卷预览 |
 | 考场作答 | [wps-exam-ai-weekly-v2.html](wps-exam-ai-weekly-v2.html) | 单题 / 整卷作答 |
+| 考场作答（按题型） | [wps-exam-ai-weekly-v3.html](wps-exam-ai-weekly-v3.html) | 仅单题；答题卡按写作 / 听力理解 / 选词填空等题型分组 |
 | 写作 | [wps-exam-ai-weekly-v2.html?kind=writing](wps-exam-ai-weekly-v2.html?kind=writing) | 无分屏文本框 |
 | 听力 | [wps-exam-ai-weekly-v2.html?kind=listening](wps-exam-ai-weekly-v2.html?kind=listening) | 音频 + 选项分屏 |
 | 选词填空 | [wps-exam-ai-weekly-v2.html?kind=cloze](wps-exam-ai-weekly-v2.html?kind=cloze) | 篇章空格 + 词库 |
