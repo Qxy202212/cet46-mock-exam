@@ -95,7 +95,15 @@
 
   var MATCH_RICH = {
     36: "Hiring managers believe unemployed workers over 45 lack good skills and are less adaptable.",
-    37: "Switching to a new career is difficult and getting reemployed after a layoff is even tougher."
+    37: "Switching to a new career is difficult and getting reemployed after a layoff is even tougher.",
+    38: "Older job seekers are advised to highlight achievements instead of years of service.",
+    39: "Reverse mentoring lets senior staff learn digital tools from younger colleagues.",
+    40: "Government programs subsidize mid-career training to keep experienced workers productive.",
+    41: "Automated screening systems may reject résumés with graduation years that look too old.",
+    42: "Flexible work arrangements help people over 45 re-enter the labor market.",
+    43: "Professional networks and referrals matter more as workers grow older.",
+    44: "People from lower-income communities are less likely to join free training programs.",
+    45: "Many employers value practical work experience more than a perfect degree."
   };
 
   var CAREFUL_RICH = {
@@ -409,6 +417,169 @@
     "Part IV  翻译"
   ];
 
+  function clozePlain() {
+    return CLOZE_SEGS.map(function (s) {
+      return s.type === "blank" ? "___" + s.no + "___" : s.text;
+    }).join("");
+  }
+
+  function excerptOf(text, max) {
+    var t = String(text || "").replace(/\s+/g, " ").trim();
+    return t.length > max ? t.slice(0, max) + "…" : t;
+  }
+
+  /** 官方题库：按母题（材料/篇章）成组，卡片正文为 Directions + 材料，不拆小题 */
+  function buildMotherItems(level) {
+    level = level || "CET4";
+    var qs = buildQuestions();
+    var paper = level === "CET6" ? "2026年英语六级考试真题一" : "2026年英语四级考试真题一";
+    var citeMul = level === "CET6" ? 0.62 : 1;
+    var kp = level;
+    var mothers = [];
+
+    function add(cfg) {
+      mothers.push({
+        id: level + "-" + cfg.id,
+        level: level,
+        paper: paper,
+        kind: cfg.kind,
+        typeLabel: cfg.typeLabel,
+        difficulty: cfg.difficulty,
+        title: cfg.title,
+        body: cfg.body,
+        excerpt: cfg.body,
+        childCount: cfg.childCount,
+        qRange: cfg.qRange,
+        score: cfg.score,
+        tags: cfg.tags,
+        cites: Math.max(12, Math.round(cfg.cites * citeMul)),
+        schoolCites: cfg.schoolCites != null ? cfg.schoolCites : 0,
+        source: "WPS 官方"
+      });
+    }
+
+    var writing = qs.filter(function (q) { return q.kind === "writing"; })[0];
+    add({
+      id: "writing",
+      kind: "writing",
+      typeLabel: "作文题",
+      difficulty: "简单",
+      title: "Writing",
+      body: writing.stem + "\n" + writing.material,
+      childCount: 1,
+      qRange: "Part I",
+      score: 15,
+      tags: [kp, "写作", "议论文", "校园生活"],
+      cites: 99,
+      schoolCites: 0
+    });
+
+    LISTEN_META.forEach(function (lm) {
+      var start = lm.range[0];
+      var end = lm.range[1];
+      var count = end - start + 1;
+      var diff = lm.section === "A" ? "简单" : (lm.section === "B" ? "中等" : "困难");
+      var secName = lm.section === "A" ? "短篇新闻" : (lm.section === "B" ? "长对话" : "听力篇章");
+      add({
+        id: "listen-" + lm.group,
+        kind: "listening",
+        typeLabel: "听力题",
+        difficulty: diff,
+        title: lm.material,
+        body: lm.directions + "\nQuestions " + start + " to " + end + " are based on the following " +
+          (lm.section === "A" ? "news report" : (lm.section === "B" ? "conversation" : "passage")) +
+          ". " + lm.material + ".",
+        childCount: count,
+        qRange: "Q" + start + "–Q" + end,
+        score: count,
+        tags: [kp, "听力理解", secName, lm.material],
+        cites: 38 + start,
+        schoolCites: start % 3
+      });
+    });
+
+    add({
+      id: "cloze",
+      kind: "cloze",
+      typeLabel: "选词填空",
+      difficulty: "中等",
+      title: "Section A 选词填空",
+      body: clozeDirections() + "\n" + clozePlain(),
+      childCount: 10,
+      qRange: "Q26–Q35",
+      score: 10,
+      tags: [kp, "阅读理解", "选词填空", "词汇运用"],
+      cites: 99,
+      schoolCites: 0
+    });
+
+    add({
+      id: "matching",
+      kind: "matching",
+      typeLabel: "信息匹配",
+      difficulty: "困难",
+      title: "Section B 信息匹配",
+      body: matchDirections() + "\n" + MATCH_PARAS.map(function (p) {
+        return p.key + ") " + p.text;
+      }).join(" "),
+      childCount: 10,
+      qRange: "Q36–Q45",
+      score: 10,
+      tags: [kp, "阅读理解", "信息匹配", "段落定位"],
+      cites: 74,
+      schoolCites: 2
+    });
+
+    add({
+      id: "careful-p1",
+      kind: "careful",
+      typeLabel: "仔细阅读",
+      difficulty: "中等",
+      title: "Passage One",
+      body: carefulDirections() + "\nPassage One\n" + CAREFUL_P1,
+      childCount: 5,
+      qRange: "Q46–Q50",
+      score: 10,
+      tags: [kp, "阅读理解", "仔细阅读", "主旨细节"],
+      cites: 156,
+      schoolCites: 1
+    });
+
+    add({
+      id: "careful-p2",
+      kind: "careful",
+      typeLabel: "仔细阅读",
+      difficulty: "困难",
+      title: "Passage Two",
+      body: carefulDirections() + "\nPassage Two\n" + CAREFUL_P2,
+      childCount: 5,
+      qRange: "Q51–Q55",
+      score: 10,
+      tags: [kp, "阅读理解", "仔细阅读", "推理判断"],
+      cites: 91,
+      schoolCites: 0
+    });
+
+    var trans = qs.filter(function (q) { return q.kind === "translation"; })[0];
+    add({
+      id: "translation",
+      kind: "translation",
+      typeLabel: "翻译题",
+      difficulty: "困难",
+      title: "Translation",
+      body: "Directions: For this part, you are allowed 30 minutes to translate a passage from Chinese into English.\n" +
+        trans.stem + "\n" + trans.source,
+      childCount: 1,
+      qRange: "Part IV",
+      score: 15,
+      tags: [kp, "翻译", "汉译英", "校园场景"],
+      cites: 63,
+      schoolCites: 0
+    });
+
+    return mothers;
+  }
+
   global.CET_EXAM = {
     META: META,
     CLOZE_OPTIONS: CLOZE_OPTIONS,
@@ -419,6 +590,7 @@
     buildQuestions: buildQuestions,
     buildPreviewItems: buildPreviewItems,
     buildScoreItems: buildScoreItems,
+    buildMotherItems: buildMotherItems,
     sheetSectionName: sheetSectionName,
     SHEET_ORDER: SHEET_ORDER,
     jumpPrefer: {

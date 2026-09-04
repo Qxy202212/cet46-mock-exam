@@ -76,7 +76,7 @@
           </div>
         </article>
 
-        <div id="sectionCards" class="grid min-h-[220px] flex-1 grid-cols-4 gap-4"></div>
+        <div id="sectionCards" class="grid min-h-[220px] flex-1 grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6"></div>
       </section>
 
       <section class="mt-4 rounded-lg bg-white shadow-card">
@@ -118,11 +118,13 @@
       var CAREFUL_P2 = CET_EXAM.CAREFUL_P2;
       var ITEMS = CET_EXAM.buildScoreItems();
 
-      var SECTIONS = [
-        { key: "写作", label: "写作" },
-        { key: "听力", label: "听力" },
-        { key: "阅读", label: "阅读" },
-        { key: "翻译", label: "翻译" }
+      var TYPE_CARDS = [
+        { label: "写作", kinds: ["writing"] },
+        { label: "听力", kinds: ["listening"] },
+        { label: "选词填空", kinds: ["banked_cloze"] },
+        { label: "信息匹配", kinds: ["matching"] },
+        { label: "仔细阅读", kinds: ["careful_reading"] },
+        { label: "翻译", kinds: ["translation"] }
       ];
 
       var activeId = "r47";
@@ -147,10 +149,12 @@
         return ITEMS[0];
       }
 
-      function sectionScore(key) {
+      function typeScore(kinds) {
+        var set = {};
+        kinds.forEach(function (k) { set[k] = true; });
         var got = 0, max = 0;
         ITEMS.forEach(function (it) {
-          if (it.section === key) { got += it.got; max += it.max; }
+          if (set[it.kind]) { got += it.got; max += it.max; }
         });
         return { got: got, max: max };
       }
@@ -194,13 +198,13 @@
       }
 
       function renderCards() {
-        var html = SECTIONS.map(function (s) {
-          var sc = sectionScore(s.key);
-          var weak = s.key === "写作" && sc.max > 0 && sc.got / sc.max < 0.6;
+        var html = TYPE_CARDS.map(function (s) {
+          var sc = typeScore(s.kinds);
+          var weak = sc.max > 0 && sc.got / sc.max < 0.6;
           return (
-            '<article class="flex flex-col rounded-lg bg-white px-5 py-5 shadow-card">' +
+            '<article class="flex flex-col rounded-lg bg-white px-4 py-5 shadow-card">' +
               '<div class="text-[13px] text-[#888]">' + esc(s.label) + "</div>" +
-              '<div class="mt-6 text-[22px] font-medium leading-none">' + sc.got + "<span class=\"text-[14px] font-normal\">分</span></div>" +
+              '<div class="mt-5 text-[22px] font-medium leading-none">' + sc.got + "<span class=\"text-[14px] font-normal\">分</span></div>" +
               '<div class="mt-2 text-[12px] text-[#999]">总分' + sc.max + "</div>" +
               (weak ? '<div class="mt-4"><span class="rounded px-2 py-0.5 text-[12px] text-warn" style="background:#FFF1EA">待提升</span></div>' : '<div class="mt-4 h-[22px]"></div>') +
             "</article>"
@@ -249,21 +253,25 @@
 
         html += secTitle("题目内容");
         if (it.kind === "listening") {
-          html += '<div class="text-[13px] leading-7 text-[#333]"><div class="mb-1 text-[12px] text-[#999]">' + esc(it.material) + " · 题号 " + displayNo(it) + "</div>";
-          html += "<div class=\"mb-2\">" + esc(it.stem) + "</div>" + optionLines(it.options) + "</div>";
+          html += '<div class="text-[13px] leading-7 text-[#333]"><div class="mb-2">' + esc(it.stem) + "</div>" + optionLines(it.options) + "</div>";
         } else if (it.kind === "banked_cloze") {
+          var clozeStem = String(it.stem || "").replace(/^\d+\.\s*/, "");
           html += '<div class="passage-box mb-3 px-3 py-3 text-[13px] leading-7">' + renderPassageHtml(it.blankNo) + "</div>";
-          html += '<div class="text-[13px] leading-7"><div class="mb-2">' + esc(it.stem) + "</div>" + optionLines(it.options) + "</div>";
+          html += '<div class="text-[13px] leading-7"><div class="mb-2">' + esc(clozeStem) + "</div>" + optionLines(it.options) + "</div>";
         } else if (it.kind === "matching") {
-          html += '<div class="text-[13px] leading-7"><div class="mb-1 text-[12px] text-[#999]">Section B · 题号 ' + displayNo(it) + "</div>";
-          html += "<div>" + esc(it.stem) + "</div>";
-          html += '<div class="mt-2 text-[12px] text-[#999]">请选出信息来源段落（A–M）。</div></div>';
+          html += '<div class="text-[13px] leading-7 text-[#333]">';
+          html += '<div class="mb-3">' + esc("Directions: In this section, you are going to read a passage with ten statements attached to it. Each statement contains information given in one of the paragraphs. Identify the paragraph from which the information is derived. You may choose a paragraph more than once. Each paragraph is marked with a letter.") + "</div>";
+          html += '<div class="passage-box mb-3 max-h-[240px] overflow-auto px-3 py-3">';
+          html += MATCH_PARAS.map(function (p) {
+            return '<div class="mb-2 last:mb-0"><span class="font-medium">' + esc(p.key) + ".</span> " + esc(p.text) + "</div>";
+          }).join("");
+          html += "</div>";
+          html += '<div class="border-t border-[#EEE] pt-3">' + esc(it.stem) + "</div>";
+          html += "</div>";
         } else if (it.kind === "careful_reading") {
           var passage = (it.readingNo != null && it.readingNo >= 51) ? CAREFUL_P2 : CAREFUL_P1;
-          var pTitle = (it.readingNo != null && it.readingNo >= 51) ? "Passage Two" : "Passage One";
           html += '<div class="passage-box mb-3 px-3 py-3 text-[13px] leading-7 essay-box">' + esc(passage) + "</div>";
-          html += '<div class="text-[13px] leading-7"><div class="mb-1 text-[12px] text-[#999]">' + esc(pTitle) + " · 题号 " + displayNo(it) + "</div>";
-          html += "<div class=\"mb-2\">" + esc(it.stem) + "</div>" + optionLines(it.options) + "</div>";
+          html += '<div class="text-[13px] leading-7"><div class="mb-2">' + esc(it.stem) + "</div>" + optionLines(it.options) + "</div>";
         } else if (it.kind === "translation") {
           html += '<div class="text-[13px] leading-7">' + esc(it.stem) + "</div>";
           html += '<div class="passage-box mt-2 px-3 py-3 text-[13px] leading-7">' + esc(it.source) + "</div>";
@@ -287,9 +295,7 @@
         } else if (it.kind === "banked_cloze") {
           html += '<div class="text-[13px]">' + esc(it.correct) + "（" + esc(wordByKey(it.correct)) + "）</div>";
         } else if (it.kind === "matching") {
-          var p = paraByKey(it.correct);
           html += '<div class="text-[13px]">' + esc(it.correct) + "</div>";
-          if (p) html += '<div class="passage-box mt-2 px-3 py-2.5 text-[12px] leading-6 text-[#666]">' + esc(p.key) + ". " + esc(p.text) + "</div>";
         } else {
           html += '<div class="text-[13px]">' + esc(it.correct) + "</div>";
         }
