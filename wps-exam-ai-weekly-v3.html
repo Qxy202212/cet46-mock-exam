@@ -75,6 +75,14 @@
       position: absolute; top: -3px; right: -3px;
       width: 8px; height: 8px; border-radius: 50%; background: #E85D5D;
     }
+    #miniWin {
+      min-width: 240px; min-height: 120px; width: 320px; height: 192px;
+      resize: both; overflow: hidden;
+    }
+    #miniWin:not(.hidden) { display: flex; flex-direction: column; }
+    #miniWinHead { cursor: move; user-select: none; flex-shrink: 0; }
+    #miniWinBody { min-height: 0; flex: 1; }
+    body.is-mini-dragging { cursor: move !important; user-select: none !important; }
     /* 整卷模式：对照星火题型结构 */
     .paper-full { background: #fff; }
     .paper-full .q-card { background: transparent; box-shadow: none; border: 0; border-radius: 0; padding: 0; margin-bottom: 8px; }
@@ -227,12 +235,12 @@
     </div>
   </div>
 
-  <div id="miniWin" class="fixed bottom-10 right-[300px] z-30 hidden w-[320px] overflow-hidden rounded shadow-win">
-    <div class="flex h-8 items-center bg-header px-3 text-[12px] text-white">
+  <div id="miniWin" class="fixed bottom-10 right-[300px] z-30 hidden overflow-hidden rounded shadow-win">
+    <div id="miniWinHead" class="flex h-8 items-center bg-header px-3 text-[12px] text-white">
       <span id="miniWinTitle" class="truncate">1. 【听力题·5分】</span>
       <button id="closeMiniWin" type="button" class="ml-auto grid h-5 w-5 place-items-center rounded hover:bg-white/15">×</button>
     </div>
-    <div id="miniWinBody" class="max-h-40 overflow-auto bg-white p-3 text-[12px] leading-relaxed text-[#333]"></div>
+    <div id="miniWinBody" class="overflow-auto bg-white p-3 text-[12px] leading-relaxed text-[#333]"></div>
   </div>
 
   <div id="mask" class="fixed inset-0 z-40 hidden items-center justify-center bg-black/35">
@@ -1698,6 +1706,48 @@
       document.getElementById("closeMiniWin").onclick = function () {
         document.getElementById("miniWin").classList.add("hidden");
       };
+
+      (function initMiniWinInteract() {
+        var win = document.getElementById("miniWin");
+        var head = document.getElementById("miniWinHead");
+        var closeBtn = document.getElementById("closeMiniWin");
+        var dragging = false;
+        var startX = 0;
+        var startY = 0;
+        var startLeft = 0;
+        var startTop = 0;
+        function clamp(v, min, max) {
+          return Math.max(min, Math.min(max, v));
+        }
+        head.addEventListener("mousedown", function (e) {
+          if (e.button !== 0) return;
+          if (closeBtn.contains(e.target)) return;
+          var rect = win.getBoundingClientRect();
+          win.style.left = rect.left + "px";
+          win.style.top = rect.top + "px";
+          win.style.right = "auto";
+          win.style.bottom = "auto";
+          dragging = true;
+          startX = e.clientX;
+          startY = e.clientY;
+          startLeft = rect.left;
+          startTop = rect.top;
+          document.body.classList.add("is-mini-dragging");
+          e.preventDefault();
+        });
+        document.addEventListener("mousemove", function (e) {
+          if (!dragging) return;
+          var w = win.offsetWidth;
+          var h = win.offsetHeight;
+          win.style.left = clamp(startLeft + (e.clientX - startX), 0, window.innerWidth - w) + "px";
+          win.style.top = clamp(startTop + (e.clientY - startY), 0, window.innerHeight - h) + "px";
+        });
+        document.addEventListener("mouseup", function () {
+          if (!dragging) return;
+          dragging = false;
+          document.body.classList.remove("is-mini-dragging");
+        });
+      })();
 
       document.getElementById("markBtn").onclick = function () {
         var id = QUESTIONS[current].id;

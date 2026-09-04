@@ -95,6 +95,24 @@
     .parent-box { background: #FAFBFC; border: 1px solid #F0F0F0; border-radius: 8px; }
     .progress-track { height: 4px; background: #E6E6E6; border-radius: 999px; }
     .progress-fill { height: 4px; width: 0; background: #3F80F4; border-radius: 999px; }
+    .listen-file {
+      position: relative;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 18px; height: 18px; margin-right: 8px; padding: 0;
+      vertical-align: -3px; border: 0; border-radius: 3px;
+      background: #3F80F4; color: #fff; cursor: pointer; flex-shrink: 0;
+    }
+    .listen-file svg { width: 10px; height: 10px; display: block; }
+    .listen-file .ico-pause { display: none; }
+    .listen-file.is-on .ico-play { display: none; }
+    .listen-file.is-on .ico-pause { display: block; }
+    .listen-file-tip {
+      display: none; position: absolute; left: 50%; bottom: calc(100% + 6px);
+      transform: translateX(-50%); padding: 4px 8px; border-radius: 4px;
+      background: #333; color: #fff; font-size: 12px; font-weight: 400;
+      line-height: 1.4; white-space: nowrap; z-index: 8; pointer-events: none;
+    }
+    .listen-file:hover .listen-file-tip { display: block; }
   </style>
 </head>
 <body class="flex h-screen flex-col overflow-hidden bg-page text-ink">
@@ -290,6 +308,24 @@
           }).join("") + "</div>";
       }
 
+      function listenFileName(it) {
+        var range = it.listenRange || [it.listenNo, it.listenNo];
+        var mat = String(it.material || "Listening").replace(/\s+/g, "");
+        return "CET4_Listening_" + mat + "_Q" + range[0] + "-" + range[1] + ".mp3";
+      }
+
+      function listenFileBtn(it) {
+        var key = it.listenGroup || ("l-" + it.listenNo);
+        var name = listenFileName(it);
+        var src = it.audio || "";
+        var dur = it.duration || 48;
+        return '<button type="button" class="listen-file" data-audio="' + esc(key) +
+          '" data-src="' + esc(src) + '" data-duration="' + dur + '" aria-label="播放 ' + esc(name) + '">' +
+          '<svg class="ico-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>' +
+          '<svg class="ico-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>' +
+          '<span class="listen-file-tip">' + esc(name) + "</span></button>";
+      }
+
       function renderPaper() {
         var html = "";
         var writing = itemsOf("writing")[0];
@@ -315,8 +351,9 @@
           var gk = it.listenGroup || "";
           if (gk !== lastGroup) {
             var range = it.listenRange;
-            html += '<p class="mb-3 mt-5 text-[14px] leading-[1.85] text-[#666]">Questions ' +
-              (range ? range[0] + " to " + range[1] : displayNo(it)) +
+            html += '<p class="mb-3 mt-5 text-[14px] leading-[1.85] text-[#666]">' +
+              listenFileBtn(it) +
+              "Questions " + (range ? range[0] + " to " + range[1] : displayNo(it)) +
               " are based on the recording you have just heard.</p>";
             lastGroup = gk;
           }
@@ -527,6 +564,74 @@
         if (current !== activeNo) setActive(current);
       }
 
+      var listenAudio = {};
+      var listenFake = {};
+
+      function stopListen(key) {
+        var a = listenAudio[key];
+        if (a) { a.pause(); a.currentTime = 0; }
+        if (listenFake[key]) {
+          clearInterval(listenFake[key]);
+          listenFake[key] = null;
+        }
+        var btn = document.querySelector('.listen-file[data-audio="' + key + '"]');
+        if (btn) btn.classList.remove("is-on");
+      }
+
+      function stopAllListen(except) {
+        Object.keys(listenAudio).forEach(function (k) {
+          if (k !== except) stopListen(k);
+        });
+        document.querySelectorAll(".listen-file.is-on").forEach(function (btn) {
+          var k = btn.getAttribute("data-audio");
+          if (k !== except) stopListen(k);
+        });
+      }
+
+      function startFakePlay(key, duration, btn) {
+        var t = 0;
+        if (listenFake[key]) clearInterval(listenFake[key]);
+        listenFake[key] = setInterval(function () {
+          if (!btn.classList.contains("is-on")) {
+            clearInterval(listenFake[key]);
+            listenFake[key] = null;
+            return;
+          }
+          t += 250;
+          if (t >= duration * 1000) stopListen(key);
+        }, 250);
+      }
+
+      function toggleListen(btn) {
+        var key = btn.getAttribute("data-audio");
+        var src = btn.getAttribute("data-src");
+        var duration = Number(btn.getAttribute("data-duration")) || 48;
+        if (btn.classList.contains("is-on")) {
+          stopListen(key);
+          return;
+        }
+        stopAllListen(key);
+        if (!listenAudio[key] && src) {
+          var a = new Audio(src);
+          a.preload = "none";
+          a.addEventListener("ended", function () { stopListen(key); });
+          a.addEventListener("error", function () {
+            if (btn.classList.contains("is-on") && !listenFake[key]) startFakePlay(key, duration, btn);
+          });
+          listenAudio[key] = a;
+        }
+        btn.classList.add("is-on");
+        var audio = listenAudio[key];
+        if (!audio) {
+          startFakePlay(key, duration, btn);
+          return;
+        }
+        var playPromise = audio.play();
+        if (playPromise && playPromise.catch) {
+          playPromise.catch(function () { startFakePlay(key, duration, btn); });
+        }
+      }
+
       renderPaper();
       renderNav();
       setActive(1);
@@ -538,6 +643,13 @@
       });
       document.getElementById("paperScroll").addEventListener("scroll", syncActiveByScroll);
       document.getElementById("paperScroll").addEventListener("click", function (e) {
+        var playBtn = e.target.closest("[data-audio]");
+        if (playBtn) {
+          e.preventDefault();
+          e.stopPropagation();
+          toggleListen(playBtn);
+          return;
+        }
         var detail = e.target.closest("[data-detail]");
         if (detail) {
           e.stopPropagation();

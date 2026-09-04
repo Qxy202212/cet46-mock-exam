@@ -294,6 +294,8 @@
           listenSection: q.listenSection,
           listenRange: q.listenRange,
           listenGroup: q.listenGroup,
+          audio: q.audio,
+          duration: q.duration,
           blankNo: q.blankNo,
           matchNo: q.matchNo,
           readingNo: q.readingNo
