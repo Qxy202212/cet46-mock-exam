@@ -328,10 +328,10 @@
     items.push({
       id: "w1", no: no++, section: "写作", type: "写作题", kind: "writing", max: 15, got: 8,
       stem: "Directions: For this part, you are allowed 30 minutes to write an essay. You should write at least 120 words but no more than 180 words.",
-      material: "请以 “The Value of a Weekly Operation Report” 为题，结合校园咖啡店运营场景，说明周报如何帮助团队发现问题、调整库存并服务例会决策。",
-      mine: "The Value of a Weekly Operation Report\n\nEvery Monday, the campus coffee shop makes a weekly report. I think this report is very useful.",
-      correct: "The Value of a Weekly Operation Report\n\nA weekly operation report is more than a pile of numbers.",
-      analysis: "演示写作 8/15。"
+      material: "请以 “The Value of a Weekly Operation Report” 为题，结合校园咖啡店运营场景，说明周报如何帮助团队发现问题、调整库存并服务例会决策。要求观点明确、结构完整、语言规范。",
+      mine: "The Value of a Weekly Operation Report\n\nEvery Monday, the campus coffee shop makes a weekly report. I think this report is very useful. It can help the team find problems and change the inventory. The report also give data for the morning meeting. If we don't have the report, the shop will have many problems. In conclusion, weekly operation report is important for the shop.",
+      correct: "The Value of a Weekly Operation Report\n\nA weekly operation report is more than a pile of numbers. In a campus coffee shop, it turns last week's sales into decisions for the week ahead.\n\nFirst, the report helps the team find problems early. If a drink sells poorly for several days, the numbers make the drop visible before the morning meeting. Second, it guides inventory. When the shop knows which milk and syrups moved fastest, staff can restock with less waste. Finally, the report supports the Monday meeting: the manager can share clear figures, and everyone talks about the same facts rather than impressions.\n\nIn short, a short weekly report keeps a small campus shop focused, prepared, and easier to run.",
+      analysis: "审题方向正确，能点出周报对发现问题和调整库存的作用，但例会决策写得浅，论证展开不足。结构上有开头与结尾，主体偏短。语言存在 The report also give 等主谓一致错误，词汇和句式较单一。综合 8/15，对应量表「基本切题，思想不够清楚，错误较多」。"
     });
 
     for (var n = 1; n <= 25; n++) {
@@ -383,14 +383,112 @@
     items.push({
       id: "t1", no: no++, section: "翻译", type: "翻译题", kind: "translation", max: 15, got: 12,
       stem: "请将下面的中文原文译成英语。",
-      source: "云顶咖啡是校内一家小型连锁门店。每周一，店长都会根据上一 week 的销售流水，整理一份运营分析周报，为上午的例会提供数据支持。",
-      mine: "Yunding Coffee is a small chain store in the campus.",
-      correct: "Yunding Coffee is a small campus chain.",
-      analysis: "翻译演示 12/15。"
+      source: "云顶咖啡是校内一家小型连锁门店。每周一，店长都会根据上一周的销售流水，整理一份运营分析周报，为上午的例会提供数据支持。请用准确、通顺的英语表达上述内容。",
+      mine: "Yunding Coffee is a small chain store in the campus. Every Monday, the shop manager will according to last week's sales, make a operation analysis weekly report, to provide data support for a morning meeting.",
+      correct: "Yunding Coffee is a small campus chain. Every Monday, the store manager compiles a weekly operation-analysis report based on the previous week's sales figures, providing data support for the morning meeting.",
+      analysis: "信息点齐全：校内小型连锁、每周一、依据上周销售流水、整理运营分析周报、服务上午例会。语言方面存在 in the campus、a operation、make a report 等搭配与冠词问题，但不影响理解。综合 12/15，对应量表「信息点全，有搭配/冠词等错误但不影响理解」。"
     });
 
     return items;
   }
+
+  /** 写作 / 翻译成绩报告单：四维量表 + 当前维度分支 */
+  var SUBJECTIVE_RUBRICS = {
+    writing: {
+      tips: [
+        "本题要求写一篇 120–180 词的议论文，标题为 The Value of a Weekly Operation Report。",
+        "需结合校园咖啡店运营，说明周报如何帮助发现问题、调整库存并服务例会决策。",
+        "考后按内容切题性、结构逻辑、语言准确性、语言丰富度与地道性四个维度给分。"
+      ],
+      steps: [
+        "核对标题与场景是否切题，要点是否覆盖发现问题、调整库存、服务例会。",
+        "检查是否具备开头—主体—结尾，段落是否有衔接。",
+        "标记语法、冠词、主谓一致等语言错误。",
+        "评估词汇与句式是否单一，是否出现中式表达。"
+      ],
+      dims: [
+        {
+          id: "relevance", name: "内容切题性", max: 4, got: 3,
+          comment: "审题正确，能扣住周报价值；例会决策这一要点展开不足。",
+          branches: [
+            { name: "审题方向正确", desc: "抓住「周报对校园咖啡店运营的价值」，未跑题。", max: 2, got: 2 },
+            { name: "要点覆盖完整", desc: "写到发现问题、调整库存；例会决策仅一笔带过。", max: 2, got: 1 }
+          ]
+        },
+        {
+          id: "logic", name: "结构逻辑", max: 3, got: 2,
+          comment: "有开头与结尾，主体论证偏浅，段落展开不够。",
+          branches: [
+            { name: "篇章结构完整", desc: "具备引入、主体、收束，但主体只有短句堆叠。", max: 2, got: 1 },
+            { name: "段落衔接清楚", desc: "有 In conclusion 等标记，层次尚可辨认。", max: 1, got: 1 }
+          ]
+        },
+        {
+          id: "accuracy", name: "语言准确性", max: 4, got: 2,
+          comment: "存在主谓一致、冠词等错误，不影响大意但扣分明显。",
+          branches: [
+            { name: "语法规范", desc: "The report also give 主谓不一致；结论句缺冠词。", max: 2, got: 1 },
+            { name: "用词准确", desc: "change the inventory 达意但不精确，宜用 adjust。", max: 2, got: 1 }
+          ]
+        },
+        {
+          id: "richness", name: "语言丰富度与地道性", max: 4, got: 1,
+          comment: "词汇和句式偏简单，多为 I think / very useful 一类表达。",
+          branches: [
+            { name: "词汇多样性", desc: "useful、important、problems 反复出现，缺乏替换。", max: 2, got: 0 },
+            { name: "句式变化与地道表达", desc: "以简单句为主，makes a weekly report 不够地道。", max: 2, got: 1 }
+          ]
+        }
+      ]
+    },
+    translation: {
+      tips: [
+        "本题为汉译英，需完整译出云顶咖啡运营周报场景中的全部信息点。",
+        "评分同时看信息完整度与英语表达质量，允许部分分。",
+        "考后按内容切题性、结构逻辑、语言准确性、语言丰富度与地道性四个维度给分。"
+      ],
+      steps: [
+        "拆出信息点：校内小型连锁、每周一、上周销售流水、运营分析周报、上午例会、数据支持。",
+        "核对学生译文是否漏译、错译或增添无关信息。",
+        "检查冠词、介词搭配、名词可数性等语言问题。",
+        "判断表达是否通顺、地道，如 compile a report、campus chain。"
+      ],
+      dims: [
+        {
+          id: "relevance", name: "内容切题性", max: 5, got: 5,
+          comment: "六个信息点均已译出，无漏译关键内容。",
+          branches: [
+            { name: "信息点完整", desc: "连锁门店、每周一、销售流水、周报、例会均覆盖。", max: 3, got: 3 },
+            { name: "无漏译关键信息", desc: "「数据支持」与「运营分析」均有对应表达。", max: 2, got: 2 }
+          ]
+        },
+        {
+          id: "logic", name: "结构逻辑", max: 2, got: 2,
+          comment: "两句对应原文层次，时间与目的关系清楚。",
+          branches: [
+            { name: "句序合理", desc: "先介绍门店，再写每周一的周报动作，与原文一致。", max: 1, got: 1 },
+            { name: "衔接自然", desc: "Every Monday 承接首句，目的状语能看懂。", max: 1, got: 1 }
+          ]
+        },
+        {
+          id: "accuracy", name: "语言准确性", max: 5, got: 3,
+          comment: "大意清楚，但有冠词、介词与词序问题。",
+          branches: [
+            { name: "语法正确", desc: "a operation 应为 an；will according to 缺谓语动词。", max: 3, got: 1 },
+            { name: "搭配准确", desc: "in the campus 宜为 on campus；make a report 可接受但偏口语。", max: 2, got: 2 }
+          ]
+        },
+        {
+          id: "richness", name: "语言丰富度与地道性", max: 3, got: 2,
+          comment: "能完成交际，用词偏直译，地道性不足。",
+          branches: [
+            { name: "表达地道", desc: "chain store in the campus、make a operation analysis weekly report 较生硬。", max: 2, got: 1 },
+            { name: "用词得体", desc: "shop manager、sales、morning meeting 选择基本得体。", max: 1, got: 1 }
+          ]
+        }
+      ]
+    }
+  };
 
   function sheetSectionName(q) {
     if (q.kind === "writing") return "Part I  写作";
@@ -590,6 +688,7 @@
     buildQuestions: buildQuestions,
     buildPreviewItems: buildPreviewItems,
     buildScoreItems: buildScoreItems,
+    SUBJECTIVE_RUBRICS: SUBJECTIVE_RUBRICS,
     buildMotherItems: buildMotherItems,
     sheetSectionName: sheetSectionName,
     SHEET_ORDER: SHEET_ORDER,
