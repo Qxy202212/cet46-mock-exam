@@ -95,17 +95,19 @@
     .parent-box { background: #FAFBFC; border: 1px solid #F0F0F0; border-radius: 8px; }
     .progress-track { height: 4px; background: #E6E6E6; border-radius: 999px; }
     .progress-fill { height: 4px; width: 0; background: #3F80F4; border-radius: 999px; }
-    .listen-file {
+    button.listen-file[type="button"] {
       position: relative;
       display: inline-flex; align-items: center; justify-content: center;
-      width: 18px; height: 18px; margin-right: 8px; padding: 0;
-      vertical-align: -3px; border: 0; border-radius: 3px;
-      background: #3F80F4; color: #fff; cursor: pointer; flex-shrink: 0;
+      width: 18px; height: 18px; margin: 2px 8px 0 0; padding: 0;
+      border: 0; border-radius: 3px;
+      background-color: #3F80F4; color: #fff; cursor: pointer; flex-shrink: 0;
     }
-    .listen-file svg { width: 10px; height: 10px; display: block; }
-    .listen-file .ico-pause { display: none; }
-    .listen-file.is-on .ico-play { display: none; }
-    .listen-file.is-on .ico-pause { display: block; }
+    button.listen-file[type="button"] svg {
+      width: 10px; height: 10px; display: block; fill: currentColor;
+    }
+    button.listen-file[type="button"] .ico-pause { display: none; }
+    button.listen-file[type="button"].is-on .ico-play { display: none; }
+    button.listen-file[type="button"].is-on .ico-pause { display: block; }
     .listen-file-tip {
       display: none; position: absolute; left: 50%; bottom: calc(100% + 6px);
       transform: translateX(-50%); padding: 4px 8px; border-radius: 4px;
@@ -351,10 +353,10 @@
           var gk = it.listenGroup || "";
           if (gk !== lastGroup) {
             var range = it.listenRange;
-            html += '<p class="mb-3 mt-5 text-[14px] leading-[1.85] text-[#666]">' +
+            html += '<p class="mb-3 mt-5 flex items-start text-[14px] leading-[1.85] text-[#666]">' +
               listenFileBtn(it) +
-              "Questions " + (range ? range[0] + " to " + range[1] : displayNo(it)) +
-              " are based on the recording you have just heard.</p>";
+              "<span>Questions " + (range ? range[0] + " to " + range[1] : displayNo(it)) +
+              " are based on the recording you have just heard.</span></p>";
             lastGroup = gk;
           }
           var stem = String(it.stem || "").replace(/^Question\s+\d+\.\s*/i, "");
@@ -436,12 +438,8 @@
             '<div class="parent-box px-4 py-3 text-[13px] leading-7 text-[#333]">' +
             '<div class="text-[12px] text-[#999]">Part II Listening · ' + esc(it.material || "") + "</div>" +
             '<p class="mt-1">' + esc(it.directions || "") + "</p>" +
-            '<p class="mt-2 text-[#666]">Questions ' + range[0] + " to " + range[1] + " are based on the recording you have just heard.</p>" +
-            '<div class="mt-3 flex items-center gap-3">' +
-            '<span class="grid h-9 w-9 place-items-center rounded-full bg-primary text-white">' +
-            '<svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>' +
-            '<div class="progress-track flex-1"><div class="progress-fill"></div></div>' +
-            '<span class="text-[12px] text-[#888]">00:48</span></div></div>';
+            '<p class="mt-2 flex items-start text-[#666]">' + listenFileBtn(it) +
+            "<span>Questions " + range[0] + " to " + range[1] + " are based on the recording you have just heard.</span></p></div>";
         }
         if (it.kind === "cloze") {
           var segs = CLOZE_SEGS.map(function (seg) {
@@ -574,8 +572,9 @@
           clearInterval(listenFake[key]);
           listenFake[key] = null;
         }
-        var btn = document.querySelector('.listen-file[data-audio="' + key + '"]');
-        if (btn) btn.classList.remove("is-on");
+        document.querySelectorAll('.listen-file[data-audio="' + key + '"]').forEach(function (btn) {
+          btn.classList.remove("is-on");
+        });
       }
 
       function stopAllListen(except) {
@@ -620,7 +619,9 @@
           });
           listenAudio[key] = a;
         }
-        btn.classList.add("is-on");
+        document.querySelectorAll('.listen-file[data-audio="' + key + '"]').forEach(function (el) {
+          el.classList.add("is-on");
+        });
         var audio = listenAudio[key];
         if (!audio) {
           startFakePlay(key, duration, btn);
@@ -669,6 +670,12 @@
         if (e.target === this) closeDetail();
       });
       document.getElementById("detailMain").addEventListener("click", function (e) {
+        var playBtn = e.target.closest("[data-audio]");
+        if (playBtn) {
+          e.preventDefault();
+          toggleListen(playBtn);
+          return;
+        }
         var pill = e.target.closest("[data-sub]");
         if (!pill) return;
         openDetail(Number(pill.getAttribute("data-sub")));
