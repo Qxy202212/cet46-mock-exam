@@ -156,6 +156,32 @@
     return "Directions: There are 2 passages in this section. Each passage is followed by some questions or unfinished statements. For each of them there are four choices marked A), B), C) and D). You should decide on the best choice and mark the corresponding letter on Answer Sheet 2 with a single line through the centre.";
   }
 
+  var CLOZE_KEY = {
+    26: { correct: "H", analysis: "shop 与 prepares 之间缺的是人，选 H assistant。" },
+    27: { correct: "B", analysis: "修饰 operation report 的频率，选 B weekly。" },
+    28: { correct: "I", analysis: "manager 前是部门身份，选 I sales。" },
+    29: { correct: "A", analysis: "uses WPS AI to 后面接动词，选 A analyze。" },
+    30: { correct: "F", analysis: "修饰 data，需要“准确的”，选 F accurate。C inventory 要留到后面 adjust 的宾语。" },
+    31: { correct: "D", analysis: "buying 后面是复数名词，选 D patterns。" },
+    32: { correct: "E", analysis: "provides 的宾语，选 E support。" },
+    33: { correct: "G", analysis: "morning 后面是例会，选 G meeting。" },
+    34: { correct: "C", analysis: "adjust 的宾语是库存，选 C inventory。" },
+    35: { correct: "O", analysis: "sharing highlights together，选 O together。" }
+  };
+
+  var MATCH_KEY = {
+    36: { correct: "I", analysis: "对应 I 段：招聘经理认为 45 岁以上失业者技能不足、适应力更差。" },
+    37: { correct: "M", analysis: "完整对应 M 段。G 段只说转行更难，没有“裁员后再就业更难”的后半句，容易混。" },
+    38: { correct: "B", analysis: "对应 B 段：建议用成果而不是工龄重写简历。" },
+    39: { correct: "C", analysis: "对应 C 段：反向师徒让年长员工向年轻人学数字工具。" },
+    40: { correct: "D", analysis: "对应 D 段：政府补贴中年培训，让有经验的人继续工作。" },
+    41: { correct: "E", analysis: "对应 E 段：自动筛选会因毕业年份看起来“太老”而拒简历。" },
+    42: { correct: "F", analysis: "对应 F 段：弹性工作帮助 45 岁以上的人重新进入劳动力市场。" },
+    43: { correct: "H", analysis: "对应 H 段：年龄越大，人脉和推荐越重要。" },
+    44: { correct: "J", analysis: "对应 J 段：低收入社区的人更少参加免费培训。" },
+    45: { correct: "K", analysis: "对应 K 段：很多雇主更看重实际工作经验，而不是完美学历。" }
+  };
+
   function buildQuestions() {
     var qs = [];
     var id = 1;
@@ -205,7 +231,9 @@
         wordBank: CLOZE_OPTIONS.map(function (o) { return { key: o.key, word: o.word }; }),
         segments: CLOZE_SEGS,
         stem: b + ". Choose the best word for blank " + b + ".",
-        options: CLOZE_OPTIONS.map(function (o) { return { key: o.key, text: o.word }; })
+        options: CLOZE_OPTIONS.map(function (o) { return { key: o.key, text: o.word }; }),
+        correct: CLOZE_KEY[b].correct,
+        analysis: CLOZE_KEY[b].analysis
       });
     }
 
@@ -220,7 +248,9 @@
         matchNo: m,
         directions: matchDirections(),
         paragraphs: MATCH_PARAS,
-        stem: MATCH_RICH[m] || ("Statement " + m + ": [信息匹配演示占位题 " + m + "]")
+        stem: MATCH_RICH[m] || ("Statement " + m + ": [信息匹配演示占位题 " + m + "]"),
+        correct: MATCH_KEY[m].correct,
+        analysis: MATCH_KEY[m].analysis
       });
     }
 
