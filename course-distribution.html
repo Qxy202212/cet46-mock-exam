@@ -1,0 +1,2481 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light" data-platform="web">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>计算机应用基础分发情况 - KDesign</title>
+  <style>
+    /* ══ KDesign Token 变量（复制自 _css/tokens.css） ══ */
+    /* @kd-registry: tokens v3.0 — synced from @kdocs/kdesign-theme@2.4.8 */
+/* ══════════════════════════════════════════════════════════════════════
+   KDesign Token 变量（完整版）
+   权威来源：@kdocs/kdesign-theme@2.4.8 (default.less + dark.less + modules)
+   架构：Base Palette (RGB triplets) + Semantic References (rgba)
+   选择器约定：:root = Light（默认），[data-theme="dark"] = Dark
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════════════════════════════════
+   LIGHT THEME (default)
+   ══════════════════════════════════════════════════════════════════════ */
+
+:root {
+
+  /* ══ Base Palette (RGB triplets) ══════════════════════════════════ */
+
+  /* ── Orange ── */
+  --kd-color-orange-1: 254, 241, 234;
+  --kd-color-orange-2: 253, 224, 207;
+  --kd-color-orange-3: 252, 196, 162;
+  --kd-color-orange-4: 251, 164, 113;
+  --kd-color-orange-5: 251, 126, 51;
+  --kd-color-orange-6: 226, 101, 26;
+  --kd-color-orange-7: 194, 80, 16;
+  --kd-color-orange-8: 159, 64, 9;
+  --kd-color-orange-9: 123, 48, 5;
+  --kd-color-orange-10: 88, 34, 2;
+
+  /* ── Yellow ── */
+  --kd-color-yellow-1: 252, 242, 224;
+  --kd-color-yellow-2: 248, 228, 187;
+  --kd-color-yellow-3: 248, 214, 144;
+  --kd-color-yellow-4: 249, 201, 107;
+  --kd-color-yellow-5: 248, 185, 56;
+  --kd-color-yellow-6: 233, 157, 0;
+  --kd-color-yellow-7: 196, 130, 0;
+  --kd-color-yellow-8: 154, 102, 0;
+  --kd-color-yellow-9: 112, 74, 0;
+  --kd-color-yellow-10: 72, 48, 0;
+
+  /* ── Verdure ── */
+  --kd-color-verdure-1: 239, 246, 212;
+  --kd-color-verdure-2: 224, 236, 174;
+  --kd-color-verdure-3: 200, 216, 136;
+  --kd-color-verdure-4: 176, 195, 99;
+  --kd-color-verdure-5: 151, 175, 61;
+  --kd-color-verdure-6: 123, 153, 0;
+  --kd-color-verdure-7: 102, 127, 0;
+  --kd-color-verdure-8: 82, 101, 0;
+  --kd-color-verdure-9: 61, 77, 0;
+  --kd-color-verdure-10: 44, 55, 0;
+
+  /* ── Green ── */
+  --kd-color-green-1: 233, 246, 227;
+  --kd-color-green-2: 202, 241, 185;
+  --kd-color-green-3: 169, 222, 146;
+  --kd-color-green-4: 134, 197, 107;
+  --kd-color-green-5: 101, 171, 72;
+  --kd-color-green-6: 65, 143, 31;
+  --kd-color-green-7: 52, 115, 23;
+  --kd-color-green-8: 39, 91, 16;
+  --kd-color-green-9: 30, 72, 11;
+  --kd-color-green-10: 22, 58, 7;
+
+  /* ── Teal ── */
+  --kd-color-teal-1: 228, 246, 240;
+  --kd-color-teal-2: 188, 241, 222;
+  --kd-color-teal-3: 143, 224, 195;
+  --kd-color-teal-4: 104, 205, 170;
+  --kd-color-teal-5: 63, 182, 140;
+  --kd-color-teal-6: 16, 153, 104;
+  --kd-color-teal-7: 5, 124, 82;
+  --kd-color-teal-8: 2, 98, 64;
+  --kd-color-teal-9: 0, 79, 51;
+  --kd-color-teal-10: 0, 60, 39;
+
+  /* ── Azure ── */
+  --kd-color-azure-1: 230, 246, 248;
+  --kd-color-azure-2: 196, 238, 243;
+  --kd-color-azure-3: 131, 222, 234;
+  --kd-color-azure-4: 95, 200, 214;
+  --kd-color-azure-5: 59, 179, 195;
+  --kd-color-azure-6: 0, 155, 176;
+  --kd-color-azure-7: 0, 130, 148;
+  --kd-color-azure-8: 0, 106, 121;
+  --kd-color-azure-9: 0, 82, 93;
+  --kd-color-azure-10: 0, 59, 67;
+
+  /* ── Blue ── */
+  --kd-color-blue-1: 237, 244, 255;
+  --kd-color-blue-2: 214, 230, 255;
+  --kd-color-blue-3: 166, 200, 255;
+  --kd-color-blue-4: 116, 169, 253;
+  --kd-color-blue-5: 69, 139, 250;
+  --kd-color-blue-6: 31, 105, 224;
+  --kd-color-blue-7: 30, 95, 199;
+  --kd-color-blue-8: 23, 76, 160;
+  --kd-color-blue-9: 15, 58, 128;
+  --kd-color-blue-10: 10, 48, 108;
+
+  /* ── Navy ── */
+  --kd-color-navy-1: 244, 243, 253;
+  --kd-color-navy-2: 229, 227, 250;
+  --kd-color-navy-3: 197, 191, 243;
+  --kd-color-navy-4: 165, 156, 236;
+  --kd-color-navy-5: 137, 124, 235;
+  --kd-color-navy-6: 108, 90, 251;
+  --kd-color-navy-7: 86, 69, 236;
+  --kd-color-navy-8: 72, 52, 214;
+  --kd-color-navy-9: 60, 47, 166;
+  --kd-color-navy-10: 49, 40, 119;
+
+  /* ── Indigo ── */
+  --kd-color-indigo-1: 247, 242, 254;
+  --kd-color-indigo-2: 236, 225, 252;
+  --kd-color-indigo-3: 212, 186, 246;
+  --kd-color-indigo-4: 187, 148, 238;
+  --kd-color-indigo-5: 167, 112, 240;
+  --kd-color-indigo-6: 147, 72, 243;
+  --kd-color-indigo-7: 128, 45, 240;
+  --kd-color-indigo-8: 111, 38, 208;
+  --kd-color-indigo-9: 90, 38, 160;
+  --kd-color-indigo-10: 66, 33, 109;
+
+  /* ── Violet ── */
+  --kd-color-violet-1: 251, 238, 254;
+  --kd-color-violet-2: 246, 222, 252;
+  --kd-color-violet-3: 240, 192, 251;
+  --kd-color-violet-4: 231, 156, 248;
+  --kd-color-violet-5: 219, 111, 242;
+  --kd-color-violet-6: 195, 67, 224;
+  --kd-color-violet-7: 157, 49, 182;
+  --kd-color-violet-8: 128, 39, 149;
+  --kd-color-violet-9: 103, 30, 120;
+  --kd-color-violet-10: 83, 23, 97;
+
+  /* ── Purple ── */
+  --kd-color-purple-1: 252, 239, 247;
+  --kd-color-purple-2: 254, 221, 240;
+  --kd-color-purple-3: 254, 180, 223;
+  --kd-color-purple-4: 249, 143, 205;
+  --kd-color-purple-5: 242, 102, 182;
+  --kd-color-purple-6: 225, 67, 160;
+  --kd-color-purple-7: 196, 50, 134;
+  --kd-color-purple-8: 165, 35, 111;
+  --kd-color-purple-9: 134, 22, 88;
+  --kd-color-purple-10: 100, 9, 62;
+
+  /* ── Red ── */
+  --kd-color-red-1: 254, 241, 241;
+  --kd-color-red-2: 253, 223, 223;
+  --kd-color-red-3: 250, 193, 193;
+  --kd-color-red-4: 245, 143, 143;
+  --kd-color-red-5: 241, 92, 91;
+  --kd-color-red-6: 221, 51, 50;
+  --kd-color-red-7: 187, 39, 38;
+  --kd-color-red-8: 157, 28, 28;
+  --kd-color-red-9: 131, 19, 19;
+  --kd-color-red-10: 106, 11, 10;
+
+  /* ── Gray ── */
+  --kd-color-gray-1: 245, 245, 245;
+  --kd-color-gray-2: 240, 240, 240;
+  --kd-color-gray-3: 230, 230, 230;
+  --kd-color-gray-4: 219, 219, 219;
+  --kd-color-gray-5: 194, 194, 194;
+  --kd-color-gray-6: 145, 145, 145;
+  --kd-color-gray-7: 107, 107, 107;
+  --kd-color-gray-8: 87, 87, 87;
+  --kd-color-gray-9: 51, 51, 51;
+  --kd-color-gray-10: 13, 13, 13;
+
+  /* ── Special ── */
+  --kd-color-white: 255, 255, 255;
+  --kd-color-black: 0, 0, 0;
+
+  /* ── Brand (default = WPS Blue, same as blue palette) ── */
+  --kd-color-brand-1: 237, 244, 255;
+  --kd-color-brand-2: 214, 230, 255;
+  --kd-color-brand-3: 166, 200, 255;
+  --kd-color-brand-4: 116, 169, 253;
+  --kd-color-brand-5: 69, 139, 250;
+  --kd-color-brand-6: 31, 105, 224;
+  --kd-color-brand-7: 30, 95, 199;
+  --kd-color-brand-8: 23, 76, 160;
+  --kd-color-brand-9: 15, 58, 128;
+  --kd-color-brand-10: 10, 48, 108;
+
+  /* ══ Semantic Colors ═════════════════════════════════════════════ */
+
+  /* ── Public (global action color) ── */
+  --kd-color-public-normal:  rgba(var(--kd-color-blue-6), 1);
+  --kd-color-public-hover:   rgba(var(--kd-color-blue-5), 1);
+  --kd-color-public-pressed: rgba(var(--kd-color-blue-7), 1);
+  --kd-color-public-light:   rgba(var(--kd-color-blue-1), 1);
+
+  /* ── Brand ── */
+  --kd-color-brand-normal:  rgba(var(--kd-color-brand-6), 1);
+  --kd-color-brand-hover:   rgba(var(--kd-color-brand-5), 1);
+  --kd-color-brand-pressed: rgba(var(--kd-color-brand-7), 1);
+  --kd-color-brand-light:   rgba(var(--kd-color-brand-1), 1);
+
+  /* ── AI ── */
+  --kd-color-ai-normal:         rgba(131, 80, 242, 1);
+  --kd-color-ai-hover:          rgba(156, 117, 240, 1);
+  --kd-color-ai-pressed:        rgba(104, 42, 239, 1);
+  --kd-color-ai-light:          rgba(244, 239, 253, 1);
+  --kd-color-ai-light-gradient: linear-gradient(90deg, rgba(237, 225, 253, 1) 0%, rgba(224, 212, 250, 1) 100%);
+
+  /* ── Member ── */
+  --kd-color-member-primary-normal:  rgba(50, 35, 14, 1);
+  --kd-color-member-primary-hover:   rgba(77, 55, 22, 1);
+  --kd-color-member-primary-pressed: rgba(36, 25, 10, 1);
+  --kd-color-text-member-primary:    rgba(250, 198, 125, 1);
+  --kd-color-icon-member-primary:    rgba(250, 198, 125, 1);
+
+  /* ── Text ── */
+  --kd-color-text-primary:   rgba(var(--kd-color-gray-10), 1);
+  --kd-color-text-secondary: rgba(var(--kd-color-gray-7), 1);
+  --kd-color-text-tertiary:  rgba(var(--kd-color-gray-10), 0.46);
+  --kd-color-text-public:    rgba(var(--kd-color-blue-7), 1);
+  --kd-color-text-white:     rgba(var(--kd-color-white), 1);
+  --kd-color-text-brand:     rgba(var(--kd-color-brand-7), 1);
+  --kd-color-text-ai:        rgba(104, 42, 239, 1);
+  --kd-color-text-success:   rgba(var(--kd-color-green-7), 1);
+  --kd-color-text-info:      rgba(var(--kd-color-blue-7), 1);
+  --kd-color-text-error:     rgba(var(--kd-color-red-7), 1);
+  --kd-color-text-warning:   rgba(var(--kd-color-orange-7), 1);
+  --kd-color-text-highlight: rgba(var(--kd-color-yellow-7), 1);
+
+  /* ── Icon ── */
+  --kd-color-icon-primary:            rgba(var(--kd-color-gray-9), 1);
+  --kd-color-icon-secondary:          rgba(var(--kd-color-gray-7), 1);
+  --kd-color-icon-tertiary:           rgba(var(--kd-color-gray-5), 1);
+  --kd-color-icon-quaternary:         rgba(var(--kd-color-gray-3), 1);
+  --kd-color-icon-public:             rgba(var(--kd-color-blue-7), 1);
+  --kd-color-icon-white:              rgba(var(--kd-color-white), 1);
+  --kd-color-icon-brand:              rgba(var(--kd-color-brand-7), 1);
+  --kd-color-icon-ai:                 rgba(104, 42, 239, 1);
+  --kd-color-icon-success:            rgba(var(--kd-color-green-6), 1);
+  --kd-color-icon-info:               rgba(var(--kd-color-blue-6), 1);
+  --kd-color-icon-error:              rgba(var(--kd-color-red-6), 1);
+  --kd-color-icon-warning:            rgba(var(--kd-color-orange-6), 1);
+  --kd-color-icon-highlight:          rgba(var(--kd-color-yellow-6), 1);
+  --kd-color-icon-blue-primary:       rgba(31, 105, 224, 1);
+  --kd-color-icon-blue-quaternary:    rgba(214, 230, 255, 1);
+  --kd-color-icon-green-primary:      rgba(32, 128, 78, 1);
+  --kd-color-icon-green-quaternary:   rgba(206, 243, 228, 1);
+  --kd-color-icon-orange-primary:     rgba(225, 105, 28, 1);
+  --kd-color-icon-orange-quaternary:  rgba(253, 224, 206, 1);
+  --kd-color-icon-red-primary:        rgba(216, 54, 66, 1);
+  --kd-color-icon-red-quaternary:     rgba(253, 222, 224, 1);
+
+  /* ── State ── */
+  --kd-color-state-normal:         rgba(var(--kd-color-gray-10), 0);
+  --kd-color-state-hover:          rgba(var(--kd-color-gray-10), 0.06);
+  --kd-color-state-pressed:        rgba(var(--kd-color-gray-10), 0.1);
+  --kd-color-state-pressed-public: rgba(var(--kd-color-blue-6), 0.1);
+  --kd-color-state-pressed-brand:  rgba(var(--kd-color-brand-6), 0.1);
+  --kd-color-state-pressed-ai:     rgba(131, 80, 242, 0.10);
+
+  /* ── Background (7-layer system, from top surface to deepest base) ── */
+  --kd-color-background-top:    rgba(var(--kd-color-white), 1);
+  --kd-color-background-middle: rgba(var(--kd-color-white), 1);
+  --kd-color-background-bottom: rgba(var(--kd-color-white), 1);
+  --kd-color-background-group:  rgba(250, 250, 250, 1);
+  --kd-color-background-plate:  rgba(var(--kd-color-gray-1), 1);
+  --kd-color-background-base:   rgba(var(--kd-color-gray-2), 1);
+  --kd-color-background-frame:  rgba(var(--kd-color-gray-3), 1);
+  --kd-color-background-ai:     rgba(246, 249, 255, 1);
+
+  /* ── Line ── */
+  --kd-color-line-heavy:     rgba(var(--kd-color-gray-10), 0.48);
+  --kd-color-line-medium:    rgba(var(--kd-color-gray-10), 0.24);
+  --kd-color-line-regular:   rgba(var(--kd-color-gray-10), 0.12);
+  --kd-color-line-light:     rgba(var(--kd-color-gray-10), 0.06);
+  --kd-color-line-public:    rgba(var(--kd-color-blue-7), 1);
+  --kd-color-line-white:     rgba(var(--kd-color-white), 1);
+  --kd-color-line-brand:     rgba(var(--kd-color-brand-7), 1);
+  --kd-color-line-ai:        rgba(104, 42, 239, 1);
+  --kd-color-line-success:   rgba(var(--kd-color-green-6), 1);
+  --kd-color-line-info:      rgba(var(--kd-color-blue-6), 1);
+  --kd-color-line-error:     rgba(var(--kd-color-red-6), 1);
+  --kd-color-line-warning:   rgba(var(--kd-color-orange-6), 1);
+  --kd-color-line-highlight: rgba(var(--kd-color-yellow-6), 1);
+
+  /* ── Fill (solid) ── */
+  --kd-color-fill-extra-heavy: rgba(var(--kd-color-gray-5), 1);
+  --kd-color-fill-heavy:       rgba(var(--kd-color-gray-4), 1);
+  --kd-color-fill-medium:      rgba(var(--kd-color-gray-3), 1);
+  --kd-color-fill-regular:     rgba(var(--kd-color-gray-2), 1);
+  --kd-color-fill-light:       rgba(var(--kd-color-gray-1), 1);
+  --kd-color-fill-base:        rgba(var(--kd-color-white), 1);
+
+  /* ── Fill (alpha overlay) ── */
+  --kd-color-fill-alpha-extra-heavy: rgba(var(--kd-color-gray-10), 0.4);
+  --kd-color-fill-alpha-heavy:       rgba(var(--kd-color-gray-10), 0.16);
+  --kd-color-fill-alpha-medium:      rgba(var(--kd-color-gray-10), 0.12);
+  --kd-color-fill-alpha-regular:     rgba(var(--kd-color-gray-10), 0.08);
+  --kd-color-fill-alpha-light:       rgba(var(--kd-color-gray-10), 0.04);
+
+  /* ── Mask ── */
+  --kd-color-mask-regular: rgba(var(--kd-color-gray-10), 0.5);
+  --kd-color-mask-heavy:   rgba(var(--kd-color-gray-10), 0.8);
+
+  /* ── Feedback / Inverse ── */
+  --kd-color-feedback-regular: rgba(var(--kd-color-gray-8), 1);
+  --kd-color-inverse-base:     rgba(var(--kd-color-white), 1);
+
+  /* ── Functional: Info ── */
+  --kd-color-info-normal:  rgba(var(--kd-color-blue-6), 1);
+  --kd-color-info-hover:   rgba(var(--kd-color-blue-5), 1);
+  --kd-color-info-pressed: rgba(var(--kd-color-blue-7), 1);
+  --kd-color-info-light:   rgba(var(--kd-color-blue-1), 1);
+
+  /* ── Functional: Success ── */
+  --kd-color-success-normal:  rgba(var(--kd-color-green-6), 1);
+  --kd-color-success-hover:   rgba(var(--kd-color-green-5), 1);
+  --kd-color-success-pressed: rgba(var(--kd-color-green-7), 1);
+  --kd-color-success-light:   rgba(var(--kd-color-green-1), 1);
+
+  /* ── Functional: Error ── */
+  --kd-color-error-normal:  rgba(var(--kd-color-red-6), 1);
+  --kd-color-error-hover:   rgba(var(--kd-color-red-5), 1);
+  --kd-color-error-pressed: rgba(var(--kd-color-red-7), 1);
+  --kd-color-error-light:   rgba(var(--kd-color-red-1), 1);
+
+  /* ── Functional: Highlight ── */
+  --kd-color-highlight-normal:  rgba(var(--kd-color-yellow-6), 1);
+  --kd-color-highlight-hover:   rgba(var(--kd-color-yellow-5), 1);
+  --kd-color-highlight-pressed: rgba(var(--kd-color-yellow-7), 1);
+  --kd-color-highlight-light:   rgba(var(--kd-color-yellow-1), 1);
+
+  /* ── Functional: Warning ── */
+  --kd-color-warning-normal:  rgba(var(--kd-color-orange-6), 1);
+  --kd-color-warning-hover:   rgba(var(--kd-color-orange-5), 1);
+  --kd-color-warning-pressed: rgba(var(--kd-color-orange-7), 1);
+  --kd-color-warning-light:   rgba(var(--kd-color-orange-1), 1);
+
+  /* ══ Shadows ═════════════════════════════════════════════════════ */
+
+  --kd-box-shadow-extra-small: 0px 0px 0px 1px rgba(var(--kd-color-gray-10), 0.1), 0px 1px 0px rgba(var(--kd-color-gray-10), 0.14);
+  --kd-box-shadow-small:       0px 1px 4px rgba(var(--kd-color-gray-10), 0.1);
+  --kd-box-shadow-middle:      0px 1px 4px rgba(var(--kd-color-gray-10), 0.14);
+  --kd-box-shadow-large:       0px 12px 32px rgba(var(--kd-color-gray-10), 0.08);
+  --kd-box-shadow-extra-large: 0px 32px 48px rgba(var(--kd-color-gray-10), 0.2);
+  --kd-box-shadow-glow:        0px 0px 4px rgba(var(--kd-color-blue-6), 1);
+
+  /* ══ Typography ══════════════════════════════════════════════════ */
+
+  --kd-font-family:    "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", "Noto Sans SC", "Noto Sans CJK SC", "sans-serif";
+  --kd-font-family-tw: "Helvetica Neue", "Helvetica", "Segoe UI", "Roboto", "Arial", "PingFang TC", "Microsoft JhengHei", "微軟正黑體", "Noto Sans TC", "Noto Sans CJK TC", "sans-serif";
+  --kd-font-family-hk: "Helvetica Neue", "Helvetica", "Segoe UI", "Roboto", "Arial", "PingFang HK", "Microsoft JhengHei", "微軟正黑體", "Noto Sans HK", "Noto Sans CJK HK", "sans-serif";
+  --kd-font-family-ja: "Helvetica Neue", "Helvetica", "Segoe UI", "Roboto", "Arial", "Noto Sans JP", "Noto Sans CJK JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "BIZ UDPGothic", "Meiryo", "MS PGothic";
+
+  --kd-font-size-extra-small: 10px;
+  --kd-font-size-small:       12px;
+  --kd-font-size-sub-base:    13px;
+  --kd-font-size-base:        14px;
+  --kd-font-size-middle:      16px;
+  --kd-font-size-large:       18px;
+  --kd-font-size-extra-large: 20px;
+  --kd-font-size-xx-large:    24px;
+  --kd-font-size-xxx-large:   28px;
+
+  --kd-font-weight-regular: 400;
+  --kd-font-weight-bold:    600;
+
+  --kd-font-line-height-extra-small: calc(var(--kd-font-size-extra-small) + 8px);
+  --kd-font-line-height-small:       calc(var(--kd-font-size-small) + 8px);
+  --kd-font-line-height-base:        calc(var(--kd-font-size-base) + 8px);
+  --kd-font-line-height-middle:      calc(var(--kd-font-size-middle) + 8px);
+  --kd-font-line-height-large:       calc(var(--kd-font-size-large) + 12px);
+  --kd-font-line-height-extra-large: calc(var(--kd-font-size-extra-large) + 12px);
+  --kd-font-line-height-xx-large:    calc(var(--kd-font-size-xx-large) + 12px);
+  --kd-font-line-height-xxx-large:   calc(var(--kd-font-size-xxx-large) + 12px);
+  --kd-font-line-height-reset:       1;
+  --kd-font-line-height-text:        1.625;
+
+  /* ══ Border Radius ═══════════════════════════════════════════════ */
+
+  --kd-border-radius-none:        0;
+  --kd-border-radius-extra-small: 2px;
+  --kd-border-radius-small:       4px;
+  --kd-border-radius-middle:      6px;
+  --kd-border-radius-large:       8px;
+  --kd-border-radius-extra-large: 12px;
+  --kd-border-radius-circle:      999px;
+
+  /* ══ Icon Stroke ═════════════════════════════════════════════════ */
+
+  --kd-stroke-width-icon-regular: 1;
+  --kd-stroke-width-icon-bold:    1.2;
+
+  /* ══ Transitions ═════════════════════════════════════════════════ */
+
+  --kd-all-transition:          all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  --kd-fade-transition:         opacity 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  --kd-fade-linear-transition:  opacity 200ms linear;
+  --kd-md-fade-transition:      transform 300ms cubic-bezier(0.23, 1, 0.32, 1) 100ms, opacity 300ms cubic-bezier(0.23, 1, 0.32, 1) 100ms;
+  --kd-border-transition-base:  border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  --kd-color-transition-base:   color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+  /* ══ Z-Index ═════════════════════════════════════════════════════ */
+
+  --kd-z-index-invisible: -100;
+  --kd-z-index-default:   1;
+  --kd-z-index-float:     10;
+  --kd-z-index-mask:      999;
+  --kd-z-index-dialog:    1000;
+  --kd-z-index-reminder:  1020;
+  --kd-z-index-popover:   1030;
+  --kd-z-index-popupmenu: 1040;
+  --kd-z-index-tip:       1050;
+
+  /* ══ Opacity & Custom ════════════════════════════════════════════ */
+
+  --kd-opacity-disabled:   0.4;
+  --kd-opacity-icon:       1;
+  --kd-opacity-icon-hover:  0.48;
+  --kd-opacity-icon-active: 0.72;
+  --kd-opacity-icon-mode:   1;
+
+  --kd-color-brand-disable: rgba(var(--kd-color-brand-6), var(--kd-opacity-disabled));
+  --kd-color-text-disable:  rgba(var(--kd-color-gray-10), 0.27);
+
+  /* ══ Backward-Compatible Aliases ═════════════════════════════════
+     旧版 token 名 → 新版名映射，保证已有组件 CSS 不破坏 */
+
+  --kd-font-size-xs:  var(--kd-font-size-extra-small);
+  --kd-font-size-xl:  var(--kd-font-size-extra-large);
+  --kd-font-size-xxl: var(--kd-font-size-xx-large);
+
+  --kd-line-height-xs:     var(--kd-font-line-height-extra-small);
+  --kd-line-height-small:  var(--kd-font-line-height-small);
+  --kd-line-height-base:   var(--kd-font-line-height-base);
+  --kd-line-height-middle: var(--kd-font-line-height-middle);
+  --kd-line-height-large:  var(--kd-font-line-height-large);
+  --kd-line-height-xl:     var(--kd-font-line-height-extra-large);
+  --kd-line-height-xxl:    var(--kd-font-line-height-xx-large);
+
+  --kd-time-fast:   120ms;
+  --kd-time-normal: 240ms;
+  --kd-easing-ease: cubic-bezier(.25, .10, .25, 1.00);
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   DARK THEME
+   Only overrides: base palette + tokens with explicitly different values.
+   Semantic tokens referencing palette vars (e.g. rgba(var(--kd-color-blue-6), 1))
+   adapt automatically through the palette swap.
+   ══════════════════════════════════════════════════════════════════════ */
+
+[data-theme="dark"] {
+
+  /* ══ Dark Base Palette ═══════════════════════════════════════════ */
+
+  /* ── Orange ── */
+  --kd-color-orange-1: 66, 49, 45;
+  --kd-color-orange-2: 95, 57, 46;
+  --kd-color-orange-3: 124, 67, 45;
+  --kd-color-orange-4: 153, 77, 42;
+  --kd-color-orange-5: 181, 85, 36;
+  --kd-color-orange-6: 208, 96, 29;
+  --kd-color-orange-7: 245, 109, 28;
+  --kd-color-orange-8: 254, 147, 76;
+  --kd-color-orange-9: 255, 188, 148;
+  --kd-color-orange-10: 255, 230, 215;
+
+  /* ── Yellow ── */
+  --kd-color-yellow-1: 60, 52, 35;
+  --kd-color-yellow-2: 87, 71, 41;
+  --kd-color-yellow-3: 117, 93, 45;
+  --kd-color-yellow-4: 149, 115, 49;
+  --kd-color-yellow-5: 183, 138, 51;
+  --kd-color-yellow-6: 218, 163, 57;
+  --kd-color-yellow-7: 247, 187, 67;
+  --kd-color-yellow-8: 254, 208, 109;
+  --kd-color-yellow-9: 254, 224, 157;
+  --kd-color-yellow-10: 255, 233, 184;
+
+  /* ── Verdure ── */
+  --kd-color-verdure-1: 51, 55, 35;
+  --kd-color-verdure-2: 63, 70, 36;
+  --kd-color-verdure-3: 75, 85, 34;
+  --kd-color-verdure-4: 89, 103, 31;
+  --kd-color-verdure-5: 105, 126, 25;
+  --kd-color-verdure-6: 127, 152, 27;
+  --kd-color-verdure-7: 151, 176, 47;
+  --kd-color-verdure-8: 176, 199, 86;
+  --kd-color-verdure-9: 203, 221, 128;
+  --kd-color-verdure-10: 228, 241, 175;
+
+  /* ── Green ── */
+  --kd-color-green-1: 45, 57, 40;
+  --kd-color-green-2: 48, 67, 39;
+  --kd-color-green-3: 52, 82, 39;
+  --kd-color-green-4: 57, 101, 38;
+  --kd-color-green-5: 62, 121, 36;
+  --kd-color-green-6: 69, 144, 37;
+  --kd-color-green-7: 92, 171, 57;
+  --kd-color-green-8: 123, 197, 91;
+  --kd-color-green-9: 160, 220, 131;
+  --kd-color-green-10: 214, 243, 200;
+
+  /* ── Teal ── */
+  --kd-color-teal-1: 40, 56, 50;
+  --kd-color-teal-2: 39, 70, 59;
+  --kd-color-teal-3: 38, 85, 69;
+  --kd-color-teal-4: 32, 105, 79;
+  --kd-color-teal-5: 20, 123, 87;
+  --kd-color-teal-6: 0, 148, 96;
+  --kd-color-teal-7: 12, 175, 118;
+  --kd-color-teal-8: 59, 201, 154;
+  --kd-color-teal-9: 117, 227, 189;
+  --kd-color-teal-10: 198, 244, 230;
+
+  /* ── Azure ── */
+  --kd-color-azure-1: 36, 56, 58;
+  --kd-color-azure-2: 37, 70, 74;
+  --kd-color-azure-3: 36, 86, 93;
+  --kd-color-azure-4: 31, 103, 112;
+  --kd-color-azure-5: 18, 121, 134;
+  --kd-color-azure-6: 0, 141, 159;
+  --kd-color-azure-7: 16, 166, 185;
+  --kd-color-azure-8: 58, 196, 213;
+  --kd-color-azure-9: 117, 221, 234;
+  --kd-color-azure-10: 213, 240, 244;
+
+  /* ── Blue ── */
+  --kd-color-blue-1: 40, 53, 74;
+  --kd-color-blue-2: 39, 61, 97;
+  --kd-color-blue-3: 37, 71, 126;
+  --kd-color-blue-4: 34, 85, 169;
+  --kd-color-blue-5: 24, 99, 218;
+  --kd-color-blue-6: 30, 116, 255;
+  --kd-color-blue-7: 66, 137, 255;
+  --kd-color-blue-8: 104, 161, 255;
+  --kd-color-blue-9: 148, 189, 255;
+  --kd-color-blue-10: 223, 235, 255;
+
+  /* ── Navy ── */
+  --kd-color-navy-1: 53, 49, 82;
+  --kd-color-navy-2: 59, 50, 121;
+  --kd-color-navy-3: 66, 52, 171;
+  --kd-color-navy-4: 76, 57, 211;
+  --kd-color-navy-5: 91, 70, 232;
+  --kd-color-navy-6: 109, 92, 244;
+  --kd-color-navy-7: 135, 120, 250;
+  --kd-color-navy-8: 168, 156, 253;
+  --kd-color-navy-9: 199, 190, 255;
+  --kd-color-navy-10: 235, 232, 255;
+
+  /* ── Indigo ── */
+  --kd-color-indigo-1: 60, 47, 76;
+  --kd-color-indigo-2: 74, 48, 106;
+  --kd-color-indigo-3: 87, 50, 136;
+  --kd-color-indigo-4: 104, 53, 171;
+  --kd-color-indigo-5: 122, 53, 213;
+  --kd-color-indigo-6: 144, 75, 233;
+  --kd-color-indigo-7: 168, 110, 242;
+  --kd-color-indigo-8: 193, 150, 249;
+  --kd-color-indigo-9: 217, 189, 253;
+  --kd-color-indigo-10: 241, 231, 254;
+
+  /* ── Violet ── */
+  --kd-color-violet-1: 66, 46, 70;
+  --kd-color-violet-2: 87, 51, 95;
+  --kd-color-violet-3: 111, 55, 123;
+  --kd-color-violet-4: 135, 60, 151;
+  --kd-color-violet-5: 162, 67, 183;
+  --kd-color-violet-6: 192, 74, 219;
+  --kd-color-violet-7: 209, 109, 233;
+  --kd-color-violet-8: 224, 150, 241;
+  --kd-color-violet-9: 234, 187, 245;
+  --kd-color-violet-10: 246, 229, 250;
+
+  /* ── Purple ── */
+  --kd-color-purple-1: 69, 47, 60;
+  --kd-color-purple-2: 100, 50, 79;
+  --kd-color-purple-3: 126, 53, 96;
+  --kd-color-purple-4: 152, 58, 113;
+  --kd-color-purple-5: 182, 66, 133;
+  --kd-color-purple-6: 215, 76, 158;
+  --kd-color-purple-7: 235, 110, 182;
+  --kd-color-purple-8: 243, 150, 204;
+  --kd-color-purple-9: 249, 186, 223;
+  --kd-color-purple-10: 254, 227, 243;
+
+  /* ── Red ── */
+  --kd-color-red-1: 74, 45, 45;
+  --kd-color-red-2: 101, 45, 45;
+  --kd-color-red-3: 129, 47, 47;
+  --kd-color-red-4: 155, 50, 50;
+  --kd-color-red-5: 184, 54, 54;
+  --kd-color-red-6: 214, 61, 61;
+  --kd-color-red-7: 237, 75, 75;
+  --kd-color-red-8: 244, 120, 120;
+  --kd-color-red-9: 250, 169, 169;
+  --kd-color-red-10: 254, 229, 229;
+
+  /* ── Gray (reversed: 1=darkest, 10=lightest) ── */
+  --kd-color-gray-1: 51, 51, 51;
+  --kd-color-gray-2: 56, 56, 56;
+  --kd-color-gray-3: 64, 64, 64;
+  --kd-color-gray-4: 71, 71, 71;
+  --kd-color-gray-5: 87, 87, 87;
+  --kd-color-gray-6: 102, 102, 102;
+  --kd-color-gray-7: 138, 138, 138;
+  --kd-color-gray-8: 153, 153, 153;
+  --kd-color-gray-9: 199, 199, 199;
+  --kd-color-gray-10: 245, 245, 245;
+
+  /* ── Brand (dark) ── */
+  --kd-color-brand-1: 40, 53, 74;
+  --kd-color-brand-2: 39, 61, 97;
+  --kd-color-brand-3: 37, 71, 126;
+  --kd-color-brand-4: 34, 85, 169;
+  --kd-color-brand-5: 24, 99, 218;
+  --kd-color-brand-6: 30, 116, 255;
+  --kd-color-brand-7: 66, 137, 255;
+  --kd-color-brand-8: 104, 161, 255;
+  --kd-color-brand-9: 148, 189, 255;
+  --kd-color-brand-10: 223, 235, 255;
+
+  /* ══ Dark-specific Semantic Overrides ════════════════════════════
+     Only tokens whose CSS expression differs from Light.
+     Palette-referencing tokens (e.g. rgba(var(--kd-color-blue-6), 1))
+     need no override — they adapt through the palette swap above. */
+
+  /* ── AI (different values in dark) ── */
+  --kd-color-ai-normal:         rgba(136, 87, 242, 1);
+  --kd-color-ai-hover:          rgba(113, 61, 225, 1);
+  --kd-color-ai-pressed:        rgba(158, 117, 245, 1);
+  --kd-color-ai-light:          rgba(58, 48, 85, 1);
+  --kd-color-ai-light-gradient: linear-gradient(90deg, rgba(63, 60, 95, 1) 0%, rgba(110, 70, 163, 1) 100%);
+
+  /* ── Member (light/dark values swap) ── */
+  --kd-color-member-primary-normal:  rgba(250, 198, 125, 1);
+  --kd-color-member-primary-hover:   rgba(221, 170, 95, 1);
+  --kd-color-member-primary-pressed: rgba(251, 212, 156, 1);
+  --kd-color-text-member-primary:    rgba(52, 35, 6, 1);
+  --kd-color-icon-member-primary:    rgba(52, 35, 6, 1);
+
+  /* ── Text AI ── */
+  --kd-color-text-ai: rgba(158, 117, 245, 1);
+
+  /* ── Icon (AI + colored variants differ) ── */
+  --kd-color-icon-ai:                rgba(158, 117, 245, 1);
+  --kd-color-icon-blue-primary:      rgba(85, 143, 236, 1);
+  --kd-color-icon-blue-quaternary:   rgba(36, 71, 127, 1);
+  --kd-color-icon-green-primary:     rgba(48, 171, 128, 1);
+  --kd-color-icon-green-quaternary:  rgba(28, 84, 64, 1);
+  --kd-color-icon-orange-primary:    rgba(224, 128, 66, 1);
+  --kd-color-icon-orange-quaternary: rgba(119, 67, 34, 1);
+  --kd-color-icon-red-primary:       rgba(231, 85, 96, 1);
+  --kd-color-icon-red-quaternary:    rgba(122, 41, 47, 1);
+
+  /* ── State (different opacities in dark) ── */
+  --kd-color-state-pressed-public: rgba(var(--kd-color-blue-6), 0.16);
+  --kd-color-state-pressed-brand:  rgba(var(--kd-color-brand-6), 0.16);
+  --kd-color-state-pressed-ai:     rgba(136, 87, 242, 0.16);
+
+  /* ── Background (explicit dark values) ── */
+  --kd-color-background-top:    rgba(46, 46, 46, 1);
+  --kd-color-background-middle: rgba(41, 41, 41, 1);
+  --kd-color-background-bottom: rgba(36, 36, 36, 1);
+  --kd-color-background-group:  rgba(31, 31, 31, 1);
+  --kd-color-background-plate:  rgba(25, 25, 25, 1);
+  --kd-color-background-base:   rgba(18, 18, 18, 1);
+  --kd-color-background-frame:  rgba(0, 0, 0, 1);
+  --kd-color-background-ai:     rgba(31, 33, 36, 1);
+
+  /* ── Line AI ── */
+  --kd-color-line-ai: rgba(158, 117, 245, 1);
+
+  /* ── Fill (different opacity for fill-base in dark) ── */
+  --kd-color-fill-base: rgba(var(--kd-color-white), 0.08);
+
+  /* ── Fill Alpha (different opacities in dark) ── */
+  --kd-color-fill-alpha-heavy:   rgba(var(--kd-color-gray-10), 0.18);
+  --kd-color-fill-alpha-medium:  rgba(var(--kd-color-gray-10), 0.14);
+  --kd-color-fill-alpha-regular: rgba(var(--kd-color-gray-10), 0.1);
+  --kd-color-fill-alpha-light:   rgba(var(--kd-color-gray-10), 0.06);
+
+  /* ── Mask (use gray-1 in dark, different opacity) ── */
+  --kd-color-mask-regular: rgba(var(--kd-color-gray-1), 0.6);
+  --kd-color-mask-heavy:   rgba(var(--kd-color-gray-1), 0.8);
+
+  /* ── Inverse (white → black in dark) ── */
+  --kd-color-inverse-base: rgba(var(--kd-color-black), 1);
+
+  /* ── Shadows (use white/black instead of gray-10) ── */
+  --kd-box-shadow-extra-small: 0px 0px 0px 1px rgba(var(--kd-color-white), 0.14);
+  --kd-box-shadow-small:       0px 1px 4px rgba(var(--kd-color-black), 0.24);
+  --kd-box-shadow-middle:      0px 1px 4px rgba(var(--kd-color-black), 0.32);
+  --kd-box-shadow-large:       0px 12px 32px rgba(var(--kd-color-black), 0.32);
+  --kd-box-shadow-extra-large: 0px 32px 48px rgba(var(--kd-color-black), 0.48);
+  --kd-box-shadow-glow:        0px 0px 4px rgba(var(--kd-color-blue-6), 1);
+
+  /* ── Opacity ── */
+  --kd-opacity-icon-mode: 0.85;
+}
+
+/* @kd-registry: reset v2.0 */
+/* ══════════════════════════════════════════════════════════════
+   KDesign 全局重置
+   ══════════════════════════════════════════════════════════════ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+               "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  font-size: var(--kd-font-size-base);
+  color: var(--kd-color-text-primary);
+  background: var(--kd-color-background-base);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { text-decoration: none; color: inherit; }
+button { border: none; background: transparent; font: inherit; color: inherit; cursor: pointer; }
+input, textarea, select { min-width: 0; max-width: 100%; }
+img, video, canvas, svg { max-width: 100%; }
+
+/* @kd-registry: button v2.0 */
+/* ══ Button 按钮 ══ */
+
+.kd-button {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: inherit; font-weight: var(--kd-font-weight-regular);
+  line-height: var(--kd-line-height-base);
+  border: 1px solid transparent; border-radius: var(--kd-border-radius-middle);
+  cursor: pointer; white-space: nowrap; user-select: none; outline: none;
+  transition: background var(--kd-time-fast) var(--kd-easing-ease),
+              border-color var(--kd-time-fast) var(--kd-easing-ease),
+              color var(--kd-time-fast) var(--kd-easing-ease);
+}
+.kd-button-children { display: inline-flex; align-items: center; }
+.kd-button-prefix-icon { margin-right: 4px; font-size: 16px; display: inline-flex; }
+.kd-button-suffix-icon { margin-left: 4px; font-size: 16px; display: inline-flex; }
+
+/* Size */
+.kd-button-sm { height: 24px; padding: 0 5px;    font-size: var(--kd-font-size-sub-base); border-radius: var(--kd-border-radius-small); }
+.kd-button-m  { height: 28px; padding: 2px 11px; font-size: var(--kd-font-size-sub-base); }
+.kd-button-lg { height: 32px; padding: 4px 15px; font-size: var(--kd-font-size-sub-base); }
+.kd-button-xl { height: 36px; padding: 6px 19px; font-size: var(--kd-font-size-middle); }
+.kd-button-light.kd-button-m { padding: 2px 8px; }
+
+/* Primary */
+.kd-button-primary { background: var(--kd-color-public-normal); color: var(--kd-color-text-white); }
+.kd-button-primary:hover:not(:disabled) { background: var(--kd-color-public-hover); }
+.kd-button-primary:active:not(:disabled) { background: var(--kd-color-public-pressed); }
+
+/* Secondary */
+.kd-button-secondary { background: var(--kd-color-fill-base); color: var(--kd-color-text-primary); border-color: var(--kd-color-fill-heavy); }
+.kd-button-secondary:hover:not(:disabled)  { background: var(--kd-color-fill-light); }
+.kd-button-secondary:active:not(:disabled) { background: var(--kd-color-fill-regular); }
+
+/* Light */
+.kd-button-light { background: transparent; color: var(--kd-color-text-primary); }
+.kd-button-light:hover:not(:disabled)  { background: var(--kd-color-state-hover); }
+.kd-button-light:active:not(:disabled) { background: var(--kd-color-state-pressed); }
+
+/* Danger */
+.kd-button-light.kd-button-danger  { color: var(--kd-color-error-normal); }
+.kd-button-primary.kd-button-danger { background: var(--kd-color-error-normal); }
+.kd-button-primary.kd-button-danger:hover:not(:disabled)  { background: var(--kd-color-error-hover); }
+.kd-button-primary.kd-button-danger:active:not(:disabled) { background: var(--kd-color-error-pressed); }
+
+/* Disabled */
+.kd-button:disabled { opacity: var(--kd-opacity-disabled); cursor: not-allowed; pointer-events: none; }
+
+/* Icon-only */
+.kd-button-icon.kd-button-sm { min-width: 24px; padding: 3px; }
+.kd-button-icon.kd-button-m  { min-width: 28px; padding: 5px; }
+.kd-button-icon.kd-button-lg { min-width: 32px; padding: 7px; }
+.kd-button-icon.kd-button-xl { min-width: 36px; padding: 9px; }
+
+/* @kd-registry: input v2.0 */
+/* ══ Input 输入框 ══ */
+
+.kd-input-wrap {
+  display: inline-flex; align-items: center; width: 100%;
+  background: var(--kd-color-fill-base);
+  border: 1px solid var(--kd-color-line-regular);
+  border-radius: var(--kd-border-radius-middle);
+  padding: 0 4px 0 8px;
+  transition: border-color var(--kd-time-fast);
+  box-sizing: border-box;
+}
+.kd-input-wrap > * + * { margin-left: 8px; }
+
+/* Hover / Focus / Error / Disabled */
+.kd-input:hover:not(.is-disabled):not(.kd-input-status-error) .kd-input-wrap { border-color: var(--kd-color-line-medium); }
+.kd-input.is-focus .kd-input-wrap,
+.kd-input-wrap:focus-within { border-color: var(--kd-color-line-public) !important; }
+.kd-input-status-error .kd-input-wrap { border-color: var(--kd-color-error-normal) !important; box-shadow: none; }
+.kd-input.is-disabled .kd-input-wrap { background: var(--kd-color-fill-regular); border-color: var(--kd-color-line-heavy); opacity: var(--kd-opacity-disabled); }
+
+/* Size — min-height on wrap guarantees height even if .kd-input-inner is missing */
+.kd-input-small .kd-input-wrap  { border-radius: var(--kd-border-radius-small); min-height: 24px; }
+.kd-input-medium .kd-input-wrap { min-height: 28px; }
+.kd-input-large .kd-input-wrap  { min-height: 32px; }
+.kd-input-x-large .kd-input-wrap { min-height: 36px; }
+.kd-input-small .kd-input-inner { height: 22px; padding: 0; }
+.kd-input-medium .kd-input-inner { padding: 2px 0; }
+.kd-input-large .kd-input-inner  { padding: 4px 0; }
+.kd-input-x-large .kd-input-inner { padding: 6px 0; }
+
+/* Inner */
+.kd-input-inner {
+  flex: 1; border: none; outline: none; background: transparent;
+  font-size: var(--kd-font-size-sub-base); color: var(--kd-color-text-primary);
+  line-height: var(--kd-line-height-base); padding: 4px 0; min-width: 0;
+}
+.kd-input-inner::placeholder { color: var(--kd-color-text-tertiary); }
+.kd-input-inner:disabled { cursor: not-allowed; color: var(--kd-color-text-tertiary); }
+
+/* Prefix / Suffix (decorative) */
+.kd-input-prefix,
+.kd-input-suffix {
+  flex-shrink: 0; display: flex; align-items: center;
+  color: var(--kd-color-icon-secondary);
+}
+.kd-input-prefix svg,
+.kd-input-suffix svg { display: block; width: 16px; height: 16px; }
+
+/* Icon button inside Input (clickable) */
+.kd-input-icon {
+  flex-shrink: 0; color: var(--kd-color-icon-secondary);
+  font-size: var(--kd-font-size-base);
+  display: flex; align-items: center;
+  border: none; background: transparent;
+  padding: 4px; border-radius: var(--kd-border-radius-small); cursor: pointer;
+}
+.kd-input-icon:hover { color: var(--kd-color-text-secondary); }
+
+/* @kd-registry: checkbox v2.0 */
+/* ══ Checkbox 复选框 ══ */
+
+.kd-checkbox { display: inline-flex; align-items: center; cursor: pointer; user-select: none; }
+.kd-checkbox-input { position: relative; display: inline-flex; align-items: center; }
+.kd-checkbox-inner {
+  width: 14px; height: 14px;
+  border: 1px solid var(--kd-color-line-heavy);
+  border-radius: var(--kd-border-radius-extra-small);
+  background: var(--kd-color-fill-base);
+  display: block; position: relative;
+  transition: background .25s cubic-bezier(.71,-.46,.29,1.46),
+              border-color .25s cubic-bezier(.71,-.46,.29,1.46);
+}
+.kd-checkbox-original { position: absolute; opacity: 0; width: 0; height: 0; }
+
+/* Checked (class-based) */
+.kd-checkbox-input.is-checked .kd-checkbox-inner {
+  background: var(--kd-color-public-normal); border-color: transparent;
+}
+.kd-checkbox-input.is-checked .kd-checkbox-inner::after {
+  content: ''; position: absolute;
+  box-sizing: content-box;
+  top: 1px; left: 4px; width: 3px; height: 6px;
+  border: 2px solid var(--kd-color-text-white); border-top: none; border-left: none;
+  transform: rotate(45deg);
+  transition: transform .15s cubic-bezier(.71,-.46,.88,.6) .05s;
+}
+
+/* Indeterminate */
+.kd-checkbox-input.is-indeterminate .kd-checkbox-inner {
+  background: var(--kd-color-public-normal); border-color: transparent;
+}
+.kd-checkbox-input.is-indeterminate .kd-checkbox-inner::before {
+  content: ''; position: absolute;
+  top: 50%; left: 3px; right: 3px; margin-top: -1px;
+  border-top: 2px solid var(--kd-color-text-white);
+}
+
+/* Hover */
+.kd-checkbox-input:hover:not(.is-disabled) .kd-checkbox-inner { border-color: var(--kd-color-public-normal); }
+.kd-checkbox-input.is-checked:hover:not(.is-disabled) .kd-checkbox-inner { background: var(--kd-color-public-hover); }
+
+/* Disabled */
+.kd-checkbox-input.is-disabled { pointer-events: none; }
+.kd-checkbox-input.is-disabled .kd-checkbox-inner {
+  background: var(--kd-color-fill-light); border-color: var(--kd-color-fill-heavy);
+}
+.kd-checkbox-input.is-disabled ~ .kd-checkbox-label { color: var(--kd-color-text-secondary); }
+.kd-checkbox.is-disabled { cursor: not-allowed; }
+
+.kd-checkbox-label { padding-left: 4px; font-size: var(--kd-font-size-sub-base); line-height: 20px; }
+
+/* @kd-registry: select v3.0 */
+/* ══ Select 下拉选择 ══ */
+
+/* 触发器复用 Input 样式，仅补充 Select 特有部分 */
+.kd-select-trigger { position: relative; cursor: pointer; }
+.kd-select-trigger .kd-input-wrap { cursor: pointer; }
+.kd-select-trigger .kd-input-inner { cursor: pointer; }
+
+/* 箭头 */
+.kd-select-arrow {
+  display: flex; align-items: center; justify-content: center;
+  width: 16px; height: 16px; flex-shrink: 0;
+  color: var(--kd-color-icon-secondary);
+  transition: transform var(--kd-time-fast);
+}
+.kd-select-trigger.is-open .kd-select-arrow { transform: rotate(180deg); }
+.kd-select-trigger.is-open .kd-input-wrap { border-color: var(--kd-color-line-public); }
+
+/* Status: error / warning */
+.kd-select-status-error .kd-input-wrap { border-color: var(--kd-color-error-normal) !important; }
+.kd-select-status-warning .kd-input-wrap { border-color: #E2651A !important; }
+
+/* Disabled */
+.kd-select-trigger.is-disabled { pointer-events: none; }
+.kd-select-trigger.is-disabled .kd-input-wrap {
+  background: var(--kd-color-fill-regular);
+  border-color: var(--kd-color-line-heavy);
+  opacity: var(--kd-opacity-disabled);
+}
+
+/* Clear button (replaces arrow on hover when value exists) */
+.kd-select-clear {
+  display: none; align-items: center; justify-content: center;
+  width: 16px; height: 16px; flex-shrink: 0;
+  border: none; background: transparent; cursor: pointer;
+  color: var(--kd-color-icon-secondary);
+  border-radius: 50%;
+}
+.kd-select-clear:hover { color: var(--kd-color-text-secondary); }
+.kd-input.has-value[data-select-clearable]:hover .kd-select-clear { display: flex; }
+.kd-input.has-value[data-select-clearable]:hover .kd-select-arrow { display: none; }
+
+/* 下拉面板 */
+.kd-select-dropdown {
+  position: absolute; z-index: 1050; margin-top: 4px;
+  min-width: 100%;
+}
+/* 下拉面板内的 menu 直接作为容器，不再双层背景 */
+.kd-select-dropdown > .kd-menu {
+  margin: 0;
+}
+
+/* 分组标题 */
+.kd-select-group-title {
+  font-size: 12px; color: var(--kd-color-text-tertiary);
+  padding: 4px 8px; font-weight: 600;
+  line-height: 18px;
+}
+
+/* 空状态 */
+.kd-select-empty {
+  text-align: center; padding: 24px 0;
+  font-size: var(--kd-font-size-sub-base);
+  color: var(--kd-color-text-tertiary);
+}
+
+/* 多选 Tag */
+.kd-select[data-select-mode="multiple"] .kd-input-wrap { padding-left: 4px; }
+.kd-select-tag {
+  display: inline-flex; align-items: center;
+  padding: 2px 4px 2px 8px; margin: 2px 4px 2px 0;
+  background: var(--kd-color-fill-light);
+  border-radius: var(--kd-border-radius-small);
+  font-size: var(--kd-font-size-sub-base);
+  line-height: 18px; max-width: 100%;
+}
+.kd-select-tag-close {
+  display: flex; align-items: center; justify-content: center;
+  width: 16px; height: 16px; margin-left: 2px;
+  border: none; background: transparent; cursor: pointer;
+  color: var(--kd-color-icon-secondary);
+  border-radius: 50%; flex-shrink: 0;
+}
+.kd-select-tag-close:hover { color: var(--kd-color-text-secondary); background: var(--kd-color-fill-regular); }
+
+/* 多选折叠计数 */
+.kd-select-tag-count {
+  display: inline-flex; align-items: center;
+  padding: 2px 8px; margin: 2px 0 2px 4px;
+  background: var(--kd-color-fill-light);
+  border-radius: var(--kd-border-radius-small);
+  font-size: var(--kd-font-size-sub-base);
+  color: var(--kd-color-text-secondary);
+}
+
+/* @kd-registry: menu v2.0 */
+/* ══ Menu 下拉菜单 / 右键菜单 ══ */
+
+.kd-menu {
+  position: relative; padding: 8px;
+  background: var(--kd-color-fill-base);
+  border: 1px solid var(--kd-color-line-regular);
+  box-shadow: var(--kd-box-shadow-large);
+  border-radius: var(--kd-border-radius-large);
+  list-style: none;
+}
+.kd-menu-item {
+  position: relative; display: flex;
+  padding: 5px 8px; margin-bottom: 4px;
+  font-size: var(--kd-font-size-sub-base); font-weight: var(--kd-font-weight-regular);
+  line-height: var(--kd-line-height-base); color: var(--kd-color-text-primary);
+  white-space: nowrap; border-radius: var(--kd-border-radius-middle);
+  align-items: flex-start; user-select: none; cursor: pointer;
+}
+.kd-menu-item:last-child { margin-bottom: 0; }
+.kd-menu-item:hover  { background: var(--kd-color-state-hover); }
+.kd-menu-item:active { background: var(--kd-color-state-pressed); }
+.kd-menu-item-disabled { cursor: not-allowed; opacity: 0.3; }
+.kd-menu-item-icon {
+  position: relative; top: 4px; margin-right: 6px;
+  width: 16px; height: 16px; flex-shrink: 0;
+}
+
+/* Selectable mode */
+.kd-menu-selectable .kd-menu-item { padding-left: 24px; }
+.kd-menu-item-tick {
+  position: absolute; top: 50%; left: 4px;
+  transform: translateY(-50%);
+  display: flex; align-items: center; justify-content: center;
+  width: 16px; height: 16px;
+}
+
+.kd-menu-divider { height: 1px; margin: 4px 0; background: var(--kd-color-line-regular); }
+.kd-menu-group-title {
+  padding: 8px 8px 2px;
+  font-size: var(--kd-font-size-sub-base); font-weight: var(--kd-font-weight-bold);
+  line-height: var(--kd-line-height-base); color: var(--kd-color-text-primary);
+}
+
+/* @kd-registry: table v2.0 */
+/* ══ Table 表格 ══ */
+
+.kd-table {
+  position: relative;
+  width: 100%; font-size: var(--kd-font-size-base);
+  color: var(--kd-color-text-primary); border-radius: 2px 2px 0 0;
+}
+.kd-table table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+
+/* ── Header ── */
+.kd-table-header-tr { height: 36px; background: var(--kd-color-fill-light); }
+.kd-table-header-th {
+  padding: 0 12px; font-size: var(--kd-font-size-sub-base);
+  font-weight: var(--kd-font-weight-regular); color: var(--kd-color-text-primary);
+  text-align: left; white-space: nowrap;
+}
+
+/* ── Cell ── */
+.kd-table-cell {
+  padding: 16px 12px; line-height: 24px;
+  border-bottom: 1px solid var(--kd-color-fill-light);
+  max-height: 56px; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* ── Cell alignment ── */
+.kd-table-cell-center, .kd-table-header-th.kd-table-cell-center { text-align: center; }
+.kd-table-cell-right, .kd-table-header-th.kd-table-cell-right { text-align: right; }
+
+/* ── Row hover ── */
+.kd-table-row:hover .kd-table-cell { background: var(--kd-color-state-hover); }
+.kd-table-row:hover .kd-table-cell:first-child { border-radius: var(--kd-border-radius-large) 0 0 var(--kd-border-radius-large); }
+.kd-table-row:hover .kd-table-cell:last-child  { border-radius: 0 var(--kd-border-radius-large) var(--kd-border-radius-large) 0; }
+.kd-table-row:hover .kd-table-cell { border-bottom-color: var(--kd-color-fill-base); }
+
+/* ── Row selected ── */
+.kd-table-row.is-selected .kd-table-cell { background: var(--kd-color-state-pressed-public); }
+
+/* ── Row disabled ── */
+.kd-table-row.is-disabled { pointer-events: none; }
+.kd-table-row.is-disabled .kd-table-cell { opacity: var(--kd-opacity-disabled); color: var(--kd-color-text-secondary); }
+
+/* ══ Bordered variant ══ */
+.kd-table-bordered { border: 1px solid var(--kd-color-line-regular); border-radius: var(--kd-border-radius-large); overflow: hidden; }
+.kd-table-bordered .kd-table-header-th { border-right: 1px solid var(--kd-color-line-regular); border-bottom: 1px solid var(--kd-color-line-regular); }
+.kd-table-bordered .kd-table-header-th:last-child { border-right: none; }
+.kd-table-bordered .kd-table-cell { border-right: 1px solid var(--kd-color-fill-light); }
+.kd-table-bordered .kd-table-cell:last-child { border-right: none; }
+.kd-table-bordered .kd-table-row:hover .kd-table-cell:first-child { border-radius: 0; }
+.kd-table-bordered .kd-table-row:hover .kd-table-cell:last-child { border-radius: 0; }
+
+/* ══ Striped variant ══ */
+.kd-table-striped .kd-table-row:nth-child(even) .kd-table-cell { background: var(--kd-color-fill-light); }
+.kd-table-striped .kd-table-row:nth-child(even):hover .kd-table-cell { background: var(--kd-color-state-hover); }
+
+/* ══ Fixed header ══ */
+.kd-table-fixed-header { overflow-y: auto; }
+.kd-table-fixed-header .kd-table-header-tr { position: sticky; top: 0; z-index: 2; }
+.kd-table-fixed-header .kd-table-header-th { background: var(--kd-color-fill-light); }
+
+/* ══ Hidden header ══ */
+.kd-table-no-header thead { display: none; }
+
+/* ══ Selection column ══ */
+.kd-table-th-select, .kd-table-cell-select {
+  width: 48px; text-align: center; padding: 0 8px;
+}
+
+/* ══ Expand column ══ */
+.kd-table-cell-expand { width: 40px; text-align: center; padding: 0 8px; }
+.kd-table-expand-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px; cursor: pointer;
+  color: var(--kd-color-text-secondary); font-size: 12px;
+  border-radius: var(--kd-border-radius-small); transition: background var(--kd-time-fast);
+}
+.kd-table-expand-icon:hover { background: var(--kd-color-state-hover); }
+.kd-table-expand-icon.is-expanded { color: var(--kd-color-text-primary); }
+
+/* Expanded row */
+.kd-table-expanded-row .kd-table-expanded-cell { padding: 0; border-bottom: 1px solid var(--kd-color-fill-light); }
+.kd-table-expanded-content { padding: 12px 12px 12px 52px; background: var(--kd-color-fill-light); font-size: var(--kd-font-size-sub-base); line-height: 20px; color: var(--kd-color-text-secondary); }
+
+/* ══ Empty state ══ */
+.kd-table-row-empty .kd-table-cell { border-bottom: none; }
+.kd-table-empty {
+  display: flex; align-items: center; justify-content: center; flex-direction: column;
+  padding: 40px 0; color: var(--kd-color-text-placeholder); font-size: var(--kd-font-size-sub-base);
+}
+
+/* ══ Loading overlay ══ */
+.kd-table-loading { position: relative; }
+.kd-table-loading table { opacity: 0.4; pointer-events: none; }
+.kd-table-loading-overlay {
+  position: absolute; inset: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255, 255, 255, 0.6); border-radius: inherit;
+}
+
+/* @kd-registry: modal v2.0 */
+/* ══ Modal 弹窗 ══ */
+
+/* Mask */
+.kd-modal-mask {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.45); z-index: 999;
+}
+.kd-modal-wrap {
+  position: fixed; inset: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Shell sizes */
+.kd-modal-sm .kd-modal-content { width: 480px; }
+.kd-modal-md .kd-modal-content { width: 640px; }
+.kd-modal-lg .kd-modal-content { width: 800px; }
+
+/* Content shell (底板色) */
+.kd-modal-content {
+  background: var(--kd-color-background-plate);
+  border: 1px solid var(--kd-color-line-regular);
+  border-radius: var(--kd-border-radius-extra-large);
+  box-shadow: var(--kd-box-shadow-extra-large);
+  box-sizing: border-box;
+  animation: kd-modal-in .3s ease forwards;
+}
+@keyframes kd-modal-in {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Header */
+.kd-modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 44px; padding: 10px 12px 0 16px; gap: 4px;
+}
+.kd-modal-title {
+  font-size: var(--kd-font-size-base); font-weight: var(--kd-font-weight-bold);
+  line-height: var(--kd-line-height-base); color: var(--kd-color-text-primary);
+}
+.kd-modal-close {
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  border: none; background: transparent;
+  border-radius: var(--kd-border-radius-small); cursor: pointer;
+  color: var(--kd-color-icon-secondary);
+  transition: background var(--kd-time-fast);
+}
+.kd-modal-close:hover { background: var(--kd-color-state-hover); }
+
+/* ── C1/C2：内容区直接在底板上 ── */
+.kd-modal-body-wrap { padding: 4px 16px 8px; }
+
+/* ── C3：wrap padding 更窄（留给白卡片自身 padding） ── */
+.kd-modal-body-wrap-c3 { padding: 0 16px; }
+
+/* Tabs 置于 Header 和白卡片之间（仅 C3b） */
+.kd-modal-body-wrap .kd-tabs { padding-bottom: 8px; }
+
+/* ── C3 白色内容卡片 ── */
+.kd-modal-body-card {
+  background: var(--kd-color-background-bottom);
+  border-radius: var(--kd-border-radius-extra-large);
+  padding: 12px;
+}
+
+/* C3a 多卡片容器 */
+.kd-modal-body-multi { display: flex; flex-direction: column; gap: 8px; }
+.kd-modal-body-card-c3 { padding: 12px; }
+
+/* Sections */
+.kd-modal-section { display: flex; flex-direction: column; gap: 4px; }
+.kd-modal-section + .kd-modal-section { margin-top: 16px; }
+.kd-modal-section-title {
+  font-size: var(--kd-font-size-sub-base); font-weight: var(--kd-font-weight-bold);
+  line-height: 20px; color: var(--kd-color-text-primary);
+}
+
+/* Field label (400, not bold) */
+.kd-field-label {
+  font-size: var(--kd-font-size-sub-base); font-weight: var(--kd-font-weight-regular);
+  line-height: 20px; color: var(--kd-color-text-primary);
+}
+
+/* Footer */
+.kd-modal-footer {
+  display: flex; align-items: center;
+  gap: 16px; padding: 16px;
+  justify-content: flex-end;
+}
+.kd-modal-footer.has-left { justify-content: space-between; }
+.kd-modal-footer-left,
+.kd-modal-footer-right { display: flex; align-items: center; gap: 8px; }
+.kd-modal-footer-left:empty { display: none; }
+
+/* @kd-registry: segmented v2.0 */
+/* ══ Segmented 分段控制器 ══ */
+
+.kd-segmented-controller {
+  display: inline-flex; gap: 2px;
+  padding: 2px;
+  border: 1px solid var(--kd-color-line-regular);
+  border-radius: var(--kd-border-radius-middle);
+  background: var(--kd-color-fill-base);
+}
+.kd-segmented-item { flex: 1; }
+.kd-segmented-item .kd-button { width: 100%; }
+
+/* Active state override */
+.kd-segmented-item.is-active .kd-button {
+  background: var(--kd-color-state-pressed);
+  font-weight: var(--kd-font-weight-bold);
+}
+
+/* @kd-registry: message v2.0 */
+/* ══ Message 全局提示 ══ */
+
+.kd-message-root {
+  position: fixed; top: 88px; left: 50%; transform: translateX(-50%);
+  z-index: 9000; display: flex; flex-direction: column; align-items: center;
+  gap: 8px; pointer-events: none;
+}
+.kd-message {
+  display: inline-flex; align-items: center;
+  padding: 9px 20px; border-radius: var(--kd-border-radius-large);
+  border: 1px solid; box-shadow: var(--kd-box-shadow-large);
+  font-size: var(--kd-font-size-sub-base); line-height: var(--kd-line-height-base);
+  pointer-events: auto;
+  animation: kd-toast-in .3s ease forwards;
+}
+@keyframes kd-toast-in {
+  from { opacity: 0; transform: translateY(-90%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.kd-message-icon { flex-shrink: 0; display: inline-flex; align-items: center; line-height: 1; }
+.kd-message-text { margin-left: 8px; color: var(--kd-color-text-primary); line-height: var(--kd-line-height-base); }
+
+.kd-message-success { background: var(--kd-color-success-light); border-color: var(--kd-color-success-normal); }
+.kd-message-error   { background: var(--kd-color-error-light);   border-color: var(--kd-color-error-normal); }
+.kd-message-warning { background: var(--kd-color-warning-light); border-color: var(--kd-color-warning-normal); }
+.kd-message-info,
+.kd-message-loading { background: var(--kd-color-info-light);    border-color: var(--kd-color-public-normal); }
+
+/* @kd-scene: saas-admin-console table-list-page pagination v1.0 */
+.pagination-area {
+  height: 52px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex: 0 0 52px;
+}
+
+.pagination-area.is-sticky {
+  position: sticky;
+  bottom: 0;
+  z-index: 4;
+  background: var(--kd-color-background-bottom);
+  box-shadow: 0 -1px 0 var(--kd-color-line-light);
+}
+
+.pagination-area .pagination-summary {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--kd-color-text-primary);
+}
+
+.pagination-area .pagination-main {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  column-gap: 16px;
+}
+
+.pagination-area .page-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pagination-area .page-extra {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  column-gap: 16px;
+}
+
+.pagination-area .page-extra .page-extra {
+  gap: 8px;
+  column-gap: 8px;
+}
+
+.pagination-area .page-link {
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  border-radius: var(--kd-radius-md);
+  background: transparent;
+  color: var(--kd-color-text-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+.pagination-area .page-link-icon {
+  width: 28px;
+  min-width: 28px;
+  padding: 0;
+  color: var(--kd-color-icon-secondary);
+}
+
+.pagination-area .page-link:hover:not(:disabled) {
+  background: var(--kd-color-state-hover);
+}
+
+.pagination-area .page-link:active:not(:disabled) {
+  background: var(--kd-color-state-pressed);
+}
+
+.pagination-area .page-link.is-current {
+  background: var(--kd-color-fill-base);
+  border-color: var(--kd-color-line-public);
+  color: var(--kd-color-text-public);
+}
+
+.pagination-area .page-link:disabled {
+  opacity: var(--kd-opacity-disabled);
+  cursor: not-allowed;
+}
+
+.pagination-area .page-size-field {
+  width: 88px;
+  min-width: 88px;
+}
+
+.pagination-area .page-size-field .kd-input-wrap {
+  padding-left: 7px;
+  padding-right: 5px;
+}
+
+.pagination-area .page-size-field .kd-select-arrow {
+  margin-left: 8px;
+}
+
+.pagination-area .jump-field {
+  width: 48px;
+  min-width: 48px;
+}
+
+.pagination-area .jump-field .kd-input-wrap {
+  padding-left: 7px;
+  padding-right: 7px;
+  justify-content: center;
+}
+
+.pagination-area .jump-field .kd-input-inner {
+  text-align: center;
+}
+
+
+    /* ══ 页面布局样式 ══ */
+    [hidden] { display: none !important; }
+
+    .stage {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #addMask { z-index: 1100; }
+    #addWrap { z-index: 1101; }
+    #confirmMask { z-index: 1200; }
+    #confirmWrap { z-index: 1201; }
+
+    .dist-modal .kd-modal-content {
+      max-height: calc(100vh - 48px);
+      display: flex;
+      flex-direction: column;
+    }
+    .dist-modal .kd-modal-body-wrap {
+      min-height: 0;
+      overflow: auto;
+    }
+
+    .scope-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 8px;
+    }
+    .scope-bar .kd-segmented-controller { min-width: 240px; }
+    .scope-bar .kd-field-label { flex-shrink: 0; }
+
+    .scope-hint,
+    .field-hint,
+    .all-sub,
+    .confirm-text {
+      font-size: var(--kd-font-size-sub-base);
+      line-height: 20px;
+      color: var(--kd-color-text-secondary);
+    }
+    .scope-hint { padding-bottom: 8px; }
+    .all-lead {
+      font-size: var(--kd-font-size-sub-base);
+      line-height: 20px;
+      color: var(--kd-color-text-primary);
+    }
+    .all-pane { display: flex; flex-direction: column; gap: 4px; padding: 12px 0 16px; }
+    .confirm-text { color: var(--kd-color-text-primary); }
+    .field-hint { margin-top: 4px; }
+
+    .kd-field { display: flex; flex-direction: column; gap: 4px; }
+    .req-mark { color: var(--kd-color-text-error); margin-right: 4px; }
+
+    .dist-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 8px;
+    }
+    .list-search { flex: 1; min-width: 0; display: block; }
+    .dist-toolbar .kd-button { flex-shrink: 0; }
+
+    .dist-table-scroll {
+      max-height: calc(100vh - 300px);
+      min-height: 180px;
+      overflow: auto;
+    }
+    .dist-table .kd-table-header-th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: var(--kd-color-fill-light);
+    }
+    .dist-table .kd-table-cell,
+    .dist-table .kd-table-header-th {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .empty-cell {
+      text-align: center;
+      color: var(--kd-color-text-secondary);
+      white-space: normal;
+    }
+
+    .kd-modal-footer .kd-button { min-width: 72px; }
+
+    .add-select { position: relative; z-index: 2; }
+    .add-select .kd-input-wrap {
+      flex-wrap: wrap;
+      height: auto;
+      min-height: 28px;
+    }
+    .add-select .kd-input-inner { flex: 1 1 140px; min-width: 140px; }
+    .add-select .kd-select-arrow { margin-left: auto; }
+    .add-select .kd-select-dropdown { display: none; left: 0; right: 0; top: 100%; }
+    .add-select .kd-select-trigger.is-open .kd-select-dropdown { display: block; }
+    .add-menu-scroll { max-height: 280px; overflow: auto; }
+
+    .add-option { align-items: center; }
+    .add-option .kd-checkbox { flex: 1; min-width: 0; pointer-events: none; }
+    .add-option .kd-checkbox-label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      min-width: 0;
+    }
+    .add-option.is-locked { cursor: not-allowed; }
+    .add-option.is-locked:hover,
+    .add-option.is-locked:active { background: transparent; }
+    .add-option.is-locked .kd-checkbox-label,
+    .added-mark { color: var(--kd-color-text-tertiary); }
+    .added-mark {
+      flex-shrink: 0;
+      margin-left: 8px;
+      font-size: var(--kd-font-size-sub-base);
+      line-height: 20px;
+    }
+    .add-option.is-locked .kd-checkbox-input.is-checked .kd-checkbox-inner {
+      background: var(--kd-color-icon-secondary);
+      border-color: transparent;
+    }
+
+    .kd-button-prefix-icon svg,
+    .kd-modal-close svg,
+    .kd-input-prefix svg,
+    .kd-input-icon svg,
+    .kd-select-arrow svg,
+    .kd-select-tag-close svg,
+    .kd-message-icon svg {
+      width: 16px;
+      height: 16px;
+      max-width: none;
+    }
+    .kd-modal-close .kd-color-icon-primary,
+    .kd-input-prefix .kd-color-icon-primary,
+    .kd-input-icon .kd-color-icon-primary,
+    .kd-select-arrow .kd-color-icon-primary,
+    .kd-select-tag-close .kd-color-icon-primary {
+      stroke: var(--kd-color-icon-secondary);
+    }
+    .kd-button-primary .kd-color-icon-primary {
+      stroke: var(--kd-color-text-white);
+    }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <!-- [Button: primary large] -->
+    <button type="button" id="reopen" class="kd-button kd-button-primary kd-button-lg" hidden>打开分发情况</button>
+  </div>
+
+  <div class="kd-modal-mask" id="mainMask"></div>
+  <div class="kd-modal-wrap dist-modal" id="mainWrap">
+    <!-- [Modal: lg C3b] 切换型 / Segmented 下单张白卡片 -->
+    <div class="kd-modal kd-modal-lg" role="dialog" aria-modal="true" aria-labelledby="distTitle">
+      <div class="kd-modal-content">
+        <div class="kd-modal-header">
+          <div class="kd-modal-title" id="distTitle">《计算机应用基础》分发情况</div>
+          <button type="button" class="kd-modal-close" id="mainClose" aria-label="关闭"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" km_stroke-width="1" km_darkmode="true" requiredCustomFeatures="data-kd-color-scheme"><desc>关闭_s_符号交叉二_特殊字符_横向_十字_两个_双勾</desc><style>
+    .kd-stroke-width-icon-regular { 
+       stroke-width: var(--kd-stroke-width-icon-regular, 1px)
+    }
+    .kd-color-icon-primary {
+       fill: var(--kd-color-icon-primary, #333333);
+       stroke: var(--kd-color-icon-primary, #333333);
+       km_fill: #333333;
+       km_stroke: #333333;
+       km_darkmode_fill: #C7C7C7;
+       km_darkmode_stroke: #C7C7C7; 
+    }</style><g id="group-0_main" class="kd-color-icon-primary kd-stroke-width-icon-regular"><path id="line_main" d="M3.5 3.5L12.5 12.5" stroke-linecap="round" fill="none" vector-effect="non-scaling-stroke" stroke-linejoin="round"/><path id="line_2_main" d="M3.5 12.5L12.5 3.5" stroke-linecap="round" fill="none" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></g></svg></button>
+        </div>
+        <div class="kd-modal-body-wrap kd-modal-body-wrap-c3">
+          <div class="scope-bar">
+            <div class="kd-field-label" id="scopeLabel">公开范围</div>
+            <!-- [Segmented: 公开到部分 / 公开到全部] -->
+            <div class="kd-segmented-controller" role="radiogroup" aria-labelledby="scopeLabel">
+              <div class="kd-segmented-item is-active" id="segPartial">
+                <button type="button" class="kd-button kd-button-light kd-button-m" role="radio" aria-checked="true" data-scope="partial">公开到部分</button>
+              </div>
+              <div class="kd-segmented-item" id="segAll">
+                <button type="button" class="kd-button kd-button-light kd-button-m" role="radio" aria-checked="false" data-scope="all">公开到全部</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="kd-modal-body-card kd-modal-body-card-c3">
+            <div id="partialPane">
+              <p class="scope-hint">仅对下列院校公开。与「公开到全部」互斥，同一时间只生效一种。</p>
+              <div class="dist-toolbar">
+                <!-- [Input: medium search] -->
+                <div class="kd-input kd-input-medium list-search">
+                  <div class="kd-input-wrap">
+                    <span class="kd-input-prefix"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" requiredCustomFeatures="data-kd-color-scheme" km_stroke-width="1" km_darkmode="true"><desc>放大镜_搜索_查看_查找</desc><style>
+    .kd-stroke-width-icon-regular { 
+       stroke-width: var(--kd-stroke-width-icon-regular, 1px)
+    }
+    .kd-color-icon-primary {
+       fill: var(--kd-color-icon-primary, #333333);
+       stroke: var(--kd-color-icon-primary, #333333);
+       km_fill: #333333;
+       km_stroke: #333333;
+       km_darkmode_fill: #C7C7C7;
+       km_darkmode_stroke: #C7C7C7; 
+    }</style><g id="group-0_list" class="kd-color-icon-primary kd-stroke-width-icon-regular"><path id="line_list" d="M13 7C13 10.3137 10.3137 13 7 13C3.68629 13 1 10.3137 1 7C1 3.68629 3.68629 1 7 1C10.3137 1 13 3.68629 13 7Z" fill="none" vector-effect="non-scaling-stroke" stroke-linejoin="round"/><path id="line_2_list" d="M11.5 11.5L15 15" stroke-linecap="round" fill="none" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></g></svg></span>
+                    <input class="kd-input-inner" id="listSearch" type="text" autocomplete="off" placeholder="搜索学校 ID 或学校名称" aria-label="搜索学校 ID 或学校名称">
+                    <button type="button" class="kd-input-icon" id="listSearchClear" hidden aria-label="清空搜索"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" km_stroke-width="1" km_darkmode="true" requiredCustomFeatures="data-kd-color-scheme"><desc>关闭_s_符号交叉二_特殊字符_横向_十字_两个_双勾</desc><style>
+    .kd-stroke-width-icon-regular { 
+       stroke-width: var(--kd-stroke-width-icon-regular, 1px)
+    }
+    .kd-color-icon-primary {
+       fill: var(--kd-color-icon-primary, #333333);
+       stroke: var(--kd-color-icon-primary, #333333);
+       km_fill: #333333;
+       km_stroke: #333333;
+       km_darkmode_fill: #C7C7C7;
+       km_darkmode_stroke: #C7C7C7; 
+    }</style><g id="group-0_clear" class="kd-color-icon-primary kd-stroke-width-icon-regular"><path id="line_clear" d="M3.5 3.5L12.5 12.5" stroke-linecap="round" fill="none" vector-effect="non-scaling-stroke" stroke-linejoin="round"/><path id="line_2_clear" d="M3.5 12.5L12.5 3.5" stroke-linecap="round" fill="none" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></g></svg></button>
+                  </div>
+                </div>
+                <!-- [Button: primary medium] -->
+                <button type="button" class="kd-button kd-button-primary kd-button-m" id="openAdd">
+                  <span class="kd-button-prefix-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" requiredCustomFeatures="data-kd-color-scheme" km_stroke-width="1" km_darkmode="true"><desc>插入_添加_圈十字_加号_add__EtToolbox_BatchAdd</desc><style>
+    .kd-stroke-width-icon-regular { 
+       stroke-width: var(--kd-stroke-width-icon-regular, 1px)
+    }
+    .kd-color-icon-primary {
+       fill: var(--kd-color-icon-primary, #333333);
+       stroke: var(--kd-color-icon-primary, #333333);
+       km_fill: #333333;
+       km_stroke: #333333;
+       km_darkmode_fill: #C7C7C7;
+       km_darkmode_stroke: #C7C7C7; 
+    }</style><g id="group-0_insert" class="kd-color-icon-primary kd-stroke-width-icon-regular"><path id="line_insert" d="M15 8C15 11.866 11.866 15 8 15C4.13401 15 1 11.866 1 8C1 4.13401 4.13401 1 8 1C11.866 1 15 4.13401 15 8Z" fill="none" vector-effect="non-scaling-stroke" stroke-linejoin="round"/><path id="area2_insert" d="M4.5 8H8M8 8H11.5M8 8V11.5M8 8V4.5" stroke-linecap="round" stroke-linejoin="round" fill="none" vector-effect="non-scaling-stroke"/></g></svg></span>
+                  <span class="kd-button-children">新增公开院校</span>
+                </button>
+              </div>
+              <!-- [Table: default] -->
+              <div class="dist-table-scroll">
+                <div class="kd-table dist-table">
+                  <table>
+                    <colgroup>
+                      <col style="width:128px">
+                      <col>
+                      <col style="width:188px">
+                      <col style="width:88px">
+                    </colgroup>
+                    <thead>
+                      <tr class="kd-table-header-tr">
+                        <th class="kd-table-header-th">学校ID</th>
+                        <th class="kd-table-header-th">学校名称</th>
+                        <th class="kd-table-header-th">创建时间</th>
+                        <th class="kd-table-header-th kd-table-cell-right">操作</th>
+                      </tr>
+                    </thead>
+                    <tbody id="schoolBody"></tbody>
+                  </table>
+                </div>
+              </div>
+              <footer id="adminPagination"></footer>
+            </div>
+            <div id="allPane" hidden>
+              <div class="all-pane">
+                <p class="all-lead">课程对全部院校公开，按院校配置的名单暂停生效。</p>
+                <p class="all-sub" id="allSub"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kd-modal-mask" id="addMask" hidden></div>
+  <div class="kd-modal-wrap" id="addWrap" hidden>
+    <!-- [Modal: md C1] 纯字段型 / 无白卡片 / 0 个真组 -->
+    <div class="kd-modal kd-modal-md" role="dialog" aria-modal="true" aria-labelledby="addTitle">
+      <div class="kd-modal-content">
+        <div class="kd-modal-header">
+          <div class="kd-modal-title" id="addTitle">新增公开院校</div>
+          <button type="button" class="kd-modal-close" id="addClose" aria-label="关闭"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" km_stroke-width="1" km_darkmode="true" requiredCustomFeatures="data-kd-color-scheme"><desc>关闭_s_符号交叉二_特殊字符_横向_十字_两个_双勾</desc><style>
+    .kd-stroke-width-icon-regular { 
+       stroke-width: var(--kd-stroke-width-icon-regular, 1px)
+    }
+    .kd-color-icon-primary {
+       fill: var(--kd-color-icon-primary, #333333);
+       stroke: var(--kd-color-icon-primary, #333333);
+       km_fill: #333333;
+       km_stroke: #333333;
+       km_darkmode_fill: #C7C7C7;
+       km_darkmode_stroke: #C7C7C7; 
+    }</style><g id="group-0_add" class="kd-color-icon-primary kd-stroke-width-icon-regular"><path id="line_add" d="M3.5 3.5L12.5 12.5" stroke-linecap="round" fill="none" vector-effect="non-scaling-stroke" stroke-linejoin="round"/><path id="line_2_add" d="M3.5 12.5L12.5 3.5" stroke-linecap="round" fill="none" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></g></svg></button>
+        </div>
+        <div class="kd-modal-body-wrap">
+          <div class="kd-field">
+            <div class="kd-field-label"><span class="req-mark" aria-hidden="true">*</span>公开院校</div>
+            <!-- [Select: multiple searchable] -->
+            <div class="kd-input kd-input-medium kd-select add-select" id="addSelect" data-select-mode="multiple">
+              <div class="kd-select-trigger" id="addTrigger">
+                <div class="kd-input-wrap">
+                  <span class="kd-input-prefix"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" requiredCustomFeatures="data-kd-color-scheme" km_stroke-width="1" km_darkmode="true"><desc>放大镜_搜索_查看_查找</desc><style>
+    .kd-stroke-width-icon-regular { 
+       stroke-width: var(--kd-stroke-width-icon-regular, 1px)
+    }
+    .kd-color-icon-primary {
+       fill: var(--kd-color-icon-primary, #333333);
+       stroke: var(--kd-color-icon-primary, #333333);
+       km_fill: #333333;
+       km_stroke: #333333;
+       km_darkmode_fill: #C7C7C7;
+       km_darkmode_stroke: #C7C7C7; 
+    }</style><g id="group-0_addsearch" class="kd-color-icon-primary kd-stroke-width-icon-regular"><path id="line_addsearch" d="M13 7C13 10.3137 10.3137 13 7 13C3.68629 13 1 10.3137 1 7C1 3.68629 3.68629 1 7 1C10.3137 1 13 3.68629 13 7Z" fill="none" vector-effect="non-scaling-stroke" stroke-linejoin="round"/><path id="line_2_addsearch" d="M11.5 11.5L15 15" stroke-linecap="round" fill="none" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></g></svg></span>
+                  <span id="addTags"></span>
+                  <input class="kd-input-inner" id="addSearch" type="text" autocomplete="off" placeholder="搜索企业 ID 或企业名称" aria-label="搜索企业 ID 或企业名称">
+                  <span class="kd-select-arrow"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" requiredCustomFeatures="data-kd-color-scheme" km_stroke-width="1" km_darkmode="true"><desc>下箭头16_大_Pdf_spin_down</desc><style>
+    .kd-stroke-width-icon-bold { 
+       stroke-width: var(--kd-stroke-width-icon-bold, 1.2px)
+    }
+    .kd-color-icon-secondary {
+       fill: var(--kd-color-icon-secondary, #757575);
+       stroke: var(--kd-color-icon-secondary, #757575);
+       km_fill: #757575;
+       km_stroke: #757575;
+       km_darkmode_fill: #C7C7C7;
+       km_darkmode_stroke: #C7C7C7; 
+    }</style><g id="group-0_arrow" class="kd-color-icon-secondary kd-stroke-width-icon-bold"><path id="area1_arrow" d="M12 6.5L8.00718 10H7.99262L4 6.5" stroke-linecap="round" stroke-linejoin="round" fill="none" vector-effect="non-scaling-stroke"/></g></svg></span>
+                </div>
+                <div class="kd-select-dropdown">
+                  <div class="kd-menu">
+                    <div class="add-menu-scroll" id="addMenu"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="field-hint">可按企业 ID 或企业名称搜索。已公开的院校保持勾选并置灰，不能在这里取消。</p>
+          </div>
+        </div>
+        <div class="kd-modal-footer">
+          <div class="kd-modal-footer-right">
+            <!-- [Button: secondary medium] -->
+            <button type="button" class="kd-button kd-button-secondary kd-button-m" id="addCancel">取消</button>
+            <!-- [Button: primary medium] -->
+            <button type="button" class="kd-button kd-button-primary kd-button-m" id="addOk" disabled>确定</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kd-modal-mask" id="confirmMask" hidden></div>
+  <div class="kd-modal-wrap" id="confirmWrap" hidden>
+    <!-- [Modal: sm C1] 确认 -->
+    <div class="kd-modal kd-modal-sm" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+      <div class="kd-modal-content">
+        <div class="kd-modal-header">
+          <div class="kd-modal-title" id="confirmTitle">确认</div>
+          <button type="button" class="kd-modal-close" id="confirmClose" aria-label="关闭"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" km_stroke-width="1" km_darkmode="true" requiredCustomFeatures="data-kd-color-scheme"><desc>关闭_s_符号交叉二_特殊字符_横向_十字_两个_双勾</desc><style>
+    .kd-stroke-width-icon-regular { 
+       stroke-width: var(--kd-stroke-width-icon-regular, 1px)
+    }
+    .kd-color-icon-primary {
+       fill: var(--kd-color-icon-primary, #333333);
+       stroke: var(--kd-color-icon-primary, #333333);
+       km_fill: #333333;
+       km_stroke: #333333;
+       km_darkmode_fill: #C7C7C7;
+       km_darkmode_stroke: #C7C7C7; 
+    }</style><g id="group-0_confirm" class="kd-color-icon-primary kd-stroke-width-icon-regular"><path id="line_confirm" d="M3.5 3.5L12.5 12.5" stroke-linecap="round" fill="none" vector-effect="non-scaling-stroke" stroke-linejoin="round"/><path id="line_2_confirm" d="M3.5 12.5L12.5 3.5" stroke-linecap="round" fill="none" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></g></svg></button>
+        </div>
+        <div class="kd-modal-body-wrap">
+          <p class="confirm-text" id="confirmText"></p>
+        </div>
+        <div class="kd-modal-footer">
+          <div class="kd-modal-footer-right">
+            <button type="button" class="kd-button kd-button-secondary kd-button-m" id="confirmCancel">取消</button>
+            <button type="button" class="kd-button kd-button-primary kd-button-m" id="confirmOk">确定</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- [Message: success] -->
+  <div class="kd-message-root" id="toastRoot" hidden>
+    <div class="kd-message kd-message-success" id="toastSuccess">
+      <span class="kd-message-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_47647_10778_success)">
+<path d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16Z" fill="#418F1F"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M12.6009 5.19891C12.9329 5.53086 12.9329 6.06905 12.6009 6.40099L7.78109 11.2208C7.44914 11.5528 6.91095 11.5528 6.57901 11.2208L3.89886 8.5407C3.56692 8.20876 3.56692 7.67057 3.89886 7.33862C4.23081 7.00668 4.769 7.00668 5.10094 7.33862L7.18005 9.41772L11.3989 5.19891C11.7308 4.86696 12.269 4.86696 12.6009 5.19891Z" fill="white"/>
+</g>
+<defs>
+<clipPath id="clip0_47647_10778_success">
+<rect width="16" height="16" fill="white"/>
+</clipPath>
+</defs>
+</svg>
+</span>
+      <span class="kd-message-text" id="toastText"></span>
+    </div>
+  </div>
+
+  <script>
+    (function initKdAdminPagination(global) {
+  var DEFAULT_PAGE_SIZE_OPTIONS = [10, 20, 50];
+
+  function clamp(value, min, max) {
+    var next = Number(value);
+    if (!Number.isFinite(next)) next = min;
+    return Math.max(min, Math.min(max, next));
+  }
+
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function renderIcon(path) {
+    return '' +
+      '<span class="kd-icon" aria-hidden="true">' +
+        '<svg viewBox="0 0 16 16">' + path + '</svg>' +
+      '</span>';
+  }
+
+  function createPagination(container, options) {
+    if (!container) return null;
+    options = options || {};
+
+    var state = {
+      currentPage: Number(options.currentPage) || 1,
+      pageSize: Number(options.pageSize) || 20,
+      total: Number(options.total) || 0,
+      selectedCount: Number(options.selectedCount) || 0
+    };
+    var pageSizeOptions = options.pageSizeOptions || DEFAULT_PAGE_SIZE_OPTIONS;
+    var onChange = typeof options.onChange === 'function' ? options.onChange : function() {};
+
+    container.classList.add('pagination-area');
+    container.setAttribute('data-kd-component', 'Pagination');
+    container.innerHTML = '' +
+      '<div class="pagination-summary" data-kd-pagination-summary></div>' +
+      '<div class="pagination-main">' +
+        '<div class="page-group">' +
+          '<button class="page-link page-link-icon" type="button" aria-label="上一页" data-kd-page-prev>' +
+            renderIcon('<path d="M9.5 4L6 8L9.5 12"></path>') +
+          '</button>' +
+          '<div class="page-group" data-kd-page-numbers></div>' +
+          '<button class="page-link page-link-icon" type="button" aria-label="下一页" data-kd-page-next>' +
+            renderIcon('<path d="M6.5 4L10 8L6.5 12"></path>') +
+          '</button>' +
+        '</div>' +
+        '<div class="page-extra">' +
+          '<label class="page-size-field kd-input kd-input-medium kd-select-trigger">' +
+            '<span class="sr-only">每页条数</span>' +
+            '<span class="kd-input-wrap" data-kd-component="Select">' +
+              '<input class="kd-input-inner" type="text" readonly data-kd-page-size-text>' +
+              '<span class="kd-select-arrow" aria-hidden="true">' +
+                renderIcon('<path d="M4 6.5L8 10L12 6.5"></path>') +
+              '</span>' +
+            '</span>' +
+          '</label>' +
+          '<div class="page-extra">' +
+            '<span>前往</span>' +
+            '<label class="jump-field kd-input kd-input-medium">' +
+              '<span class="sr-only">页码输入</span>' +
+              '<span class="kd-input-wrap" data-kd-component="Text Field / KDTextField">' +
+                '<input class="kd-input-inner" type="text" inputmode="numeric" data-kd-page-jump>' +
+              '</span>' +
+            '</label>' +
+            '<span>页</span>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+
+    var summary = container.querySelector('[data-kd-pagination-summary]');
+    var prevBtn = container.querySelector('[data-kd-page-prev]');
+    var nextBtn = container.querySelector('[data-kd-page-next]');
+    var pageNumbers = container.querySelector('[data-kd-page-numbers]');
+    var pageSizeText = container.querySelector('[data-kd-page-size-text]');
+    var jumpInput = container.querySelector('[data-kd-page-jump]');
+    var pageSizeTrigger = pageSizeText.closest('.kd-select-trigger');
+
+    function totalPages() {
+      return Math.max(1, Math.ceil(state.total / state.pageSize));
+    }
+
+    function emit() {
+      onChange({
+        currentPage: state.currentPage,
+        pageSize: state.pageSize,
+        total: state.total,
+        selectedCount: state.selectedCount,
+        totalPages: totalPages()
+      });
+    }
+
+    function render() {
+      var total = totalPages();
+      state.currentPage = clamp(state.currentPage, 1, total);
+      summary.textContent = '已选 ' + state.selectedCount + ' 条，共 ' + state.total + ' 条';
+      pageSizeText.value = state.pageSize + ' 条/页';
+      jumpInput.value = state.currentPage;
+      prevBtn.disabled = state.currentPage === 1;
+      nextBtn.disabled = state.currentPage === total;
+
+      var html = '';
+      for (var i = 1; i <= total; i += 1) {
+        html += '<button class="page-link' + (i === state.currentPage ? ' is-current' : '') +
+          '" type="button" data-kd-page="' + i + '">' + escapeHtml(i) + '</button>';
+      }
+      pageNumbers.innerHTML = html;
+    }
+
+    function setState(nextState, shouldEmit) {
+      if (!nextState) return;
+      if (nextState.total != null) state.total = Math.max(0, Number(nextState.total) || 0);
+      if (nextState.selectedCount != null) state.selectedCount = Math.max(0, Number(nextState.selectedCount) || 0);
+      if (nextState.pageSize != null) state.pageSize = Math.max(1, Number(nextState.pageSize) || state.pageSize);
+      if (nextState.currentPage != null) state.currentPage = Number(nextState.currentPage) || 1;
+      state.currentPage = clamp(state.currentPage, 1, totalPages());
+      render();
+      if (shouldEmit) emit();
+    }
+
+    pageNumbers.addEventListener('click', function(event) {
+      var target = event.target.closest('[data-kd-page]');
+      if (!target) return;
+      setState({ currentPage: Number(target.getAttribute('data-kd-page')) }, true);
+    });
+
+    prevBtn.addEventListener('click', function() {
+      if (state.currentPage <= 1) return;
+      setState({ currentPage: state.currentPage - 1 }, true);
+    });
+
+    nextBtn.addEventListener('click', function() {
+      if (state.currentPage >= totalPages()) return;
+      setState({ currentPage: state.currentPage + 1 }, true);
+    });
+
+    jumpInput.addEventListener('change', function() {
+      setState({ currentPage: clamp(jumpInput.value, 1, totalPages()) }, true);
+    });
+
+    pageSizeTrigger.addEventListener('click', function() {
+      var currentIndex = pageSizeOptions.indexOf(state.pageSize);
+      var nextIndex = currentIndex >= 0 ? (currentIndex + 1) % pageSizeOptions.length : 0;
+      setState({ pageSize: pageSizeOptions[nextIndex], currentPage: 1 }, true);
+    });
+
+    render();
+
+    return {
+      render: render,
+      setState: function(nextState) {
+        setState(nextState, false);
+      },
+      getState: function() {
+        return {
+          currentPage: state.currentPage,
+          pageSize: state.pageSize,
+          total: state.total,
+          selectedCount: state.selectedCount,
+          totalPages: totalPages()
+        };
+      },
+      destroy: function() {
+        container.innerHTML = '';
+      }
+    };
+  }
+
+  global.KdAdminPagination = {
+    create: createPagination
+  };
+})(window);
+
+  </script>
+  <script>
+    var CLOSE_SVG = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" km_stroke-width=\"1\" km_darkmode=\"true\" requiredCustomFeatures=\"data-kd-color-scheme\"><desc>关闭_s_符号交叉二_特殊字符_横向_十字_两个_双勾</desc><style>\n    .kd-stroke-width-icon-regular { \n       stroke-width: var(--kd-stroke-width-icon-regular, 1px)\n    }\n    .kd-color-icon-primary {\n       fill: var(--kd-color-icon-primary, #333333);\n       stroke: var(--kd-color-icon-primary, #333333);\n       km_fill: #333333;\n       km_stroke: #333333;\n       km_darkmode_fill: #C7C7C7;\n       km_darkmode_stroke: #C7C7C7; \n    }</style><g id=\"group-0\" class=\"kd-color-icon-primary kd-stroke-width-icon-regular\"><path id=\"line\" d=\"M3.5 3.5L12.5 12.5\" stroke-linecap=\"round\" fill=\"none\" vector-effect=\"non-scaling-stroke\" stroke-linejoin=\"round\"/><path id=\"line_2\" d=\"M3.5 12.5L12.5 3.5\" stroke-linecap=\"round\" fill=\"none\" vector-effect=\"non-scaling-stroke\" stroke-linejoin=\"round\"/></g></svg>";
+    var closeSeq = 0;
+
+    function uniqSvg(svg) {
+      closeSeq += 1;
+      var suffix = 'c' + closeSeq;
+      var ids = [];
+      svg.replace(/\bid="([^"]+)"/g, function(_, id) { ids.push(id); return _; });
+      ids.sort(function(a, b) { return b.length - a.length; });
+      ids.forEach(function(id) {
+        svg = svg.split('id="' + id + '"').join('id="' + id + suffix + '"');
+        svg = svg.split('url(#' + id + ')').join('url(#' + id + suffix + ')');
+      });
+      return svg;
+    }
+
+    function esc(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+    function nowText() {
+      var d = new Date();
+      return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + ' ' +
+        pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
+    }
+
+    var assigned = [
+      { id: '650597469', name: '辽宁财贸学院', createdAt: '2026-10-12 09:02:45' },
+      { id: '642899188', name: '惠州学院', createdAt: '2026-10-12 09:02:38' },
+      { id: '625764056', name: '沈阳师范大学', createdAt: '2026-10-12 09:02:31' },
+      { id: '619020547', name: '武汉科技大学', createdAt: '2026-10-12 09:02:20' },
+      { id: '601878168', name: '湖南科技学院信息工程学院公共计算机教研室', createdAt: '2026-10-12 08:56:12' },
+      { id: '632274077', name: '北京联合大学商务学院', createdAt: '2026-10-09 15:15:26' },
+      { id: '667555645', name: '齐齐哈尔大学', createdAt: '2026-10-09 15:13:10' },
+      { id: '624823022', name: '河南农业大学', createdAt: '2026-10-09 15:13:02' },
+      { id: '611471105', name: '南华大学', createdAt: '2026-10-09 15:12:43' },
+      { id: '640247625', name: '陕西师范大学计算机公共课', createdAt: '2026-10-09 15:12:29' },
+      { id: '661890537', name: '山东科技职业学院', createdAt: '2026-10-08 18:16:03' }
+    ];
+
+    var moreAssigned = ['吉林大学','中山大学','厦门大学','东南大学','重庆大学','兰州大学','中国海洋大学','中央民族大学','东北师范大学','华中师范大学','南京师范大学','湖南师范大学','华南师范大学','首都师范大学','浙江师范大学','安徽大学','南昌大学','郑州大学','云南大学','贵州大学','广西大学','海南大学','宁夏大学','青海大学','内蒙古大学','上海理工大学','南京工业大学','浙江工业大学','武汉理工大学','长安大学','合肥学院','成都理工大学','昆明理工大学','太原理工大学','燕山大学'];
+    var moreStart = Date.UTC(2026, 9, 8, 10, 0, 0);
+    moreAssigned.forEach(function(name, i) {
+      var d = new Date(moreStart - i * 3600 * 1000);
+      assigned.push({
+        id: String(701000101 + i),
+        name: name,
+        createdAt: d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()) + ' ' + pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds())
+      });
+    });
+
+    var extras = [
+      { id: '629176523', name: '上海电机学院' },
+      { id: '637247337', name: '衡阳师范学院' },
+      { id: '609038937', name: '香港教育城' },
+      { id: '631757025', name: '龙游县电化教育中心' },
+      { id: '680832894', name: '云南技师学院' },
+      { id: '665720684', name: '张掖市中学' },
+      { id: '648055214', name: '云南轻纺职业学院' },
+      { id: '680000016', name: '沈阳工业大学' },
+      { id: '680000001', name: '北京大学' },
+      { id: '680000002', name: '清华大学' },
+      { id: '680000003', name: '复旦大学' },
+      { id: '680000004', name: '浙江大学' },
+      { id: '680000005', name: '南京大学' },
+      { id: '680000006', name: '武汉大学' },
+      { id: '680000007', name: '中南大学' },
+      { id: '680000008', name: '四川大学' },
+      { id: '680000009', name: '山东大学' },
+      { id: '680000010', name: '大连理工大学' },
+      { id: '680000011', name: '电子科技大学' },
+      { id: '680000012', name: '北京航空航天大学' },
+      { id: '680000013', name: '哈尔滨工业大学' },
+      { id: '680000014', name: '西安交通大学' },
+      { id: '680000015', name: '同济大学' }
+    ];
+
+    var catalog = assigned.map(function(s) {
+      return { id: s.id, name: s.name };
+    }).concat(extras);
+
+    var scope = 'partial';
+    var currentPage = 1;
+    var pageSize = 20;
+    var pending = new Set();
+    var confirmAction = null;
+    var toastTimer = null;
+
+    var listSearch = document.getElementById('listSearch');
+    var listSearchClear = document.getElementById('listSearchClear');
+    var schoolBody = document.getElementById('schoolBody');
+    var partialPane = document.getElementById('partialPane');
+    var allPane = document.getElementById('allPane');
+    var allSub = document.getElementById('allSub');
+    var segPartial = document.getElementById('segPartial');
+    var segAll = document.getElementById('segAll');
+    var mainMask = document.getElementById('mainMask');
+    var mainWrap = document.getElementById('mainWrap');
+    var addMask = document.getElementById('addMask');
+    var addWrap = document.getElementById('addWrap');
+    var addSelect = document.getElementById('addSelect');
+    var addTrigger = document.getElementById('addTrigger');
+    var addSearch = document.getElementById('addSearch');
+    var addMenu = document.getElementById('addMenu');
+    var addTags = document.getElementById('addTags');
+    var addOk = document.getElementById('addOk');
+    var confirmMask = document.getElementById('confirmMask');
+    var confirmWrap = document.getElementById('confirmWrap');
+    var confirmTitle = document.getElementById('confirmTitle');
+    var confirmText = document.getElementById('confirmText');
+    var confirmOk = document.getElementById('confirmOk');
+    var reopen = document.getElementById('reopen');
+
+    function matchQuery(school, raw) {
+      var q = String(raw || '').trim().toLowerCase();
+      if (!q) return true;
+      return String(school.id).toLowerCase().indexOf(q) !== -1 || school.name.toLowerCase().indexOf(q) !== -1;
+    }
+
+    function isAssigned(id) {
+      for (var i = 0; i < assigned.length; i += 1) {
+        if (assigned[i].id === id) return true;
+      }
+      return false;
+    }
+
+    function filteredAssigned() {
+      return assigned.filter(function(s) { return matchQuery(s, listSearch.value); });
+    }
+
+    function syncSummary(total, start, count) {
+      var el = document.querySelector('#adminPagination [data-kd-pagination-summary]');
+      if (!el) return;
+      if (!total) {
+        el.textContent = '共 0 条';
+        return;
+      }
+      el.textContent = '第 ' + (start + 1) + '-' + (start + count) + ' 条 / 共 ' + total + ' 条';
+    }
+
+    function paintRows(rows) {
+      if (!rows.length) {
+        var emptyText = listSearch.value.trim() ? '未找到匹配的院校' : '暂无公开院校';
+        schoolBody.innerHTML = '<tr class="kd-table-row"><td class="kd-table-cell empty-cell" colspan="4">' + emptyText + '</td></tr>';
+        return;
+      }
+      var html = '';
+      rows.forEach(function(s) {
+        html += '<tr class="kd-table-row">' +
+          '<td class="kd-table-cell" title="' + esc(s.id) + '">' + esc(s.id) + '</td>' +
+          '<td class="kd-table-cell" title="' + esc(s.name) + '">' + esc(s.name) + '</td>' +
+          '<td class="kd-table-cell">' + esc(s.createdAt) + '</td>' +
+          '<td class="kd-table-cell kd-table-cell-right">' +
+            '<button type="button" class="kd-button kd-button-light kd-button-sm kd-button-danger" data-delete-id="' + esc(s.id) + '">删除</button>' +
+          '</td></tr>';
+      });
+      schoolBody.innerHTML = html;
+    }
+
+    function renderTable(resetPage) {
+      if (resetPage) currentPage = 1;
+      var rows = filteredAssigned();
+      var maxPage = Math.max(1, Math.ceil(rows.length / pageSize) || 1);
+      if (currentPage > maxPage) currentPage = maxPage;
+      pagination.setState({
+        total: rows.length,
+        selectedCount: 0,
+        currentPage: currentPage,
+        pageSize: pageSize
+      });
+      var st = pagination.getState();
+      currentPage = st.currentPage;
+      pageSize = st.pageSize;
+      var start = rows.length ? (st.currentPage - 1) * st.pageSize : 0;
+      var pageRows = rows.slice(start, start + st.pageSize);
+      paintRows(pageRows);
+      syncSummary(rows.length, start, pageRows.length);
+      allSub.textContent = assigned.length
+        ? '已配置 ' + assigned.length + ' 所院校，切回「公开到部分」后恢复，无需重新添加。'
+        : '当前没有按院校配置的公开范围。';
+    }
+
+    function setSegment(next) {
+      var partialOn = next === 'partial';
+      segPartial.classList.toggle('is-active', partialOn);
+      segAll.classList.toggle('is-active', !partialOn);
+      segPartial.querySelector('[role="radio"]').setAttribute('aria-checked', partialOn ? 'true' : 'false');
+      segAll.querySelector('[role="radio"]').setAttribute('aria-checked', partialOn ? 'false' : 'true');
+      partialPane.hidden = !partialOn;
+      allPane.hidden = partialOn;
+    }
+
+    function renderScope() {
+      setSegment(scope);
+      if (scope === 'partial') renderTable(false);
+      else allSub.textContent = assigned.length
+        ? '已配置 ' + assigned.length + ' 所院校，切回「公开到部分」后恢复，无需重新添加。'
+        : '当前没有按院校配置的公开范围。';
+    }
+
+    function toast(text) {
+      var root = document.getElementById('toastRoot');
+      var msg = document.getElementById('toastSuccess');
+      document.getElementById('toastText').textContent = text;
+      root.hidden = false;
+      msg.style.animation = 'none';
+      void msg.offsetWidth;
+      msg.style.animation = '';
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function() { root.hidden = true; }, 2400);
+    }
+
+    function openConfirm(opts) {
+      confirmTitle.textContent = opts.title;
+      confirmText.textContent = opts.body;
+      confirmOk.textContent = opts.okText;
+      confirmOk.classList.toggle('kd-button-danger', !!opts.danger);
+      confirmAction = opts.onOk;
+      confirmMask.hidden = false;
+      confirmWrap.hidden = false;
+    }
+
+    function closeConfirm() {
+      confirmMask.hidden = true;
+      confirmWrap.hidden = true;
+      confirmAction = null;
+    }
+
+    function applyScope(next) {
+      scope = next;
+      renderScope();
+      if (next === 'all') toast('已切换为公开到全部');
+      else toast(assigned.length ? '已切换为公开到部分，已恢复 ' + assigned.length + ' 所院校' : '已切换为公开到部分');
+    }
+
+    function onScopeClick(next) {
+      if (next === scope) return;
+      if (next === 'all' && assigned.length) {
+        openConfirm({
+          title: '切换为公开到全部',
+          body: '切换后，课程将对全部院校公开。当前已配置的 ' + assigned.length + ' 所院校暂停生效，切回「公开到部分」后会恢复。',
+          okText: '确定',
+          danger: false,
+          onOk: function() { applyScope('all'); }
+        });
+        return;
+      }
+      applyScope(next);
+    }
+
+    function openDropdown() { addTrigger.classList.add('is-open'); }
+    function closeDropdown() { addTrigger.classList.remove('is-open'); }
+
+    function optionHtml(s, locked) {
+      var checked = locked || pending.has(s.id);
+      return '<div class="kd-menu-item add-option' + (locked ? ' is-locked' : '') + '" role="option" aria-selected="' + (checked ? 'true' : 'false') + '" aria-disabled="' + (locked ? 'true' : 'false') + '" data-school-id="' + esc(s.id) + '" title="' + esc(s.name + '（企业ID: ' + s.id + '）') + '">' +
+        '<span class="kd-checkbox"><span class="kd-checkbox-input' + (checked ? ' is-checked' : '') + '"><span class="kd-checkbox-inner"></span></span>' +
+        '<span class="kd-checkbox-label">' + esc(s.name) + '（企业ID: ' + esc(s.id) + '）</span></span>' +
+        (locked ? '<span class="added-mark">已添加</span>' : '') +
+      '</div>';
+    }
+
+    function renderAddOptions() {
+      var top = addMenu.scrollTop;
+      var unlocked = [];
+      var locked = [];
+      catalog.forEach(function(s) {
+        if (!matchQuery(s, addSearch.value)) return;
+        if (isAssigned(s.id)) locked.push(s);
+        else unlocked.push(s);
+      });
+      var html = '';
+      if (!unlocked.length && !locked.length) {
+        html = '<div class="kd-select-empty">暂无匹配院校</div>';
+      } else {
+        if (unlocked.length) {
+          html += '<div class="kd-select-group-title">可选院校</div>';
+          unlocked.forEach(function(s) { html += optionHtml(s, false); });
+        }
+        if (locked.length) {
+          html += '<div class="kd-select-group-title">已公开</div>';
+          locked.forEach(function(s) { html += optionHtml(s, true); });
+        }
+      }
+      addMenu.innerHTML = html;
+      addMenu.scrollTop = top;
+    }
+
+    function renderAddTags() {
+      var html = '';
+      pending.forEach(function(id) {
+        var school = null;
+        for (var i = 0; i < catalog.length; i += 1) {
+          if (catalog[i].id === id) { school = catalog[i]; break; }
+        }
+        if (!school || isAssigned(id)) return;
+        html += '<span class="kd-select-tag" title="' + esc(school.name + ' ' + school.id) + '">' + esc(school.name) +
+          '<button type="button" class="kd-select-tag-close" data-remove-id="' + esc(id) + '" aria-label="移除' + esc(school.name) + '">' + uniqSvg(CLOSE_SVG) + '</button></span>';
+      });
+      addTags.innerHTML = html;
+    }
+
+    function syncAddOk() { addOk.disabled = pending.size === 0; }
+
+    function openAdd() {
+      pending = new Set();
+      addSearch.value = '';
+      renderAddTags();
+      renderAddOptions();
+      syncAddOk();
+      addMask.hidden = false;
+      addWrap.hidden = false;
+      openDropdown();
+      addSearch.focus();
+    }
+
+    function closeAdd() {
+      closeDropdown();
+      addMask.hidden = true;
+      addWrap.hidden = true;
+      pending = new Set();
+    }
+
+    function confirmAdd() {
+      if (!pending.size) return;
+      var now = nowText();
+      var ordered = [];
+      pending.forEach(function(id) {
+        if (isAssigned(id)) return;
+        for (var i = 0; i < catalog.length; i += 1) {
+          if (catalog[i].id === id) {
+            ordered.push({ id: catalog[i].id, name: catalog[i].name, createdAt: now });
+            break;
+          }
+        }
+      });
+      if (!ordered.length) return;
+      for (var n = ordered.length - 1; n >= 0; n -= 1) assigned.unshift(ordered[n]);
+      closeAdd();
+      listSearch.value = '';
+      listSearchClear.hidden = true;
+      renderTable(true);
+      toast('已新增 ' + ordered.length + ' 所公开院校');
+    }
+
+    function askDelete(id) {
+      var school = null;
+      for (var i = 0; i < assigned.length; i += 1) {
+        if (assigned[i].id === id) { school = assigned[i]; break; }
+      }
+      if (!school) return;
+      openConfirm({
+        title: '删除公开院校',
+        body: '删除后，「' + school.name + '」将不再通过部分公开访问本课程。确定删除？',
+        okText: '删除',
+        danger: true,
+        onOk: function() {
+          assigned = assigned.filter(function(s) { return s.id !== id; });
+          renderTable(false);
+          toast('已删除「' + school.name + '」');
+        }
+      });
+    }
+
+    function closeMain() {
+      mainMask.hidden = true;
+      mainWrap.hidden = true;
+      reopen.hidden = false;
+    }
+
+    function openMain() {
+      reopen.hidden = true;
+      mainMask.hidden = false;
+      mainWrap.hidden = false;
+      renderScope();
+    }
+
+    var pagination = KdAdminPagination.create(document.getElementById('adminPagination'), {
+      total: assigned.length,
+      selectedCount: 0,
+      currentPage: 1,
+      pageSize: 20,
+      pageSizeOptions: [10, 20, 50],
+      onChange: function(state) {
+        currentPage = state.currentPage;
+        pageSize = state.pageSize;
+        renderTable(false);
+      }
+    });
+
+    renderScope();
+
+    document.querySelector('.kd-segmented-controller').addEventListener('click', function(e) {
+      var btn = e.target.closest('[data-scope]');
+      if (!btn) return;
+      onScopeClick(btn.getAttribute('data-scope'));
+    });
+
+    listSearch.addEventListener('input', function() {
+      listSearchClear.hidden = !listSearch.value;
+      renderTable(true);
+    });
+    listSearchClear.addEventListener('click', function() {
+      listSearch.value = '';
+      listSearchClear.hidden = true;
+      renderTable(true);
+      listSearch.focus();
+    });
+
+    schoolBody.addEventListener('click', function(e) {
+      var btn = e.target.closest('[data-delete-id]');
+      if (!btn) return;
+      askDelete(btn.getAttribute('data-delete-id'));
+    });
+
+    document.getElementById('openAdd').addEventListener('click', openAdd);
+    document.getElementById('addClose').addEventListener('click', closeAdd);
+    document.getElementById('addCancel').addEventListener('click', closeAdd);
+    addOk.addEventListener('click', confirmAdd);
+    addMask.addEventListener('click', closeAdd);
+
+    addSearch.addEventListener('input', renderAddOptions);
+    addSearch.addEventListener('focus', openDropdown);
+    addTrigger.addEventListener('click', function() {
+      addSearch.focus();
+      openDropdown();
+    });
+    addMenu.addEventListener('mousedown', function(e) {
+      if (e.target.closest('.add-option')) e.preventDefault();
+    });
+    addMenu.addEventListener('click', function(e) {
+      var row = e.target.closest('[data-school-id]');
+      if (!row) return;
+      var id = row.getAttribute('data-school-id');
+      if (isAssigned(id)) return;
+      if (pending.has(id)) pending.delete(id);
+      else pending.add(id);
+      renderAddOptions();
+      renderAddTags();
+      syncAddOk();
+    });
+    addTags.addEventListener('click', function(e) {
+      var btn = e.target.closest('[data-remove-id]');
+      if (!btn) return;
+      e.stopPropagation();
+      pending.delete(btn.getAttribute('data-remove-id'));
+      renderAddTags();
+      renderAddOptions();
+      syncAddOk();
+    });
+
+    document.addEventListener('mousedown', function(e) {
+      if (addWrap.hidden) return;
+      if (!addSelect.contains(e.target)) closeDropdown();
+    });
+
+    document.getElementById('confirmClose').addEventListener('click', closeConfirm);
+    document.getElementById('confirmCancel').addEventListener('click', closeConfirm);
+    confirmMask.addEventListener('click', closeConfirm);
+    confirmOk.addEventListener('click', function() {
+      var action = confirmAction;
+      closeConfirm();
+      if (action) action();
+    });
+
+    document.getElementById('mainClose').addEventListener('click', closeMain);
+    mainMask.addEventListener('click', function() {
+      if (!addWrap.hidden || !confirmWrap.hidden) return;
+      closeMain();
+    });
+    reopen.addEventListener('click', openMain);
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key !== 'Escape') return;
+      if (!confirmWrap.hidden) { closeConfirm(); return; }
+      if (!addWrap.hidden) {
+        if (addTrigger.classList.contains('is-open')) { closeDropdown(); return; }
+        closeAdd();
+        return;
+      }
+      if (!mainWrap.hidden) closeMain();
+    });
+  </script>
+</body>
+</html>
